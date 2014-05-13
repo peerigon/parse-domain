@@ -1,0 +1,31 @@
+{
+  "name": "parse-domain",
+  "version": "0.1.0",
+  "description": "Parses domain-specific parts of an url",
+  "main": "./lib/parseDomain.js",
+  "scripts": {
+    "test": "node node_modules/mocha/bin/mocha -R spec"
+  },
+  "keywords": [
+    "domain",
+    "url",
+    "sub-domain",
+    "tld",
+    "parse",
+    "extract",
+    "sanitize",
+    "country",
+    "top-level"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "1.x",
+    "chai": "1.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/peerigon/parse-domain.git"
+  },
+  "author": "peerigon <developers@peerigon.com>",
+  "license": "Unlicense"
+}
