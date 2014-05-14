@@ -18,6 +18,10 @@ expect(parseDomain("https://user:password@example.co.uk:8080/some/path?and&query
     domain: "example",
     tld: "co.uk"
 });
+
+expect(parseDomain("unknown.tld.kk")).to.equal(null);
+expect(parseDomain("invalid url")).to.equal(null);
+expect(parseDomain({})).to.equal(null);
 ```
 
 <br />
@@ -39,7 +43,9 @@ Setup
 API
 ------------------------------------------------------------------------
 
-### parseDomain(url: String): ParsedDomain
+### parseDomain(url: String): ParsedDomain|null
+
+Returns `null` if `url` has an unknown tld or if it's not a valid url.
 
 ### ParsedDomain
 
