@@ -1,7 +1,7 @@
 {
   "name": "parse-domain",
   "version": "0.1.0",
-  "description": "Parses domain-specific parts of an url",
+  "description": "Finds the sub-domain, domain and top-level-domain from an url",
   "main": "./lib/parseDomain.js",
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha -R spec"
@@ -25,6 +25,20 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/peerigon/parse-domain.git"
+  },
+  "testling": {
+    "harness" : "mocha",
+    "files": "test/parseDomain.test.js",
+    "browsers": [
+      "ie/8..latest",
+      "chrome/27..latest",
+      "firefox/22..latest",
+      "safari/latest",
+      "opera/latest",
+      "iphone/latest",
+      "ipad/latest",
+      "android-browser/latest"
+    ]
   },
   "author": "peerigon <developers@peerigon.com>",
   "license": "Unlicense"
