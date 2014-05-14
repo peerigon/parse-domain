@@ -7,15 +7,14 @@ Since domains are handled differently across different countries and organizatio
 ```javascript
 var parseDomain = require("parse-domain");
 
-expect(parseDomain("www.example.co.uk")).to.eql({
-    subdomain: "www",
+expect(parseDomain("some.subdomain.example.co.uk")).to.eql({
+    subdomain: "some.subdomain",
     domain: "example",
     tld: "co.uk"
 });
 
-expect(parseDomain("https://user@www.some.other.subdomain.example.co.uk"
-    + ":8080/some/path?and&query#hash")).to.eql({
-    subdomain: "www.some.other.subdomain",
+expect(parseDomain("https://user:password@example.co.uk:8080/some/path?and&query#hash")).to.eql({
+    subdomain: "",
     domain: "example",
     tld: "co.uk"
 });
