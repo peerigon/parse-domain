@@ -62,4 +62,4 @@ Returns `null` if `url` has an unknown tld or if it's not a valid url.
 License
 ------------------------------------------------------------------------
 
-MIT
+Unlicense
