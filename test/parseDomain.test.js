@@ -79,7 +79,7 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should work also work with the minimum", function () {
+    it("should also work with the minimum", function () {
         expect(parseDomain("example.com")).to.eql({
             subdomain: "",
             domain: "example",

@@ -1,7 +1,7 @@
 {
   "name": "parse-domain",
-  "version": "0.1.0",
-  "description": "Finds the sub-domain, domain and top-level-domain from an url",
+  "version": "0.1.1",
+  "description": "Splits an url into sub-domain, domain and top-level-domain",
   "main": "./lib/parseDomain.js",
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha -R spec"
