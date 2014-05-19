@@ -94,6 +94,7 @@ describe("parseDomain(url)", function () {
     it("should return null if the given value is not a string", function () {
         expect(parseDomain(undefined)).to.equal(null);
         expect(parseDomain({})).to.equal(null);
+        expect(parseDomain("")).to.equal(null);
     });
 
     it("should work with domains that could match multiple tlds", function() {
