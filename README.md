@@ -31,9 +31,9 @@ Setup
 
 [![npm status](https://nodei.co/npm/parse-domain.png?downloads=true&stars=true)](https://npmjs.org/package/parse-domain)
 
-[![build status](https://travis-ci.org/peerigon/parse-domain.png)](http://travis-ci.org/peerigon/parse-domain)
-[![dependencies](https://david-dm.org/peerigon/parse-domain.png)](http://david-dm.org/peerigon/parse-domain)
-[![devDependencies](https://david-dm.org/peerigon/parse-domain/dev-status.png)](http://david-dm.org/peerigon/parse-domain#info=devDependencies)
+[![Build Status](https://travis-ci.org/peerigon/parse-domain.svg?branch=master)](https://travis-ci.org/peerigon/parse-domain)
+[![Dependency Status](https://david-dm.org/peerigon/parse-domain.svg)](https://david-dm.org/peerigon/parse-domain)
+[![Coverage Status](https://img.shields.io/coveralls/peerigon/parse-domain.svg)](https://coveralls.io/r/peerigon/parse-domain?branch=master)
 
 [![browser support](https://ci.testling.com/peerigon/parse-domain.png)
 ](https://ci.testling.com/peerigon/parse-domain)
