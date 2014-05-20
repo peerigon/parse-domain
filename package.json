@@ -4,7 +4,8 @@
   "description": "Splits an url into sub-domain, domain and top-level-domain",
   "main": "./lib/parseDomain.js",
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha -R spec"
+    "test": "node node_modules/mocha/bin/mocha -R spec",
+    "build-regex": "node lib/build/buildRegex.js"
   },
   "keywords": [
     "domain",
