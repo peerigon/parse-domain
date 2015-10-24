@@ -20,15 +20,15 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "mocha": "1.x",
-    "chai": "1.x"
+    "chai": "^3.4.0",
+    "mocha": "^2.3.3"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/peerigon/parse-domain.git"
   },
   "testling": {
-    "harness" : "mocha",
+    "harness": "mocha",
     "files": "test/parseDomain.test.js",
     "browsers": [
       "ie/8..latest",
