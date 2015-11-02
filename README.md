@@ -22,6 +22,14 @@ expect(parseDomain("https://user:password@example.co.uk:8080/some/path?and&query
 expect(parseDomain("unknown.tld.kk")).to.equal(null);
 expect(parseDomain("invalid url")).to.equal(null);
 expect(parseDomain({})).to.equal(null);
+
+expect(parseDomain("www.mymachine.local")).to.equal(null);
+expect(parseDomain("www.mymachine.local",["dev","local"])).to.eql({
+    subdomain: "www",
+    domain: "mymachine",
+    tld: "local"
+});
+
 ```
 
 <br />
