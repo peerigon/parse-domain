@@ -30,6 +30,13 @@ expect(parseDomain("www.mymachine.local",["dev","local"])).to.eql({
     tld: "local"
 });
 
+var parseDevDomain = parseDomain.applyCustomTlds(["dev","local"]);
+expect(parseDevDomain("www.mymachine.dev")).to.eql({
+    subdomain: "www",
+    domain: "mymachine",
+    tld: "dev"
+});
+
 ```
 
 <br />
