@@ -132,15 +132,9 @@ describe("parseDomain(url)", function () {
             domain: "dev",
             tld: "local"
         });
-        function parseCustomTlds(url) {
-            var options = {
-                customTlds: ["local"]
-            };
-            return parseDomain(url, options);
-        }
-        expect(parseCustomTlds("mymachine.local")).to.eql({
+        expect(parseDomain("dev.local",{customTlds:["local"]})).to.eql({
             subdomain: "",
-            domain: "mymachine",
+            domain: "dev",
             tld: "local"
         });
     });
