@@ -42,6 +42,12 @@ expect(parseCustomTlds("mymachine.local")).to.eql({
     tld: "local"
 });
 
+expect(parseDomain("mymachine.local",{customTldsRegExp:/\.local$/})).to.eql({
+    subdomain: "",
+    domain: "mymachine",
+    tld: "local"
+});
+
 ```
 
 <br />
