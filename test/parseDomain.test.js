@@ -125,6 +125,26 @@ describe("parseDomain(url)", function () {
         });
     });
 
+    it("should behave itself when standard top-level domains sit atom custom top-level domains (eg .dev.local)", function () {
+        expect(parseDomain("ohno.dev.local")).to.eql(null);
+        expect(parseDomain("ohno.dev.local",{customTlds:["local"]})).to.eql({
+            subdomain: "ohno",
+            domain: "dev",
+            tld: "local"
+        });
+        function parseCustomTlds(url) {
+            var options = {
+                customTlds: ["local"]
+            };
+            return parseDomain(url, options);
+        }
+        expect(parseCustomTlds("mymachine.local")).to.eql({
+            subdomain: "",
+            domain: "mymachine",
+            tld: "local"
+        });
+    });
+
     it("should also work with custom top-level domains (eg .local) passed as regexps", function () {
         expect(parseDomain("mymachine.local")).to.eql(null);
         expect(parseDomain("mymachine.local",{customTldsRegExp:/\.local$/})).to.eql({
