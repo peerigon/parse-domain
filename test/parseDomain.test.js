@@ -134,4 +134,29 @@ describe("parseDomain(url)", function () {
         });
     });
 
+    it("should also work with custom hostnames (eg localhost) when passed as a regexp", function () {
+        expect(parseDomain("localhost")).to.eql(null);
+        expect(parseDomain("localhost",{customTldsRegExp:/localhost$/})).to.eql({
+            subdomain: "",
+            domain: "",
+            tld: "localhost"
+        });
+        function parseLocalDomains(url) {
+            var options = {
+                customTldsRegExp: /localhost|\.local/
+            };
+            return parseDomain(url, options);
+        }
+        expect(parseLocalDomains("localhost")).to.eql({
+            subdomain: "",
+            domain: "",
+            tld: "localhost"
+        });
+        expect(parseLocalDomains("mymachine.local")).to.eql({
+            subdomain: "",
+            domain: "mymachine",
+            tld: "local"
+        });
+    });
+
 });
