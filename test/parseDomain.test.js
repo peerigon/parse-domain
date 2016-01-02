@@ -105,20 +105,21 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should also work with passed-in custom top-level domains (like .dev or .local)", function () {
-        expect(parseDomain("www.mymachine.local")).to.eql(null);
-        expect(parseDomain("www.mymachine.dev","dev")).to.eql({
-            subdomain: "www",
+    it("should work with custom top-level domains (eg .local)", function () {
+        expect(parseDomain("mymachine.local")).to.eql(null);
+        expect(parseDomain("mymachine.local",{customTlds:["local"]})).to.eql({
+            subdomain: "",
             domain: "mymachine",
-            tld: "dev"
+            tld: "local"
         });
-        expect(parseDomain("www.mymachine.dev","dev,local")).to.eql({
-            subdomain: "www",
-            domain: "mymachine",
-            tld: "dev"
-        });
-        expect(parseDomain("www.mymachine.local",["dev","local"])).to.eql({
-            subdomain: "www",
+        function parseCustomTlds(url) {
+            var options = {
+                customTlds: ["local"]
+            };
+            return parseDomain(url, options);
+        }
+        expect(parseCustomTlds("mymachine.local")).to.eql({
+            subdomain: "",
             domain: "mymachine",
             tld: "local"
         });

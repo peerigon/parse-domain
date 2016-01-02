@@ -23,9 +23,21 @@ expect(parseDomain("unknown.tld.kk")).to.equal(null);
 expect(parseDomain("invalid url")).to.equal(null);
 expect(parseDomain({})).to.equal(null);
 
-expect(parseDomain("www.mymachine.local")).to.equal(null);
-expect(parseDomain("www.mymachine.local",["dev","local"])).to.eql({
-    subdomain: "www",
+expect(parseDomain("mymachine.local")).to.eql(null);
+expect(parseDomain("mymachine.local",{customTlds:["local"]})).to.eql({
+    subdomain: "",
+    domain: "mymachine",
+    tld: "local"
+});
+
+function parseCustomTlds(url) {
+    var options = {
+        customTlds: ["local"]
+    };
+    return parseDomain(url, options);
+}
+expect(parseCustomTlds("mymachine.local")).to.eql({
+    subdomain: "",
     domain: "mymachine",
     tld: "local"
 });
