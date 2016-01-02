@@ -124,20 +124,4 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should also work with injected custom top-level domains (like .dev or .local)", function () {
-        expect(parseDomain("www.mymachine.local")).to.eql(null);
-        var parseDevDomain = parseDomain.applyCustomTlds(["dev","local"]);
-        expect(parseDevDomain("www.mymachine.dev")).to.eql({
-            subdomain: "www",
-            domain: "mymachine",
-            tld: "dev"
-        });
-        expect(parseDevDomain("www.mymachine.local")).to.eql({
-            subdomain: "www",
-            domain: "mymachine",
-            tld: "local"
-        });
-        expect(parseDomain("www.mymachine.test")).to.eql(null);
-    });
-
 });
