@@ -152,6 +152,11 @@ describe("parseDomain(url)", function () {
             domain: "",
             tld: "localhost"
         });
+        expect(parseLocalDomains("localhost:8080")).to.eql({
+            subdomain: "",
+            domain: "",
+            tld: "localhost"
+        });
         expect(parseLocalDomains("mymachine.local")).to.eql({
             subdomain: "",
             domain: "mymachine",
