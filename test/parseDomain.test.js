@@ -141,7 +141,7 @@ describe("parseDomain(url)", function () {
 
     it("should also work with custom top-level domains (eg .local) passed as regexps", function () {
         expect(parseDomain("mymachine.local")).to.eql(null);
-        expect(parseDomain("mymachine.local",{customTldsRegExp:/\.local$/})).to.eql({
+        expect(parseDomain("mymachine.local",{customTlds:/\.local$/})).to.eql({
             subdomain: "",
             domain: "mymachine",
             tld: "local"
@@ -150,14 +150,14 @@ describe("parseDomain(url)", function () {
 
     it("should also work with custom hostnames (eg localhost) when passed as a regexp", function () {
         expect(parseDomain("localhost")).to.eql(null);
-        expect(parseDomain("localhost",{customTldsRegExp:/localhost$/})).to.eql({
+        expect(parseDomain("localhost",{customTlds:/localhost$/})).to.eql({
             subdomain: "",
             domain: "",
             tld: "localhost"
         });
         function parseLocalDomains(url) {
             var options = {
-                customTldsRegExp: /localhost|\.local/
+                customTlds: /localhost|\.local/
             };
             return parseDomain(url, options);
         }

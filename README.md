@@ -63,7 +63,7 @@ expect(parseDomain("mymachine.local",{customTlds:["local"]})).to.eql({
 });
 
 // custom regexps can optionally be specified (instead of customTlds)
-expect(parseDomain("localhost",{customTldsRegExp:/localhost|\.local/})).to.eql({
+expect(parseDomain("localhost",{customTlds:/localhost|\.local/})).to.eql({
     subdomain: "",
     domain: "",
     tld: "localhost"
@@ -72,7 +72,7 @@ expect(parseDomain("localhost",{customTldsRegExp:/localhost|\.local/})).to.eql({
 // it can sometimes be helpful to apply the customTlds argument using a helper function
 function parseLocalDomains(url) {
     var options = {
-        customTldsRegExp: /localhost|\.local/
+        customTlds: /localhost|\.local/
     };
     return parseDomain(url, options);
 }
@@ -100,8 +100,7 @@ Returns `null` if `url` has an unknown tld or if it's not a valid url.
 #### `options`
 ```js
 {
-    customTlds: String[],
-    customTldsRegExp: RegExp
+    customTlds: RegExp|String[]
 }
 ```
 
