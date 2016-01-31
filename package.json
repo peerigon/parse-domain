@@ -21,10 +21,6 @@
     "top-level"
   ],
   "dependencies": {},
-  "devDependencies": {
-    "chai": "^3.4.0",
-    "mocha": "^2.3.3"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/peerigon/parse-domain.git"
@@ -44,5 +40,9 @@
     ]
   },
   "author": "peerigon <developers@peerigon.com>",
-  "license": "Unlicense"
+  "license": "Unlicense",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  }
 }
