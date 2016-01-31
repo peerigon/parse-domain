@@ -8,7 +8,7 @@ parse-domain
 
 Since domains are handled differently across different countries and organizations, splitting a URL into sub-domain, domain and top-level-domain parts is not a simple regexp. **parse-domain** uses a [large list of effective tld names](http://publicsuffix.org/list/effective_tld_names.dat) from publicsuffix.org to recognize different parts of the domain.
 
-Please also read the note on [effective top-level domains](#Note-on-effective-top-level-domains).
+Please also read the note on [effective top-level domains](#note-on-effective-top-level-domains).
 
 <br />
 
