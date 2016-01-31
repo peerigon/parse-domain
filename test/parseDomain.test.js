@@ -105,4 +105,77 @@ describe("parseDomain(url)", function () {
         });
     });
 
+    it("should work with custom top-level domains (eg .local)", function () {
+        expect(parseDomain("mymachine.local")).to.eql(null);
+        expect(parseDomain("mymachine.local",{customTlds:["local"]})).to.eql({
+            subdomain: "",
+            domain: "mymachine",
+            tld: "local"
+        });
+        function parseCustomTlds(url) {
+            var options = {
+                customTlds: ["local"]
+            };
+            return parseDomain(url, options);
+        }
+        expect(parseCustomTlds("mymachine.local")).to.eql({
+            subdomain: "",
+            domain: "mymachine",
+            tld: "local"
+        });
+    });
+
+    it("should behave itself when standard top-level domains sit atom custom top-level domains (eg .dev.local)", function () {
+        expect(parseDomain("ohno.dev.local")).to.eql(null);
+        expect(parseDomain("ohno.dev.local",{customTlds:["local"]})).to.eql({
+            subdomain: "ohno",
+            domain: "dev",
+            tld: "local"
+        });
+        expect(parseDomain("dev.local",{customTlds:["local"]})).to.eql({
+            subdomain: "",
+            domain: "dev",
+            tld: "local"
+        });
+    });
+
+    it("should also work with custom top-level domains (eg .local) passed as regexps", function () {
+        expect(parseDomain("mymachine.local")).to.eql(null);
+        expect(parseDomain("mymachine.local",{customTlds:/\.local$/})).to.eql({
+            subdomain: "",
+            domain: "mymachine",
+            tld: "local"
+        });
+    });
+
+    it("should also work with custom hostnames (eg localhost) when passed as a regexp", function () {
+        expect(parseDomain("localhost")).to.eql(null);
+        expect(parseDomain("localhost",{customTlds:/localhost$/})).to.eql({
+            subdomain: "",
+            domain: "",
+            tld: "localhost"
+        });
+        function parseLocalDomains(url) {
+            var options = {
+                customTlds: /localhost|\.local/
+            };
+            return parseDomain(url, options);
+        }
+        expect(parseLocalDomains("localhost")).to.eql({
+            subdomain: "",
+            domain: "",
+            tld: "localhost"
+        });
+        expect(parseLocalDomains("localhost:8080")).to.eql({
+            subdomain: "",
+            domain: "",
+            tld: "localhost"
+        });
+        expect(parseLocalDomains("mymachine.local")).to.eql({
+            subdomain: "",
+            domain: "mymachine",
+            tld: "local"
+        });
+    });
+
 });
