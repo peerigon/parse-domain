@@ -1,31 +1,22 @@
 parse-domain
-========================================================================
-**Splits a URL into sub-domain, domain and top-level-domain parts.**
+============
+**Splits a URL into sub-domain, domain and the effective top-level domain.**
 
-Since domains are handled differently across different countries and organizations, splitting a URL into sub-domain, domain and top-level-domain parts is not a simple regexp. **parse-domain** uses a [large list of known tlds](https://github.com/peerigon/parse-domain/blob/master/lib/build/tld.txt) (borrowed from [http://publicsuffix.org](http://publicsuffix.org/list/effective_tld_names.dat)) to recognize different parts of the domain.
+[![](https://img.shields.io/npm/v/parse-domain.svg)](https://www.npmjs.com/package/parse-domain)
+[![](https://img.shields.io/npm/dm/parse-domain.svg)](https://www.npmjs.com/package/parse-domain)
+[![Dependency Status](https://david-dm.org/peerigon/parse-domain.svg)](https://david-dm.org/peerigon/parse-domain)
+
+Since domains are handled differently across different countries and organizations, splitting a URL into sub-domain, domain and top-level-domain parts is not a simple regexp. **parse-domain** uses a [large list of effective tld names](http://publicsuffix.org/list/effective_tld_names.dat) from publicsuffix.org to recognize different parts of the domain.
+
+Please also read the note on [effective top-level domains](#Note-on-effective-top-level-domains).
 
 <br />
 
-Setup
+Installation
 ------------------------------------------------------------------------
 
-[![npm status](https://nodei.co/npm/parse-domain.png?downloads=true&stars=true)](https://npmjs.org/package/parse-domain)
-
-[![Build Status](https://travis-ci.org/peerigon/parse-domain.svg?branch=master)](https://travis-ci.org/peerigon/parse-domain)
-[![Dependency Status](https://david-dm.org/peerigon/parse-domain.svg)](https://david-dm.org/peerigon/parse-domain)
-[![Coverage Status](https://img.shields.io/coveralls/peerigon/parse-domain.svg)](https://coveralls.io/r/peerigon/parse-domain?branch=master)
-
-[![browser support](https://ci.testling.com/peerigon/parse-domain.png)
-](https://ci.testling.com/peerigon/parse-domain)
-
 ```sh
-# use npm to install the parse-domain package
 npm install --save parse-domain
-```
-
-```js
-// then require as usual!
-var parseDomain = require("parse-domain");
 ```
 
 <br />
@@ -33,7 +24,7 @@ var parseDomain = require("parse-domain");
 Usage
 ------------------------------------------------------------------------
 
-```js
+```javascript
 // long subdomains can be handled
 expect(parseDomain("some.subdomain.example.co.uk")).to.eql({
     subdomain: "some.subdomain",
@@ -54,28 +45,36 @@ expect(parseDomain("unknown.tld.kk")).to.equal(null);
 // invalid urls are also ignored
 expect(parseDomain("invalid url")).to.equal(null);
 expect(parseDomain({})).to.equal(null);
+```
 
+### Introducing custom tlds
+
+```javascript
 // custom top-level domains can optionally be specified
-expect(parseDomain("mymachine.local",{customTlds:["local"]})).to.eql({
+expect(parseDomain("mymachine.local",{ customTlds: ["local"] })).to.eql({
     subdomain: "",
     domain: "mymachine",
     tld: "local"
 });
 
 // custom regexps can optionally be specified (instead of customTlds)
-expect(parseDomain("localhost",{customTlds:/localhost|\.local/})).to.eql({
+expect(parseDomain("localhost",{ customTlds:/localhost|\.local/ })).to.eql({
     subdomain: "",
     domain: "",
     tld: "localhost"
 });
+```
 
-// it can sometimes be helpful to apply the customTlds argument using a helper function
+It can sometimes be helpful to apply the customTlds argument using a helper function
+
+```javascript
 function parseLocalDomains(url) {
     var options = {
         customTlds: /localhost|\.local/
     };
     return parseDomain(url, options);
 }
+
 expect(parseLocalDomains("localhost")).to.eql({
     subdomain: "",
     domain: "",
@@ -93,25 +92,42 @@ expect(parseLocalDomains("mymachine.local")).to.eql({
 API
 ------------------------------------------------------------------------
 
-### `parseDomain(url: String, options: Object): parsedDomain|null`
+### `parseDomain(url: String, options: ParseOptions): ParsedDomain|null`
 
 Returns `null` if `url` has an unknown tld or if it's not a valid url.
 
-#### `options`
-```js
+#### `ParseOptions`
+```javascript
 {
     customTlds: RegExp|String[]
 }
 ```
 
-#### `parsedDomain`
-```js
+#### `ParsedDomain`
+```javascript
 {
     tld: String,
     domain: String,
     subdomain: String
 }
 ```
+
+<br />
+
+Note on effective top-level domains
+------------------------------------------------------------------------
+
+Technically, the top-level domain is *always* the part after the last dot. That's why publicsuffix.org is a list of *effective* top-level domains: It lists all top-level domains where users are allowed to host any content. That's why `foo.blogspot.com` will be split into
+
+```javascript
+{
+    tld: "blogspot.com",
+    domain: "foo",
+    subdomain: ""
+}
+```
+
+See also [#4](https://github.com/peerigon/parse-domain/issues/4)
 
 <br />
 
