@@ -1,7 +1,7 @@
 {
   "name": "parse-domain",
   "version": "0.2.1",
-  "description": "Splits an url into sub-domain, domain and top-level-domain",
+  "description": "Splits an url into sub-domain, domain and effective top-level-domain",
   "main": "./lib/parseDomain.js",
   "scripts": {
     "test": "mocha -R spec",
