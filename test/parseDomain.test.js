@@ -47,6 +47,14 @@ describe("parseDomain(url)", function () {
         });
     });
 
+    it("should remove the query string", function () {
+        expect(parseDomain("example.com?and&query")).to.eql({
+            subdomain: "",
+            domain: "example",
+            tld: "com"
+        });
+    });
+
     it("should remove the port", function () {
         expect(parseDomain("example.com:8080")).to.eql({
             subdomain: "",
