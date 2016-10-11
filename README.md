@@ -97,13 +97,16 @@ API
 Returns `null` if `url` has an unknown tld or if it's not a valid url.
 
 #### `ParseOptions`
+
 ```javascript
 {
-    customTlds: RegExp|String[]
+    customTlds: RegExp|String[],
+    icann: Boolean, // see bottom `Note on effective top-level domains`
 }
 ```
 
 #### `ParsedDomain`
+
 ```javascript
 {
     tld: String,
@@ -128,6 +131,8 @@ Technically, the top-level domain is *always* the part after the last dot. That'
 ```
 
 See also [#4](https://github.com/peerigon/parse-domain/issues/4)
+
+If you only want icann tlds, just set `icann` options to `true`
 
 <br />
 
