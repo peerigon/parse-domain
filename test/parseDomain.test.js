@@ -79,21 +79,21 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it('should work with private domains like blogspot.com', function () {
-      expect(parseDomain("foo.blogspot.com")).to.eql({
-          subdomain: "",
-          domain: "foo",
-          tld: "blogspot.com"
-      });
-    })
+    it("should not include private domains like blogspot.com by default", function () {
+        expect(parseDomain("foo.blogspot.com")).to.eql({
+            subdomain: "foo",
+            domain: "blogspot",
+            tld: "com"
+        });
+    });
 
-    it('should work with `icann` option', function () {
-      expect(parseDomain("foo.blogspot.com", {icann: true})).to.eql({
-          subdomain: "foo",
-          domain: "blogspot",
-          tld: "com"
-      });
-    })
+    it("should include private tlds ", function () {
+        expect(parseDomain("foo.blogspot.com", { includePrivateTlds: true })).to.eql({
+            subdomain: "",
+            domain: "foo",
+            tld: "blogspot.com"
+        });
+    });
 
     it("should work when all url parts are present", function () {
         expect(parseDomain("https://user@www.some.other.subdomain.example.co.uk:8080/some/path?and&query#hash")).to.eql({
