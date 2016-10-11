@@ -1,14 +1,14 @@
 parse-domain
 ============
-**Splits a URL into sub-domain, domain and the effective top-level domain.**
+**Splits a URL into sub-domain, domain and the top-level domain.**
 
 [![](https://img.shields.io/npm/v/parse-domain.svg)](https://www.npmjs.com/package/parse-domain)
 [![](https://img.shields.io/npm/dm/parse-domain.svg)](https://www.npmjs.com/package/parse-domain)
 [![Dependency Status](https://david-dm.org/peerigon/parse-domain.svg)](https://david-dm.org/peerigon/parse-domain)
+[![Build Status](https://travis-ci.org/peerigon/parse-domain.svg?branch=master)](https://travis-ci.org/peerigon/parse-domain)
+[![Coverage Status](https://img.shields.io/coveralls/peerigon/parse-domain.svg)](https://coveralls.io/r/peerigon/parse-domain?branch=master)
 
-Since domains are handled differently across different countries and organizations, splitting a URL into sub-domain, domain and top-level-domain parts is not a simple regexp. **parse-domain** uses a [large list of effective tld names](http://publicsuffix.org/list/effective_tld_names.dat) from publicsuffix.org to recognize different parts of the domain.
-
-Please also read the note on [effective top-level domains](#note-on-effective-top-level-domains).
+Since domains are handled differently across different countries and organizations, splitting a URL into sub-domain, domain and top-level-domain parts is not a simple regexp. **parse-domain** uses a [large list of known top-level domains](https://publicsuffix.org/list/public_suffix_list.dat) from publicsuffix.org to recognize different parts of the domain.
 
 <br />
 
@@ -32,14 +32,14 @@ expect(parseDomain("some.subdomain.example.co.uk")).to.eql({
     tld: "co.uk"
 });
 
-// usernames, passwords and ports are disregarded
+// protocols, usernames, passwords, ports, paths, queries and hashes are disregarded
 expect(parseDomain("https://user:password@example.co.uk:8080/some/path?and&query#hash")).to.eql({
     subdomain: "",
     domain: "example",
     tld: "co.uk"
 });
 
-// non-canonical top-level domains are ignored
+// unknown top-level domains are ignored
 expect(parseDomain("unknown.tld.kk")).to.equal(null);
 
 // invalid urls are also ignored
@@ -69,10 +69,9 @@ It can sometimes be helpful to apply the customTlds argument using a helper func
 
 ```javascript
 function parseLocalDomains(url) {
-    var options = {
+    return parseDomain(url, {
         customTlds: /localhost|\.local/
-    };
-    return parseDomain(url, options);
+    });
 }
 
 expect(parseLocalDomains("localhost")).to.eql({
@@ -92,7 +91,7 @@ expect(parseLocalDomains("mymachine.local")).to.eql({
 API
 ------------------------------------------------------------------------
 
-### `parseDomain(url: String, options: ParseOptions): ParsedDomain|null`
+### `parseDomain(url: string, options: ParseOptions): ParsedDomain|null`
 
 Returns `null` if `url` has an unknown tld or if it's not a valid url.
 
@@ -100,8 +99,18 @@ Returns `null` if `url` has an unknown tld or if it's not a valid url.
 
 ```javascript
 {
-    customTlds: RegExp|String[],
-    icann: Boolean, // see bottom `Note on effective top-level domains`
+    // A list of custom tlds that are first matched against the url.
+    // Useful if you also need to split internal URLs like localhost.
+    customTlds: RegExp|string[],
+    
+    // There are lot of private domains that act like top-level domains,
+    // like blogspot.com, googleapis.com or s3.amazonaws.com.
+    // By default, these domains would be split into:
+    // { subdomain: ..., domain: "blogspot", tld: "com" }
+    // When this flag is set to true, the domain will be split into
+    // { subdomain: ..., domain: ..., tld: "blogspot.com" }
+    // See also https://github.com/peerigon/parse-domain/issues/4
+    includePrivateTlds: boolean
 }
 ```
 
@@ -109,30 +118,11 @@ Returns `null` if `url` has an unknown tld or if it's not a valid url.
 
 ```javascript
 {
-    tld: String,
-    domain: String,
-    subdomain: String
+    tld: string,
+    domain: string,
+    subdomain: string
 }
 ```
-
-<br />
-
-Note on effective top-level domains
-------------------------------------------------------------------------
-
-Technically, the top-level domain is *always* the part after the last dot. That's why publicsuffix.org is a list of *effective* top-level domains: It lists all top-level domains where users are allowed to host any content. That's why `foo.blogspot.com` will be split into
-
-```javascript
-{
-    tld: "blogspot.com",
-    domain: "foo",
-    subdomain: ""
-}
-```
-
-See also [#4](https://github.com/peerigon/parse-domain/issues/4)
-
-If you only want icann tlds, just set `icann` options to `true`
 
 <br />
 
