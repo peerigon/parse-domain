@@ -1,0 +1,13 @@
+{
+    "extends": [
+        "peerigon/base",
+        "peerigon/es5"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 5
+    },
+    "env": {
+        "node": true
+    },
+    "root": true
+}

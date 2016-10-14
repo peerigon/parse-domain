@@ -1,8 +1,8 @@
 "use strict";
 
-var chai = require("chai"),
-    expect = chai.expect,
-    parseDomain = require("../lib/parseDomain.js");
+var chai = require("chai");
+var expect = chai.expect;
+var parseDomain = require("../lib/parseDomain.js");
 
 chai.config.includeStack = true;
 
@@ -88,7 +88,7 @@ describe("parseDomain(url)", function () {
     });
 
     it("should include private tlds ", function () {
-        expect(parseDomain("foo.blogspot.com", { includePrivateTlds: true })).to.eql({
+        expect(parseDomain("foo.blogspot.com", { privateTlds: true })).to.eql({
             subdomain: "",
             domain: "foo",
             tld: "blogspot.com"
@@ -121,7 +121,7 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("")).to.equal(null);
     });
 
-    it("should work with domains that could match multiple tlds", function() {
+    it("should work with domains that could match multiple tlds", function () {
         expect(parseDomain("http://hello.de.ibm.com")).to.eql({
             subdomain: "hello.de",
             domain: "ibm",
@@ -134,11 +134,12 @@ describe("parseDomain(url)", function () {
             var options = {
                 customTlds: ["local"]
             };
+
             return parseDomain(url, options);
         }
 
         expect(parseDomain("mymachine.local")).to.eql(null);
-        expect(parseDomain("mymachine.local",{customTlds:["local"]})).to.eql({
+        expect(parseDomain("mymachine.local", { customTlds: ["local"] })).to.eql({
             subdomain: "",
             domain: "mymachine",
             tld: "local"
@@ -152,12 +153,12 @@ describe("parseDomain(url)", function () {
 
     it("should behave itself when standard top-level domains sit atom custom top-level domains (eg .dev.local)", function () {
         expect(parseDomain("ohno.dev.local")).to.eql(null);
-        expect(parseDomain("ohno.dev.local",{customTlds:["local"]})).to.eql({
+        expect(parseDomain("ohno.dev.local", { customTlds: ["local"] })).to.eql({
             subdomain: "ohno",
             domain: "dev",
             tld: "local"
         });
-        expect(parseDomain("dev.local",{customTlds:["local"]})).to.eql({
+        expect(parseDomain("dev.local", { customTlds: ["local"] })).to.eql({
             subdomain: "",
             domain: "dev",
             tld: "local"
@@ -166,7 +167,7 @@ describe("parseDomain(url)", function () {
 
     it("should also work with custom top-level domains (eg .local) passed as regexps", function () {
         expect(parseDomain("mymachine.local")).to.eql(null);
-        expect(parseDomain("mymachine.local",{customTlds:/\.local$/})).to.eql({
+        expect(parseDomain("mymachine.local", { customTlds: /\.local$/ })).to.eql({
             subdomain: "",
             domain: "mymachine",
             tld: "local"
@@ -178,11 +179,12 @@ describe("parseDomain(url)", function () {
             var options = {
                 customTlds: /localhost|\.local/
             };
+
             return parseDomain(url, options);
         }
 
         expect(parseDomain("localhost")).to.eql(null);
-        expect(parseDomain("localhost",{customTlds:/localhost$/})).to.eql({
+        expect(parseDomain("localhost", { customTlds: /localhost$/ })).to.eql({
             subdomain: "",
             domain: "",
             tld: "localhost"
