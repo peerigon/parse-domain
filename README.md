@@ -101,7 +101,7 @@ Returns `null` if `url` has an unknown tld or if it's not a valid url.
 {
     // A list of custom tlds that are first matched against the url.
     // Useful if you also need to split internal URLs like localhost.
-    customTlds: RegExp|Array<string>,
+    customTlds: RegExp|Array<String>,
     
     // There are lot of private domains that act like top-level domains,
     // like blogspot.com, googleapis.com or s3.amazonaws.com.
@@ -110,7 +110,7 @@ Returns `null` if `url` has an unknown tld or if it's not a valid url.
     // When this flag is set to true, the domain will be split into
     // { subdomain: ..., domain: ..., tld: "blogspot.com" }
     // See also https://github.com/peerigon/parse-domain/issues/4
-    privateTlds: boolean
+    privateTlds: Boolean - default: false
 }
 ```
 
