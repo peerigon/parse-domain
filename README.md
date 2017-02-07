@@ -110,7 +110,7 @@ Returns `null` if `url` has an unknown tld or if it's not a valid url.
     // When this flag is set to true, the domain will be split into
     // { subdomain: ..., domain: ..., tld: "blogspot.com" }
     // See also https://github.com/peerigon/parse-domain/issues/4
-    privateTlds: boolean
+    privateTlds: boolean - default: false
 }
 ```
 
