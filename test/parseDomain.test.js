@@ -71,6 +71,14 @@ describe("parseDomain(url)", function () {
         });
     });
 
+    it("should allow @ characters in the path", function () {
+        expect(parseDomain("https://medium.com/@username/")).to.eql({
+            subdomain: "",
+            domain: "medium",
+            tld: "com"
+        });
+    });
+
     it("should also work with three-level domains like .co.uk", function () {
         expect(parseDomain("www.example.co.uk")).to.eql({
             subdomain: "www",
@@ -87,7 +95,7 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should include private tlds ", function () {
+    it("should include private tlds", function () {
         expect(parseDomain("foo.blogspot.com", { privateTlds: true })).to.eql({
             subdomain: "",
             domain: "foo",
