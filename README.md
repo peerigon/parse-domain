@@ -130,3 +130,7 @@ License
 ------------------------------------------------------------------------
 
 Unlicense
+
+## Sponsors
+
+[<img src="https://assets.peerigon.com/peerigon/logo/peerigon-logo-flat-spinat.png" width="150" />](https://peerigon.com)
