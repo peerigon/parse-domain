@@ -11871,6 +11871,10 @@ remotewd.com
 // Submitted by Yuvi Panda <yuvipanda@wikimedia.org>
 wmflabs.org
 
+//Wordpress blogs : https://www.wordpress.com
+// Submitted by Michael Neth <mneth@callcap.com>
+wordpress.com
+
 // Yola : https://www.yola.com/
 // Submitted by Stefano Rivera <stefano@yola.com>
 yolasite.com
