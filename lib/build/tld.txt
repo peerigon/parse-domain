@@ -11871,7 +11871,7 @@ remotewd.com
 // Submitted by Yuvi Panda <yuvipanda@wikimedia.org>
 wmflabs.org
 
-//Wordpress blogs : https://www.wordpress.com
+// Wordpress blogs : https://www.wordpress.com
 // Submitted by Michael Neth <mneth@callcap.com>
 wordpress.com
 
