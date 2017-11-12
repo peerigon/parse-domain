@@ -55,6 +55,14 @@ describe("parseDomain(url)", function () {
         });
     });
 
+    it("should remove special characters", function () {
+        expect(parseDomain("http://m.example.com\r")).to.eql({
+            subdomain: "m",
+            domain: "example",
+            tld: "com"
+        });
+    });
+
     it("should remove the port", function () {
         expect(parseDomain("example.com:8080")).to.eql({
             subdomain: "",
