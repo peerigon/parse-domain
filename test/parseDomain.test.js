@@ -1,15 +1,15 @@
 "use strict";
 
-var chai = require("chai");
+const chai = require("chai");
 
-var expect = chai.expect;
-var parseDomain = require("../lib/parseDomain.js");
+const expect = chai.expect;
+const parseDomain = require("../lib/parseDomain.js");
 
 chai.config.includeStack = true;
 
-describe("parseDomain(url)", function () {
+describe("parseDomain(url)", () => {
 
-    it("should remove the protocol", function () {
+    it("should remove the protocol", () => {
         expect(parseDomain("http://example.com")).to.eql({
             subdomain: "",
             domain: "example",
@@ -22,7 +22,7 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should remove sub-domains", function () {
+    it("should remove sub-domains", () => {
         expect(parseDomain("www.example.com")).to.eql({
             subdomain: "www",
             domain: "example",
@@ -35,7 +35,7 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should remove the path", function () {
+    it("should remove the path", () => {
         expect(parseDomain("example.com/some/path?and&query")).to.eql({
             subdomain: "",
             domain: "example",
@@ -48,7 +48,7 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should remove the query string", function () {
+    it("should remove the query string", () => {
         expect(parseDomain("example.com?and&query")).to.eql({
             subdomain: "",
             domain: "example",
@@ -56,7 +56,7 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should remove special characters", function () {
+    it("should remove special characters", () => {
         expect(parseDomain("http://m.example.com\r")).to.eql({
             subdomain: "m",
             domain: "example",
@@ -64,7 +64,7 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should remove the port", function () {
+    it("should remove the port", () => {
         expect(parseDomain("example.com:8080")).to.eql({
             subdomain: "",
             domain: "example",
@@ -72,7 +72,7 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should remove the authentication", function () {
+    it("should remove the authentication", () => {
         expect(parseDomain("user:password@example.com")).to.eql({
             subdomain: "",
             domain: "example",
@@ -80,7 +80,7 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should allow @ characters in the path", function () {
+    it("should allow @ characters in the path", () => {
         expect(parseDomain("https://medium.com/@username/")).to.eql({
             subdomain: "",
             domain: "medium",
@@ -88,7 +88,7 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should also work with three-level domains like .co.uk", function () {
+    it("should also work with three-level domains like .co.uk", () => {
         expect(parseDomain("www.example.co.uk")).to.eql({
             subdomain: "www",
             domain: "example",
@@ -96,7 +96,7 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should not include private domains like blogspot.com by default", function () {
+    it("should not include private domains like blogspot.com by default", () => {
         expect(parseDomain("foo.blogspot.com")).to.eql({
             subdomain: "foo",
             domain: "blogspot",
@@ -104,7 +104,7 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should include private tlds", function () {
+    it("should include private tlds", () => {
         expect(parseDomain("foo.blogspot.com", { privateTlds: true })).to.eql({
             subdomain: "",
             domain: "foo",
@@ -112,7 +112,7 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should work when all url parts are present", function () {
+    it("should work when all url parts are present", () => {
         expect(parseDomain("https://user@www.some.other.subdomain.example.co.uk:8080/some/path?and&query#hash")).to.eql({
             subdomain: "www.some.other.subdomain",
             domain: "example",
@@ -120,7 +120,7 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should also work with the minimum", function () {
+    it("should also work with the minimum", () => {
         expect(parseDomain("example.com")).to.eql({
             subdomain: "",
             domain: "example",
@@ -128,17 +128,17 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should return null if the given url contains an unsupported top-level domain", function () {
+    it("should return null if the given url contains an unsupported top-level domain", () => {
         expect(parseDomain("example.kk")).to.equal(null);
     });
 
-    it("should return null if the given value is not a string", function () {
+    it("should return null if the given value is not a string", () => {
         expect(parseDomain(undefined)).to.equal(null);
         expect(parseDomain({})).to.equal(null);
         expect(parseDomain("")).to.equal(null);
     });
 
-    it("should work with domains that could match multiple tlds", function () {
+    it("should work with domains that could match multiple tlds", () => {
         expect(parseDomain("http://hello.de.ibm.com")).to.eql({
             subdomain: "hello.de",
             domain: "ibm",
@@ -146,9 +146,9 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should work with custom top-level domains (eg .local)", function () {
+    it("should work with custom top-level domains (eg .local)", () => {
         function parseCustomTlds(url) {
-            var options = {
+            const options = {
                 customTlds: ["local"],
             };
 
@@ -168,7 +168,7 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should behave itself when standard top-level domains sit atom custom top-level domains (eg .dev.local)", function () {
+    it("should behave itself when standard top-level domains sit atom custom top-level domains (eg .dev.local)", () => {
         expect(parseDomain("ohno.dev.local")).to.eql(null);
         expect(parseDomain("ohno.dev.local", { customTlds: ["local"] })).to.eql({
             subdomain: "ohno",
@@ -182,7 +182,7 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should also work with custom top-level domains (eg .local) passed as regexps", function () {
+    it("should also work with custom top-level domains (eg .local) passed as regexps", () => {
         expect(parseDomain("mymachine.local")).to.eql(null);
         expect(parseDomain("mymachine.local", { customTlds: /\.local$/ })).to.eql({
             subdomain: "",
@@ -191,9 +191,9 @@ describe("parseDomain(url)", function () {
         });
     });
 
-    it("should also work with custom hostnames (eg localhost) when passed as a regexp", function () {
+    it("should also work with custom hostnames (eg localhost) when passed as a regexp", () => {
         function parseLocalDomains(url) {
-            var options = {
+            const options = {
                 customTlds: /localhost|\.local/,
             };
 
