@@ -1,6 +1,7 @@
 "use strict";
 
 var chai = require("chai");
+
 var expect = chai.expect;
 var parseDomain = require("../lib/parseDomain.js");
 
@@ -12,12 +13,12 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("http://example.com")).to.eql({
             subdomain: "",
             domain: "example",
-            tld: "com"
+            tld: "com",
         });
         expect(parseDomain("https://example.com")).to.eql({
             subdomain: "",
             domain: "example",
-            tld: "com"
+            tld: "com",
         });
     });
 
@@ -25,12 +26,12 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("www.example.com")).to.eql({
             subdomain: "www",
             domain: "example",
-            tld: "com"
+            tld: "com",
         });
         expect(parseDomain("www.some.other.subdomain.example.com")).to.eql({
             subdomain: "www.some.other.subdomain",
             domain: "example",
-            tld: "com"
+            tld: "com",
         });
     });
 
@@ -38,12 +39,12 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("example.com/some/path?and&query")).to.eql({
             subdomain: "",
             domain: "example",
-            tld: "com"
+            tld: "com",
         });
         expect(parseDomain("example.com/")).to.eql({
             subdomain: "",
             domain: "example",
-            tld: "com"
+            tld: "com",
         });
     });
 
@@ -51,7 +52,7 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("example.com?and&query")).to.eql({
             subdomain: "",
             domain: "example",
-            tld: "com"
+            tld: "com",
         });
     });
 
@@ -59,7 +60,7 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("http://m.example.com\r")).to.eql({
             subdomain: "m",
             domain: "example",
-            tld: "com"
+            tld: "com",
         });
     });
 
@@ -67,7 +68,7 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("example.com:8080")).to.eql({
             subdomain: "",
             domain: "example",
-            tld: "com"
+            tld: "com",
         });
     });
 
@@ -75,7 +76,7 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("user:password@example.com")).to.eql({
             subdomain: "",
             domain: "example",
-            tld: "com"
+            tld: "com",
         });
     });
 
@@ -83,7 +84,7 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("https://medium.com/@username/")).to.eql({
             subdomain: "",
             domain: "medium",
-            tld: "com"
+            tld: "com",
         });
     });
 
@@ -91,7 +92,7 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("www.example.co.uk")).to.eql({
             subdomain: "www",
             domain: "example",
-            tld: "co.uk"
+            tld: "co.uk",
         });
     });
 
@@ -99,7 +100,7 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("foo.blogspot.com")).to.eql({
             subdomain: "foo",
             domain: "blogspot",
-            tld: "com"
+            tld: "com",
         });
     });
 
@@ -107,7 +108,7 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("foo.blogspot.com", { privateTlds: true })).to.eql({
             subdomain: "",
             domain: "foo",
-            tld: "blogspot.com"
+            tld: "blogspot.com",
         });
     });
 
@@ -115,7 +116,7 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("https://user@www.some.other.subdomain.example.co.uk:8080/some/path?and&query#hash")).to.eql({
             subdomain: "www.some.other.subdomain",
             domain: "example",
-            tld: "co.uk"
+            tld: "co.uk",
         });
     });
 
@@ -123,7 +124,7 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("example.com")).to.eql({
             subdomain: "",
             domain: "example",
-            tld: "com"
+            tld: "com",
         });
     });
 
@@ -141,14 +142,14 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("http://hello.de.ibm.com")).to.eql({
             subdomain: "hello.de",
             domain: "ibm",
-            tld: "com"
+            tld: "com",
         });
     });
 
     it("should work with custom top-level domains (eg .local)", function () {
         function parseCustomTlds(url) {
             var options = {
-                customTlds: ["local"]
+                customTlds: ["local"],
             };
 
             return parseDomain(url, options);
@@ -158,12 +159,12 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("mymachine.local", { customTlds: ["local"] })).to.eql({
             subdomain: "",
             domain: "mymachine",
-            tld: "local"
+            tld: "local",
         });
         expect(parseCustomTlds("mymachine.local")).to.eql({
             subdomain: "",
             domain: "mymachine",
-            tld: "local"
+            tld: "local",
         });
     });
 
@@ -172,12 +173,12 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("ohno.dev.local", { customTlds: ["local"] })).to.eql({
             subdomain: "ohno",
             domain: "dev",
-            tld: "local"
+            tld: "local",
         });
         expect(parseDomain("dev.local", { customTlds: ["local"] })).to.eql({
             subdomain: "",
             domain: "dev",
-            tld: "local"
+            tld: "local",
         });
     });
 
@@ -186,14 +187,14 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("mymachine.local", { customTlds: /\.local$/ })).to.eql({
             subdomain: "",
             domain: "mymachine",
-            tld: "local"
+            tld: "local",
         });
     });
 
     it("should also work with custom hostnames (eg localhost) when passed as a regexp", function () {
         function parseLocalDomains(url) {
             var options = {
-                customTlds: /localhost|\.local/
+                customTlds: /localhost|\.local/,
             };
 
             return parseDomain(url, options);
@@ -203,22 +204,22 @@ describe("parseDomain(url)", function () {
         expect(parseDomain("localhost", { customTlds: /localhost$/ })).to.eql({
             subdomain: "",
             domain: "",
-            tld: "localhost"
+            tld: "localhost",
         });
         expect(parseLocalDomains("localhost")).to.eql({
             subdomain: "",
             domain: "",
-            tld: "localhost"
+            tld: "localhost",
         });
         expect(parseLocalDomains("localhost:8080")).to.eql({
             subdomain: "",
             domain: "",
-            tld: "localhost"
+            tld: "localhost",
         });
         expect(parseLocalDomains("mymachine.local")).to.eql({
             subdomain: "",
             domain: "mymachine",
-            tld: "local"
+            tld: "local",
         });
     });
 
