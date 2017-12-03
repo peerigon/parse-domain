@@ -35,6 +35,7 @@
     "eslint-config-peerigon": "^12.0.1",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsdoc": "^3.2.0",
+    "got": "^8.0.1",
     "mocha": "^4.0.1",
     "nyc": "^11.3.0",
     "standard-version": "^4.2.0"
