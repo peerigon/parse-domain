@@ -9,7 +9,8 @@
     "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha",
     "download-tld": "curl https://publicsuffix.org/list/public_suffix_list.dat > lib/build/tld.txt",
     "build-regex": "node lib/build/buildRegex.js",
-    "update-regex": "npm run download-tld && npm run build-regex && npm run test"
+    "update-regex": "npm run download-tld && npm run build-regex && npm run test",
+    "release": "standard-version"
   },
   "keywords": [
     "domain",
@@ -33,6 +34,7 @@
     "chai": "^4.1.2",
     "eslint": "^4.12.1",
     "eslint-config-peerigon": "^12.0.1",
-    "mocha": "^4.0.1"
+    "mocha": "^4.0.1",
+    "standard-version": "^4.2.0"
   }
 }
