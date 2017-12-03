@@ -6,9 +6,7 @@
   "scripts": {
     "test": "nyc mocha -R spec",
     "posttest": "eslint lib test",
-    "download-tld": "curl https://publicsuffix.org/list/public_suffix_list.dat > lib/build/tld.txt",
-    "build-regex": "node lib/build/buildRegex.js",
-    "update-regex": "npm run download-tld && npm run build-regex && npm run test",
+    "update-lists": "node tools/updateLists.js",
     "release": "standard-version"
   },
   "keywords": [

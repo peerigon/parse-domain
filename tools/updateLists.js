@@ -5,7 +5,7 @@ const path = require("path");
 const got = require("got");
 
 const PUBLIC_SUFFIX_URL = "https://publicsuffix.org/list/public_suffix_list.dat";
-const listsPath = path.resolve(__dirname, "../lists");
+const listsPath = path.resolve(__dirname, "../lib/lists");
 const lists = [
     {
         name: "icann",
@@ -35,8 +35,8 @@ got(PUBLIC_SUFFIX_URL).then(res => res.body)
             .replace(/\*/g, "[^.]+")
             .slice(1, -1))
             .map(list => `"use strict";
-    
-    module.exports = /\\.(${ list })$/;`)
+
+module.exports = /\\.(${ list })$/;`)
             .map((src, i) => {
                 const listName = lists[i].name;
                 const listPath = path.resolve(listsPath, listName + ".js");
@@ -59,4 +59,8 @@ got(PUBLIC_SUFFIX_URL).then(res => res.body)
             });
 
         console.log("All list regexes are ok");
+    })
+    .catch(err => {
+        console.error(err);
+        process.exit(1); // eslint-disable-line no-process-exit
     });
