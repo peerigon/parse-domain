@@ -1,4 +1,5 @@
 # Project specific
+.nyc_output
 
 # Logs
 logs
