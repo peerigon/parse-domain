@@ -1,5 +1,7 @@
 "use strict";
 
+const tldRanking = require("./tldRanking");
+
 const SEPARATORS = [
     "<", // one level up
     ",", // same level
@@ -7,17 +9,28 @@ const SEPARATORS = [
 ];
 
 function compareLinesAt(lineA, lineB, i) {
-    const endOfLineA = i === lineA.length;
-    const endOfLineB = i === lineB.length;
+    function _compareLinesAt(lineA, lineB, i) {
+        const endOfLineA = i === lineA.length;
+        const endOfLineB = i === lineB.length;
 
-    if (endOfLineA || endOfLineB) {
-        return lineA.length - lineB.length;
+        if (endOfLineA || endOfLineB) {
+            return lineA.length - lineB.length;
+        }
+
+        return lineA[i].localeCompare(lineB[i]) || _compareLinesAt(lineA, lineB, i + 1);
     }
 
-    const a = lineA[i];
-    const b = lineB[i];
+    const rankingA = tldRanking.indexOf(lineA[0]);
+    const rankingB = tldRanking.indexOf(lineB[0]);
 
-    return a.localeCompare(b) || compareLinesAt(lineA, lineB, i + 1);
+    if (rankingA === -1) {
+        return Infinity;
+    }
+    if (rankingB === -1) {
+        return -Infinity;
+    }
+
+    return rankingA - rankingB || _compareLinesAt(lineA, lineB, 0);
 }
 
 function pickSeparator(line, i, arr) {
