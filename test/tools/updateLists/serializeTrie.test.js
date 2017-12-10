@@ -6,9 +6,10 @@ const serializeTrie = require("../../../tools/updateLists/serializeTrie");
 describe("serializeTrie()", () => {
     [
         [[], ""],
-        [["com"], "com"],
-        [["com", "de"], "com,de"],
-        [["uk", "co.uk"], "uk>co"],
+        // All tlds with just one element are not included in the list
+        [["com"], ""],
+        [["com", "de"], ""],
+        [["com", "de", "uk", "co.uk"], "uk>co"],
         [["uk", "ac.uk", "co.uk"], "uk>ac,co"],
         [["pl", "gov.pl", "ap.gov.pl"], "pl>gov>ap"],
         [
@@ -22,7 +23,7 @@ describe("serializeTrie()", () => {
                 "静岡.jp",
                 "موقع",
             ],
-            "jp>岐阜,静岡<موقع",
+            "jp>岐阜,静岡",
         ],
     ].forEach(([parsedList, expectedString]) => {
         it(`maps ${ JSON.stringify(parsedList) } on ${ JSON.stringify(expectedString) }`, () => {
@@ -37,23 +38,8 @@ describe("serializeTrie()", () => {
     it("sorts the input (foreign characters)", () => {
         expect(serializeTrie([
             "岐阜.jp",
-            "موقع",
             "静岡.jp",
             "jp",
-        ])).to.equal("jp>岐阜,静岡<موقع");
-    });
-
-    it("sorts the tlds depending on their ranking", () => {
-        expect(serializeTrie([
-            "pw",
-            "download",
-            "org",
-            "uk",
-            "co.uk",
-            "cat",
-            "ru",
-            "ac.uk",
-            "com",
-        ])).to.equal("com,ru,org,uk>ac,co<download,cat,pw");
+        ])).to.equal("jp>岐阜,静岡");
     });
 });
