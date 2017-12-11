@@ -1,10 +1,12 @@
 "use strict";
 
-const SEPARATORS = [
-    "<", // one level up
-    ",", // same level
-    ">", // one level down
-];
+const HIERARCHY_DIRECTIONS = ["up", "same", "down"];
+const SEPARATORS = {
+    up: "<", // one level up
+    same: ",", // same level
+    down: ">", // one level down
+    reset: "|", // reset level index and start new
+};
 
 function compareLinesAt(lineA, lineB, i) {
     const endOfLineA = i === lineA.length;
@@ -17,18 +19,56 @@ function compareLinesAt(lineA, lineB, i) {
     return lineA[i].localeCompare(lineB[i]) || compareLinesAt(lineA, lineB, i + 1);
 }
 
-function pickSeparator(line, i, arr) {
-    if (i === 0) {
-        return "";
+function findIndexOfDifference(lineA, lineB) {
+    const length = Math.max(lineA.length, lineB.length);
+    let i;
+
+    for (i = 0; i < length; i++) {
+        if (lineA[i] !== lineB[i]) {
+            return i;
+        }
     }
 
-    const prevLine = arr[i - 1];
-
-    return SEPARATORS[1 + Math.sign(line.length - prevLine.length)];
+    return -1;
 }
 
-function longerThanOne(line) {
-    return line !== undefined && line.length > 1;
+function getUpSeparators(indexOfDifference, prevLineLength) {
+    const levelsToGoUp = Math.max(prevLineLength - indexOfDifference - 1, 0);
+
+    return new Array(levelsToGoUp)
+        .fill(SEPARATORS.up)
+        .join("");
+}
+
+function pickSeparator(line, i, arr) {
+    if (line.length < 2) {
+        throw new Error("pickSeparator() works only on lines that have more elements than 1");
+    }
+
+    let indexOfDifference = 0;
+    let separatorFromPrev = "";
+
+    if (i > 0) {
+        const prevLine = arr[i - 1];
+
+        indexOfDifference = findIndexOfDifference(line, prevLine);
+        if (indexOfDifference === -1) {
+            // Identical lines
+            return "";
+        }
+        if (indexOfDifference === 0) {
+            separatorFromPrev = SEPARATORS.reset;
+        } else if (prevLine.length === line.length && indexOfDifference === line.length - 1) {
+            separatorFromPrev = SEPARATORS.same;
+        } else {
+            separatorFromPrev = getUpSeparators(indexOfDifference, prevLine.length);
+            if (prevLine.length < line.length && indexOfDifference === line.length - 1) {
+                separatorFromPrev += SEPARATORS.down;
+            }
+        }
+    }
+
+    return separatorFromPrev + line.slice(indexOfDifference).join(SEPARATORS.down);
 }
 
 function serializeTrie(parsedList) {
@@ -54,11 +94,13 @@ function serializeTrie(parsedList) {
      *
      * com,uk>co,gov<jp>静岡,岐阜<موقع
      */
+
     return parsedList
-        .map(line => line.split(".").reverse())
+        .map(line => line.split("."))
+        .filter(line => line.length > 1)
+        .map(line => line.reverse())
         .sort((lineA, lineB) => compareLinesAt(lineA, lineB, 0))
-        .filter((line, i, arr) => longerThanOne(line) || longerThanOne(arr[i + 1]))
-        .map((line, i, arr) => pickSeparator(line, i, arr) + line[line.length - 1])
+        .map((line, i, arr) => pickSeparator(line, i, arr))
         .join("");
 }
 
