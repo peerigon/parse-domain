@@ -3,11 +3,11 @@
 const fs = require("fs");
 const path = require("path");
 const got = require("got");
-const parsePSList = require("./parsePSList");
-const serializeTrie = require("./serializeTrie");
+const parsePSList = require("../lib/serialize/parsePSList");
+const serializeTrie = require("../lib/serialize/serializeTrie");
 
 const PUBLIC_SUFFIX_URL = "https://publicsuffix.org/list/public_suffix_list.dat";
-const listsPath = path.resolve(__dirname, "../../lib/lists");
+const listsPath = path.resolve(__dirname, "../lib/lists");
 
 // Check if listsPath is available
 fs.accessSync(listsPath);
