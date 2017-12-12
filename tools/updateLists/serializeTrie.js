@@ -1,6 +1,5 @@
 "use strict";
 
-const HIERARCHY_DIRECTIONS = ["up", "same", "down"];
 const SEPARATORS = {
     up: "<", // one level up
     same: ",", // same level
@@ -32,15 +31,7 @@ function findIndexOfDifference(lineA, lineB) {
     return -1;
 }
 
-function getUpSeparators(indexOfDifference, prevLineLength) {
-    const levelsToGoUp = Math.max(prevLineLength - indexOfDifference - 1, 0);
-
-    return new Array(levelsToGoUp)
-        .fill(SEPARATORS.up)
-        .join("");
-}
-
-function pickSeparator(line, i, arr) {
+function lineToString(line, i, arr) {
     if (line.length < 2) {
         throw new Error("pickSeparator() works only on lines that have more elements than 1");
     }
@@ -57,14 +48,21 @@ function pickSeparator(line, i, arr) {
             return "";
         }
         if (indexOfDifference === 0) {
+            // line and prevLine are completely different
             separatorFromPrev = SEPARATORS.reset;
         } else if (prevLine.length === line.length && indexOfDifference === line.length - 1) {
+            // only the last part of line and prevLine are different
             separatorFromPrev = SEPARATORS.same;
+        } else if (indexOfDifference > prevLine.length - 1) {
+            // we don't need to go up the hierarchy first because prevLine is part of line
+            // so let's just start with an initial down separator
+            separatorFromPrev = SEPARATORS.down;
         } else {
-            separatorFromPrev = getUpSeparators(indexOfDifference, prevLine.length);
-            if (prevLine.length < line.length && indexOfDifference === line.length - 1) {
-                separatorFromPrev += SEPARATORS.down;
-            }
+            // line and prevLine are different, but share a common root at indexOfDifference - 1
+            // we now need to go up the hierarchy to the common root
+            separatorFromPrev = new Array(prevLine.length - indexOfDifference - 1)
+                .fill(SEPARATORS.up)
+                .join("");
         }
     }
 
@@ -100,7 +98,7 @@ function serializeTrie(parsedList) {
         .filter(line => line.length > 1)
         .map(line => line.reverse())
         .sort((lineA, lineB) => compareLinesAt(lineA, lineB, 0))
-        .map((line, i, arr) => pickSeparator(line, i, arr))
+        .map(lineToString)
         .join("");
 }
 
