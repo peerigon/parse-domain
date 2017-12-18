@@ -12,9 +12,8 @@ describe("parseTrie()", () => {
 
         it("returns an empty map when an empty string is given", () => {
             const trie = parseTrie("");
-            const emptyString = trie.get("");
 
-            expect(emptyString).to.equal(true);
+            expect(trie.size).to.equal(0);
         });
 
         it("returns a map with the given domain as key and true as value", () => {
