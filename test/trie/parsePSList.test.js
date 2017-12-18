@@ -1,7 +1,7 @@
 "use strict";
 
 const { expect } = require("chai");
-const parsePSList = require("../../../tools/updateLists/parsePSList");
+const parsePSList = require("../../lib/trie/parsePSList");
 
 const icannStart = "// ===BEGIN ICANN DOMAINS===";
 const icannEnd = "// ===END ICANN DOMAINS===";
