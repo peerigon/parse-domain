@@ -18,10 +18,10 @@ describe("parseTrie()", () => {
         });
 
         it("returns a map with the given domain as key and true as value", () => {
-            const trie = parseTrie("a");
-            const a = trie.get("a");
+            const trie = parseTrie("some-domain");
+            const someDomain = trie.get("some-domain");
 
-            expect(a).to.equal(true);
+            expect(someDomain).to.equal(true);
         });
     });
 
