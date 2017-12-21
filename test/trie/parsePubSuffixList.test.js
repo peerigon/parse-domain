@@ -1,18 +1,18 @@
 "use strict";
 
 const { expect } = require("chai");
-const parsePSList = require("../../lib/trie/parsePSList");
+const parsePubSuffixList = require("../../lib/trie/parsePubSuffixList");
 
 const icannStart = "// ===BEGIN ICANN DOMAINS===";
 const icannEnd = "// ===END ICANN DOMAINS===";
 const privateStart = "// ===BEGIN PRIVATE DOMAINS===";
 const privateEnd = "// ===END PRIVATE DOMAINS===";
 
-describe("parsePSList()", () => {
+describe("parsePubSuffixList()", () => {
     it("returns an object with empty lists by default", () => {
         const str = [icannStart, icannEnd, privateStart, privateEnd].join("\n");
 
-        expect(parsePSList(str)).to.eql({
+        expect(parsePubSuffixList(str)).to.eql({
             icann: [],
             private: [],
         });
@@ -21,14 +21,18 @@ describe("parsePSList()", () => {
     it("splits the list by the line break character \\n (ignoring \\r if present)", () => {
         const str = [
             icannStart,
-            "a.b.c\r", "a", "b\r",
+            "a.b.c\r",
+            "a",
+            "b\r",
             icannEnd + "\r",
             privateStart,
-            "a.b.c", "a", "b",
+            "a.b.c",
+            "a",
+            "b",
             privateEnd,
         ].join("\n");
 
-        expect(parsePSList(str)).to.eql({
+        expect(parsePubSuffixList(str)).to.eql({
             icann: ["a.b.c", "a", "b"],
             private: ["a.b.c", "a", "b"],
         });
@@ -38,7 +42,9 @@ describe("parsePSList()", () => {
         const str = [
             icannStart,
             "// comment",
-            "a.b.c", "a", "b",
+            "a.b.c",
+            "a",
+            "b",
             "//another comment",
             icannEnd,
             privateStart,
@@ -50,7 +56,7 @@ describe("parsePSList()", () => {
             privateEnd,
         ].join("\n");
 
-        expect(parsePSList(str)).to.eql({
+        expect(parsePubSuffixList(str)).to.eql({
             icann: ["a.b.c", "a", "b"],
             private: ["a.b.c", "a", "b"],
         });
@@ -60,7 +66,9 @@ describe("parsePSList()", () => {
         const str = [
             icannStart,
             " ",
-            "a.b.c", "a", "b",
+            "a.b.c",
+            "a",
+            "b",
             "\r",
             icannEnd,
             privateStart,
@@ -71,7 +79,7 @@ describe("parsePSList()", () => {
             privateEnd,
         ].join("\n");
 
-        expect(parsePSList(str)).to.eql({
+        expect(parsePubSuffixList(str)).to.eql({
             icann: ["a.b.c", "a", "b"],
             private: ["a.b.c", "a", "b"],
         });
