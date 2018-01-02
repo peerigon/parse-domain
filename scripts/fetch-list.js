@@ -22,16 +22,18 @@ got(PUBLIC_SUFFIX_URL)
     })
     .then(parsePubSuffixList)
     .then(parsed =>
-        Object.keys(parsed)
-            .map(listName => {
-                const listPath = path.resolve(listsPath, listName + ".json");
+        [["icann", "complete"], ["icann", "light"], ["private", "complete"]]
+            .map(tuple => {
+                const listName = tuple[0];
+                const trieType = tuple[1];
+                const listPath = path.resolve(listsPath, `${ listName }.${ trieType }.json`);
                 const parsedList = parsed[listName];
 
                 return {
                     path: listPath,
                     content: JSON.stringify({
                         updatedAt: new Date().toISOString(),
-                        trie: serializeTrie(parsedList),
+                        trie: serializeTrie(parsedList, trieType),
                     }),
                 };
             })
@@ -43,14 +45,15 @@ got(PUBLIC_SUFFIX_URL)
     )
     .then(() => {
         process.stdout.write("Running sanity check... ");
-        childProcess.execSync("npm run test:after-fetch", {
+        childProcess.spawnSync("npm run test:after-fetch", {
             cwd: rootPath,
             encoding: "utf8",
+            stdio: "ignore",
         });
         console.log("ok");
     })
     .catch(err => {
-        const prebuiltListPath = path.resolve(defaultListPath, "icann.json");
+        const prebuiltListPath = path.resolve(defaultListPath, "icann.complete.json");
         let exitCode = 1;
 
         console.error("");

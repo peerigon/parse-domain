@@ -40,8 +40,8 @@ describe("snapshots", () => {
         const parsedTrie = parseTrie(serializedTrie);
 
         [
-            ["example.com", null],
-            ["example.a.com", null],
+            ["example.com", "com"],
+            ["example.a.com", "com"],
             ["example.uk", "uk"],
             ["example.co.uk", "co.uk"],
             ["example.ab.uk", "uk"],
