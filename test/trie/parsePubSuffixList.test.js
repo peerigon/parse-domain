@@ -1,8 +1,11 @@
 "use strict";
 
+const fs = require("fs");
+const path = require("path");
 const { expect } = require("chai");
 const parsePubSuffixList = require("../../lib/trie/parsePubSuffixList");
 
+const pathToFixtures = path.resolve(__dirname, "..", "fixtures");
 const icannStart = "// ===BEGIN ICANN DOMAINS===";
 const icannEnd = "// ===END ICANN DOMAINS===";
 const privateStart = "// ===BEGIN PRIVATE DOMAINS===";
@@ -82,6 +85,19 @@ describe("parsePubSuffixList()", () => {
         expect(parsePubSuffixList(str)).to.eql({
             icann: ["a.b.c", "a", "b"],
             private: ["a.b.c", "a", "b"],
+        });
+    });
+    describe("with fixtures", () => {
+        const pubSuffixList = fs.readFileSync(path.resolve(pathToFixtures, "pubSuffixList.txt"), "utf8");
+
+        it("returns the expected result (based on samples)", () => {
+            const parsedList = parsePubSuffixList(pubSuffixList);
+
+            expect(parsedList.icann).to.be.an("array");
+            expect(parsedList.private).to.be.an("array");
+            expect(parsedList.icann).to.contain("com");
+            expect(parsedList.icann).to.contain("co.uk");
+            expect(parsedList.private).to.contain("herokuapp.com");
         });
     });
 });

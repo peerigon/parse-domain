@@ -29,20 +29,9 @@ describe("serializeTrie()", () => {
         [["com", "de", "uk", "co.uk"], "uk>co"],
         [["uk", "ac.uk", "co.uk"], "uk>ac,co"],
         [["pl", "gov.pl", "ap.gov.pl"], "pl>gov>ap"],
-        [
-            ["pl", "gov.pl", "ap.gov.pl", "net.pl"],
-            "pl>gov>ap<net",
-        ],
+        [["pl", "gov.pl", "ap.gov.pl", "net.pl"], "pl>gov>ap<net"],
         [["pl", "gov.pl", "ap.gov.pl", "uk", "ac.uk", "co.uk"], "pl>gov>ap|uk>ac,co"],
-        [
-            [
-                "jp",
-                "岐阜.jp",
-                "静岡.jp",
-                "موقع",
-            ],
-            "jp>岐阜,静岡",
-        ],
+        [["jp", "岐阜.jp", "静岡.jp", "موقع"], "jp>岐阜,静岡"],
         // Meaningful characters like the wildcard and the negation are not omitted
         [["*.ck", "!www.ck"], "ck>!www,*"],
         // This example is from the private domains list.
@@ -52,5 +41,8 @@ describe("serializeTrie()", () => {
         it(`maps ${ JSON.stringify(parsedList) } on ${ JSON.stringify(expectedString) }`, () => {
             expect(serializeTrie(parsedList)).to.equal(expectedString);
         });
+    });
+    describe("with fixtures", () => {
+        parseSuf;
     });
 });
