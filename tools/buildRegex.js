@@ -3,8 +3,8 @@
 const fs = require("fs");
 const path = require("path");
 
-const txtPath = path.resolve(__dirname, "./tld.txt");
-const regexPath = path.resolve(__dirname, "../tld.js");
+const txtPath = path.resolve(__dirname, "tld.txt");
+const regexPath = path.resolve(__dirname, "../lib/tld.js");
 
 console.log("Reading " + txtPath + " ...");
 

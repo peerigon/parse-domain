@@ -1,45 +1,50 @@
 {
-  "name": "parse-domain",
-  "version": "2.0.0",
-  "description": "Splits an url into sub-domain, domain and effective top-level-domain",
-  "main": "./lib/parseDomain.js",
-  "scripts": {
-    "test": "nyc mocha -R spec",
-    "posttest": "eslint lib test",
-    "download-tld": "curl https://publicsuffix.org/list/public_suffix_list.dat > lib/build/tld.txt",
-    "build-regex": "node lib/build/buildRegex.js",
-    "update-regex": "npm run download-tld && npm run build-regex && npm run test",
-    "release": "standard-version"
-  },
-  "keywords": [
-    "domain",
-    "url",
-    "sub-domain",
-    "tld",
-    "parse",
-    "extract",
-    "sanitize",
-    "country",
-    "top-level"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/peerigon/parse-domain.git"
-  },
-  "author": "peerigon <developers@peerigon.com>",
-  "license": "Unlicense",
-  "dependencies": {},
-  "devDependencies": {
-    "chai": "^4.1.2",
-    "eslint": "^4.12.1",
-    "eslint-config-peerigon": "^12.0.1",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsdoc": "^3.2.0",
-    "mocha": "^4.0.1",
-    "nyc": "^11.3.0",
-    "standard-version": "^4.2.0"
-  },
-  "files": [
-    "lib"
-  ]
+    "name": "parse-domain",
+    "version": "2.0.0",
+    "description":
+        "Splits an url into sub-domain, domain and effective top-level-domain",
+    "main": "./build/lib/parseDomain.js",
+    "scripts": {
+        "test": "nyc mocha -R spec",
+        "posttest": "eslint lib test",
+        "download-tld":
+            "curl https://publicsuffix.org/list/public_suffix_list.dat > tools/tld.txt",
+        "build-regex": "node tools/buildRegex.js",
+        "update-regex":
+            "npm run download-tld && npm run build-regex && npm run test",
+        "release": "standard-version",
+        "prepare":
+            "npm run update-regex && rm -rf build && mkdir build && ./node_modules/.bin/babel lib/**/*.js -d build/"
+    },
+    "keywords": [
+        "domain",
+        "url",
+        "sub-domain",
+        "tld",
+        "parse",
+        "extract",
+        "sanitize",
+        "country",
+        "top-level"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/peerigon/parse-domain.git"
+    },
+    "author": "peerigon <developers@peerigon.com>",
+    "license": "Unlicense",
+    "dependencies": {},
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-es2015": "^6.24.1",
+        "chai": "^4.1.2",
+        "eslint": "^4.12.1",
+        "eslint-config-peerigon": "^12.0.1",
+        "eslint-plugin-import": "^2.8.0",
+        "eslint-plugin-jsdoc": "^3.2.0",
+        "mocha": "^4.0.1",
+        "nyc": "^11.3.0",
+        "standard-version": "^4.2.0"
+    },
+    "files": ["build"]
 }
