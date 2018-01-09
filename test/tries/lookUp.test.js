@@ -1,7 +1,7 @@
 "use strict";
 
 const { expect } = require("chai");
-const lookUp = require("../../lib/trie/lookUp");
+const lookUp = require("../../lib/tries/lookUp");
 
 describe("lookUp()", () => {
     it("returns null if the trie is empty", () => {

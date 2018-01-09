@@ -3,10 +3,10 @@
 const fs = require("fs");
 const path = require("path");
 const { expect } = require("chai");
-const parsePubSuffixList = require("../lib/trie/parsePubSuffixList");
-const serializeTrie = require("../lib/trie/serializeTrie");
-const parseTrie = require("../lib/trie/parseTrie");
-const lookUp = require("../lib/trie/lookUp");
+const parsePubSuffixList = require("../lib/tries/parsePubSuffixList");
+const serializeTrie = require("../lib/tries/serializeTrie");
+const parseTrie = require("../lib/tries/parseTrie");
+const lookUp = require("../lib/tries/lookUp");
 
 const TEST_SNAPSHOT = true;
 const pathToFixtures = path.resolve(__dirname, "fixtures");

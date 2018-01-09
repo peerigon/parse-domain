@@ -1,10 +1,9 @@
 "use strict";
 
 const { expect } = require("chai");
-const parseTrie = require("../../lib/trie/parseTrie");
+const parseTrie = require("../../lib/tries/parseTrie");
 
 describe("parseTrie()", () => {
-
     describe("basic cases", () => {
         it("returns a map", () => {
             expect(parseTrie("")).to.be.instanceOf(Map);
@@ -158,5 +157,4 @@ describe("parseTrie()", () => {
             expect(bbab).to.equal(true);
         });
     });
-
 });
