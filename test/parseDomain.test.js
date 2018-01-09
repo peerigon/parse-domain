@@ -8,7 +8,6 @@ const parseDomain = require("../lib/parseDomain.js");
 chai.config.includeStack = true;
 
 describe("parseDomain(url)", () => {
-
     it("should remove the protocol", () => {
         expect(parseDomain("http://example.com")).to.eql({
             subdomain: "",
@@ -113,11 +112,13 @@ describe("parseDomain(url)", () => {
     });
 
     it("should work when all url parts are present", () => {
-        expect(parseDomain("https://user@www.some.other.subdomain.example.co.uk:8080/some/path?and&query#hash")).to.eql({
-            subdomain: "www.some.other.subdomain",
-            domain: "example",
-            tld: "co.uk",
-        });
+        expect(parseDomain("https://user@www.some.other.subdomain.example.co.uk:8080/some/path?and&query#hash")).to.eql(
+            {
+                subdomain: "www.some.other.subdomain",
+                domain: "example",
+                tld: "co.uk",
+            }
+        );
     });
 
     it("should also work with the minimum", () => {
@@ -222,5 +223,4 @@ describe("parseDomain(url)", () => {
             tld: "local",
         });
     });
-
 });
