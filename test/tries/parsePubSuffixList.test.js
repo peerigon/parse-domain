@@ -87,6 +87,31 @@ describe("parsePubSuffixList()", () => {
             private: ["a.b.c", "a", "b"],
         });
     });
+
+    it("throws when the ICANN start marker is missing ", () => {
+        const str = [""].join("\n");
+
+        expect(() => parsePubSuffixList(str)).to.throw("Missing start marker of icann list");
+    });
+
+    it("throws when the ICANN end marker is missing ", () => {
+        const str = [icannStart].join("\n");
+
+        expect(() => parsePubSuffixList(str)).to.throw("Missing end marker of icann list");
+    });
+
+    it("throws when the PRIVATE start marker is missing ", () => {
+        const str = [icannStart, icannEnd].join("\n");
+
+        expect(() => parsePubSuffixList(str)).to.throw("Missing start marker of private list");
+    });
+
+    it("throws when the PRIVATE end marker is missing ", () => {
+        const str = [icannStart, icannEnd, privateStart].join("\n");
+
+        expect(() => parsePubSuffixList(str)).to.throw("Missing end marker of private list");
+    });
+
     describe("with fixtures", () => {
         const pubSuffixList = fs.readFileSync(path.resolve(pathToFixtures, "pubSuffixList.txt"), "utf8");
 
