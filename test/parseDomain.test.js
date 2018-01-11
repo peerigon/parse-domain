@@ -15,6 +15,11 @@ describe("parseDomain(url)", () => {
             domain: "example",
             tld: "com",
         });
+        expect(parseDomain("//example.com")).to.eql({
+            subdomain: "",
+            domain: "example",
+            tld: "com",
+        });
         expect(parseDomain("https://example.com")).to.eql({
             subdomain: "",
             domain: "example",
