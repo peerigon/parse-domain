@@ -2,12 +2,13 @@
 
 const fs = require("fs");
 const path = require("path");
-const { expect } = require("chai");
+const chai = require("chai");
 const parsePubSuffixList = require("../lib/tries/parsePubSuffixList");
 const serializeTrie = require("../lib/tries/serializeTrie");
 const parseTrie = require("../lib/tries/parseTrie");
 const lookUp = require("../lib/tries/lookUp");
 
+const expect = chai.expect;
 const TEST_SNAPSHOT = true;
 const pathToFixtures = path.resolve(__dirname, "fixtures");
 const pathToSnapshots = path.resolve(__dirname, "snapshots");
@@ -45,7 +46,10 @@ describe("snapshots", () => {
             ["example.uk", "uk"],
             ["example.co.uk", "co.uk"],
             ["example.ab.uk", "uk"],
-        ].forEach(([hostname, expectedResult]) => {
+        ].forEach(testArgs => {
+            const hostname = testArgs[0];
+            const expectedResult = testArgs[1];
+
             it(`'${ hostname }' returns ${ expectedResult }`, () => {
                 expect(lookUp(parsedTrie, hostname)).to.equal(expectedResult);
             });

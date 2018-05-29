@@ -2,9 +2,10 @@
 
 const fs = require("fs");
 const path = require("path");
-const { expect } = require("chai");
+const chai = require("chai");
 const parsePubSuffixList = require("../../lib/tries/parsePubSuffixList");
 
+const expect = chai.expect;
 const pathToFixtures = path.resolve(__dirname, "..", "fixtures");
 const icannStart = "// ===BEGIN ICANN DOMAINS===";
 const icannEnd = "// ===END ICANN DOMAINS===";

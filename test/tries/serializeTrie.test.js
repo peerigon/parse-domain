@@ -1,7 +1,9 @@
 "use strict";
 
-const { expect } = require("chai");
+const chai = require("chai");
 const serializeTrie = require("../../lib/tries/serializeTrie");
+
+const expect = chai.expect;
 
 describe("serializeTrie()", () => {
     [
@@ -30,7 +32,10 @@ describe("serializeTrie()", () => {
         // This example is from the private domains list.
         // They are without the company domain (.ua in this case)
         [["cc.ua", "inf.ua", "ltd.ua"], "ua>cc,inf,ltd"],
-    ].forEach(([parsedList, expectedString]) => {
+    ].forEach((args) => {
+        const parsedList = args[0];
+        const expectedString = args[1];
+
         it(`maps ${ JSON.stringify(parsedList) } on ${ JSON.stringify(expectedString) }`, () => {
             expect(serializeTrie(parsedList)).to.equal(expectedString);
         });
@@ -48,7 +53,10 @@ describe("serializeTrie()", () => {
             // Real-world use cases
             [["com", "de", "uk", "co.uk"], "uk>co"],
             [["jp", "岐阜.jp", "静岡.jp", "موقع"], "jp>岐阜,静岡"],
-        ].forEach(([parsedList, expectedString]) => {
+        ].forEach((args) => {
+            const parsedList = args[0];
+            const expectedString = args[1];
+
             it(`maps ${ JSON.stringify(parsedList) } on ${ JSON.stringify(expectedString) }`, () => {
                 expect(serializeTrie(parsedList, type)).to.equal(expectedString);
             });
@@ -70,7 +78,10 @@ describe("serializeTrie()", () => {
             [["pl", "gov.pl", "ap.gov.pl", "net.pl"], "pl>gov>ap<net"],
             [["pl", "gov.pl", "ap.gov.pl", "uk", "ac.uk", "co.uk"], "pl>gov>ap|uk>ac,co"],
             [["jp", "岐阜.jp", "静岡.jp", "موقع"], "jp>岐阜,静岡|موقع"],
-        ].forEach(([parsedList, expectedString]) => {
+        ].forEach((args) => {
+            const parsedList = args[0];
+            const expectedString = args[1];
+
             it(`maps ${ JSON.stringify(parsedList) } on ${ JSON.stringify(expectedString) }`, () => {
                 expect(serializeTrie(parsedList, type)).to.equal(expectedString);
             });
