@@ -6,7 +6,7 @@
     "scripts": {
         "test": "nyc mocha -R spec",
         "posttest": "eslint lib test",
-        "build": "node scripts/build-tries.js",
+        "postinstall": "node scripts/build-tries.js",
         "prepublish": "node scripts/write-pre.js",
         "release": "standard-version"
     },
