@@ -5,11 +5,22 @@
     "main": "./lib/parseDomain.js",
     "scripts": {
         "test": "nyc mocha -R spec",
-        "test:after-fetch": "mocha -R dot",
         "posttest": "eslint lib test",
+        "build": "node scripts/build-tries.js",
+        "prepublish": "node scripts/write-pre.js",
         "release": "standard-version"
     },
-    "keywords": ["domain", "url", "sub-domain", "tld", "parse", "extract", "sanitize", "country", "top-level"],
+    "keywords": [
+        "domain",
+        "url",
+        "sub-domain",
+        "tld",
+        "parse",
+        "extract",
+        "sanitize",
+        "country",
+        "top-level"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/peerigon/parse-domain.git"
@@ -18,7 +29,9 @@
     "license": "Unlicense",
     "dependencies": {
         "chai": "^4.1.2",
+        "fs-copy-file-sync": "^1.1.1",
         "got": "^8.0.1",
+        "mkdirp": "^0.5.1",
         "mocha": "^4.0.1"
     },
     "devDependencies": {
@@ -29,5 +42,11 @@
         "nyc": "^11.3.0",
         "standard-version": "^4.2.0"
     },
-    "files": ["lib"]
+    "files": [
+        "lib",
+        "scripts",
+        "lists",
+        "test",
+        "build/tries/pre"
+    ]
 }
