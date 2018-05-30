@@ -70,8 +70,7 @@ got(PUBLIC_SUFFIX_URL)
     })
     .catch(err => {
         console.error("");
-        console.error("Could not update list of known top-level domains for parse-domain.");
-        console.error(err.stack);
+        console.error("Could not update list of known top-level domains for parse-domain because of " + err.message);
 
         tries.forEach(list => {
             const src = path.resolve(triesPrePath, list.filename);
@@ -81,11 +80,11 @@ got(PUBLIC_SUFFIX_URL)
             copySync(src, dest);
         });
 
-        const prebuiltList = JSON.parse(fs.readFileSync(path.resolve(triesPrePath, tries[0])));
+        const prebuiltList = JSON.parse(fs.readFileSync(path.resolve(triesPrePath, tries[0].filename)));
 
-        console.error("Using possibly outdated prebuilt list from " + prebuiltList.updatedAt);
+        console.error("Using possibly outdated prebuilt list from " + new Date(prebuiltList.updatedAt).toDateString());
 
-        // We could recover using the (possibly outdated) prebuilt list, hence exit code 0
+        // We can recover using the (possibly outdated) prebuilt list, hence exit code 0
         process.exit(0); // eslint-disable-line no-process-exit
     })
     .catch(() => {
