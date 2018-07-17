@@ -6,10 +6,10 @@
     "functions": 100,
     "branches": 100,
     "include": [
-      "lib"
+      "src"
     ],
     "exclude": [
-      "lib/build"
+      "src/build"
     ],
     "reporter": [
       "lcov",

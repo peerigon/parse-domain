@@ -7,8 +7,8 @@ const childProcess = require("child_process");
 const got = require("got");
 const copySync = require("fs-copy-file-sync");
 const mkdirp = require("mkdirp");
-const parsePubSuffixList = require("../lib/tries/parsePubSuffixList");
-const serializeTrie = require("../lib/tries/serializeTrie");
+const parsePubSuffixList = require("../src/tries/parsePubSuffixList");
+const serializeTrie = require("../src/tries/serializeTrie");
 
 const PUBLIC_SUFFIX_URL = "https://publicsuffix.org/list/public_suffix_list.dat";
 const rootPath = path.resolve(__dirname, "..");

@@ -3,7 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 const chai = require("chai");
-const parsePubSuffixList = require("../../lib/tries/parsePubSuffixList");
+const parsePubSuffixList = require("../../src/tries/parsePubSuffixList");
 
 const expect = chai.expect;
 const pathToFixtures = path.resolve(__dirname, "..", "fixtures");
