@@ -7,6 +7,7 @@
     "test": "nyc mocha -R spec",
     "posttest": "eslint lib test",
     "postinstall": "node scripts/build-tries.js",
+    "prepare": "node scripts/build-tries.js",
     "release": "standard-version"
   },
   "keywords": [
