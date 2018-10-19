@@ -5,15 +5,13 @@ const fs = require("fs");
 const path = require("path");
 const childProcess = require("child_process");
 const got = require("got");
-const copySync = require("fs-copy-file-sync");
 const mkdirp = require("mkdirp");
 const parsePubSuffixList = require("../src/tries/parsePubSuffixList");
 const serializeTrie = require("../src/tries/serializeTrie");
 
 const PUBLIC_SUFFIX_URL = "https://publicsuffix.org/list/public_suffix_list.dat";
 const rootPath = path.resolve(__dirname, "..");
-const triesPrePath = path.resolve(rootPath, "build", "tries", "pre");
-const triesPath = path.resolve(rootPath, "build", "tries", "current");
+const triesPath = path.resolve(rootPath, "build", "tries");
 const tries = [
     {
         listName: "icann",
@@ -72,15 +70,7 @@ got(PUBLIC_SUFFIX_URL)
         console.error("");
         console.error("Could not update list of known top-level domains for parse-domain because of " + err.message);
 
-        tries.forEach(list => {
-            const src = path.resolve(triesPrePath, list.filename);
-            const dest = path.resolve(triesPath, list.filename);
-
-            mkdirp.sync(path.dirname(dest));
-            copySync(src, dest);
-        });
-
-        const prebuiltList = JSON.parse(fs.readFileSync(path.resolve(triesPrePath, tries[0].filename)));
+        const prebuiltList = JSON.parse(fs.readFileSync(path.resolve(triesPath, tries[0].filename)));
 
         console.error("Using possibly outdated prebuilt list from " + new Date(prebuiltList.updatedAt).toDateString());
 

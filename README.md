@@ -27,6 +27,10 @@ Usage
 ------------------------------------------------------------------------
 
 ```javascript
+
+// import the module
+const parseDomain = require("parse-domain");
+
 // long subdomains can be handled
 expect(parseDomain("some.subdomain.example.co.uk")).to.eql({
     subdomain: "some.subdomain",

@@ -2,4 +2,4 @@
 
 const parseTrie = require("../src/tries/parseTrie");
 
-module.exports = parseTrie(require("../build/tries/current/private.complete.json").trie);
+module.exports = parseTrie(require("../build/tries/private.complete.json").trie);
