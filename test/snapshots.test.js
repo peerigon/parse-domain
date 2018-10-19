@@ -3,10 +3,10 @@
 const fs = require("fs");
 const path = require("path");
 const chai = require("chai");
-const parsePubSuffixList = require("../src/tries/parsePubSuffixList");
-const serializeTrie = require("../src/tries/serializeTrie");
-const parseTrie = require("../src/tries/parseTrie");
-const lookUp = require("../src/tries/lookUp");
+const parsePubSuffixList = require("../lib/tries/parsePubSuffixList");
+const serializeTrie = require("../lib/tries/serializeTrie");
+const parseTrie = require("../lib/tries/parseTrie");
+const lookUp = require("../lib/tries/lookUp");
 
 const expect = chai.expect;
 const TEST_SNAPSHOT = true;

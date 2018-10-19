@@ -3,7 +3,7 @@
 const chai = require("chai");
 
 const expect = chai.expect;
-const parseDomain = require("../src/parseDomain.js");
+const parseDomain = require("../lib/parseDomain.js");
 
 chai.config.includeStack = true;
 

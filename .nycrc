@@ -8,9 +8,6 @@
     "include": [
       "src"
     ],
-    "exclude": [
-      "src/build"
-    ],
     "reporter": [
       "lcov",
       "text-summary"

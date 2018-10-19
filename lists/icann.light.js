@@ -1,5 +1,5 @@
 "use strict";
 
-const parseTrie = require("../src/tries/parseTrie");
+const parseTrie = require("../lib/tries/parseTrie");
 
 module.exports = parseTrie(require("../build/tries/icann.light.json").trie);

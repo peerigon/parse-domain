@@ -1,7 +1,7 @@
 "use strict";
 
 const chai = require("chai");
-const lookUp = require("../../src/tries/lookUp");
+const lookUp = require("../../lib/tries/lookUp");
 
 const expect = chai.expect;
 

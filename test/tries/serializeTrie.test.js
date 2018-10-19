@@ -1,7 +1,7 @@
 "use strict";
 
 const chai = require("chai");
-const serializeTrie = require("../../src/tries/serializeTrie");
+const serializeTrie = require("../../lib/tries/serializeTrie");
 
 const expect = chai.expect;
 
