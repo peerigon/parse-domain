@@ -6,6 +6,16 @@ const path = require("path");
 const childProcess = require("child_process");
 const got = require("got");
 const mkdirp = require("mkdirp");
+
+try {
+    require.resolve("../lib/tries/parsePubSuffixList");
+} catch (error) {
+    // This conditions occurs when the CI system or a developer checks out the repo for the first time.
+    // It happens because the postinstall hook kicks in *before* the lib is built.
+    // In that case, it's safe to just skip the step.
+    console.error("Lib does not exist yet, skipping build-tries step.");
+    process.exit(0); // eslint-disable-line no-process-exit
+}
 const parsePubSuffixList = require("../lib/tries/parsePubSuffixList");
 const serializeTrie = require("../lib/tries/serializeTrie");
 
@@ -70,7 +80,7 @@ got(PUBLIC_SUFFIX_URL)
         console.error("");
         console.error("Could not update list of known top-level domains for parse-domain because of " + err.message);
 
-        const prebuiltList = JSON.parse(fs.readFileSync(path.resolve(triesPath, tries[0].filename)));
+        const prebuiltList = JSON.parse(fs.readFileSync(path.resolve(triesPath, tries[0].filename), "utf8"));
 
         console.error("Using possibly outdated prebuilt list from " + new Date(prebuiltList.updatedAt).toDateString());
 

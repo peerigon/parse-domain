@@ -37,3 +37,6 @@ node_modules
 
 # We don't check in the compiled lists. They are created upon npm publish and npm install.
 build/tries
+
+# Don't include the build target directory.
+lib
