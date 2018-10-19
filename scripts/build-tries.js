@@ -70,7 +70,7 @@ got(PUBLIC_SUFFIX_URL)
         console.error("");
         console.error("Could not update list of known top-level domains for parse-domain because of " + err.message);
 
-        const prebuiltList = JSON.parse(fs.readFileSync(path.resolve(triesPath, tries[0].filename)));
+        const prebuiltList = JSON.parse(fs.readFileSync(path.resolve(triesPath, tries[0].filename), "utf8"));
 
         console.error("Using possibly outdated prebuilt list from " + new Date(prebuiltList.updatedAt).toDateString());
 
