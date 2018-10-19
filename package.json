@@ -51,7 +51,6 @@
     "standard-version": "^4.2.0"
   },
   "files": [
-    "src",
     "scripts",
     "lists",
     "test",
