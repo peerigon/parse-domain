@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.1.3"></a>
+## [2.1.3](https://github.com/peerigon/parse-domain/compare/v2.1.2...v2.1.3) (2018-10-19)
+
+
+### Bug Fixes
+
+* Do not write in the file system on postinstall if it's forbidden ([#39](https://github.com/peerigon/parse-domain/issues/39)) ([9aee180](https://github.com/peerigon/parse-domain/commit/9aee180))
+* Re-add missing prepare script after ([e5d6362](https://github.com/peerigon/parse-domain/commit/e5d6362))
+
+
+
 <a name="2.1.2"></a>
 ## [2.1.2](https://github.com/peerigon/parse-domain/compare/v2.1.1...v2.1.2) (2018-06-13)
 
