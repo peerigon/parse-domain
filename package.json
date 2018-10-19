@@ -46,6 +46,6 @@
     "scripts",
     "lists",
     "test",
-    "build/tries/pre"
+    "build"
   ]
 }
