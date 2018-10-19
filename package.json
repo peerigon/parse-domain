@@ -4,7 +4,7 @@
   "description": "Splits an url into sub-domain, domain and effective top-level-domain",
   "main": "./lib/parseDomain.js",
   "scripts": {
-    "build": "run-p build:lib build:tries",
+    "build": "run-s build:lib build:tries",
     "build:lib": "run-s build:lib:clean build:lib:babel",
     "build:lib:clean": "rimraf lib",
     "build:lib:babel": "babel src --out-dir lib",

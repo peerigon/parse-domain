@@ -6,6 +6,16 @@ const path = require("path");
 const childProcess = require("child_process");
 const got = require("got");
 const mkdirp = require("mkdirp");
+
+try {
+    require.resolve("../lib/tries/parsePubSuffixList");
+} catch (error) {
+    // This conditions occurs when the CI system or a developer checks out the repo for the first time.
+    // It happens because the postinstall hook kicks in *before* the lib is built.
+    // In that case, it's safe to just skip the step.
+    console.error("Lib does not exist yet, skipping build-tries step.");
+    process.exit(0); // eslint-disable-line no-process-exit
+}
 const parsePubSuffixList = require("../lib/tries/parsePubSuffixList");
 const serializeTrie = require("../lib/tries/serializeTrie");
 
