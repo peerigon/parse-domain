@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.1.5"></a>
+## [2.1.5](https://github.com/peerigon/parse-domain/compare/v2.1.4...v2.1.5) (2018-10-19)
+
+
+### Bug Fixes
+
+* Compatibility problems with older JavaScript engines ([#51](https://github.com/peerigon/parse-domain/issues/51)) ([d9d782b](https://github.com/peerigon/parse-domain/commit/d9d782b))
+
+
+
 <a name="2.1.4"></a>
 ## [2.1.4](https://github.com/peerigon/parse-domain/compare/v2.1.3...v2.1.4) (2018-10-19)
 
