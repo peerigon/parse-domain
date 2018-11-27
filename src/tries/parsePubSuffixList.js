@@ -31,10 +31,10 @@ function parsePubSuffixList(listContent) {
             const end = listContent.indexOf(list.markers.end);
 
             if (start === -1) {
-                throw new Error(`Missing start marker of ${ list.name } list`);
+                throw new Error(`Missing start marker of ${list.name} list`);
             }
             if (end === -1) {
-                throw new Error(`Missing end marker of ${ list.name } list`);
+                throw new Error(`Missing end marker of ${list.name} list`);
             }
 
             return listContent.slice(start, end);

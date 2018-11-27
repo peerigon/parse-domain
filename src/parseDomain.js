@@ -1,10 +1,11 @@
 "use strict";
 
-const normalize = require("./normalize.js");
-const lookUp = require("./tries/lookUp");
 const icannTrie = require("../lists/icann.complete");
 const privateTrie = require("../lists/private.complete");
+const normalize = require("./normalize.js");
+const lookUp = require("./tries/lookUp");
 
+// eslint-disable-next-line
 const urlParts = /^(:?\/\/|https?:\/\/)?([^/]*@)?(.+?)(:\d{2,5})?([/?].*)?$/; // 1 = protocol, 2 = auth, 3 = domain, 4 = port, 5 = path
 const dot = /\./g;
 const emptyArr = [];
@@ -33,6 +34,7 @@ function matchTld(domain, options) {
     return null;
 }
 
+/* eslint-disable jsdoc/no-undefined-types */
 /**
  * Removes all unnecessary parts of the domain (e.g. protocol, auth, port, path, query)
  * and parses the remaining domain. The returned object contains the properties 'subdomain', 'domain' and 'tld'.

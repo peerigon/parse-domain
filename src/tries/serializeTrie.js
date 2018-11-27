@@ -94,9 +94,9 @@ function serializeTrie(parsedList, type) {
 
     if (POSSIBLE_TYPES.indexOf(type) === -1) {
         throw new Error(
-            `Cannot serialize trie: Unknown trie type "${ type }". Expected type to be one of ${ POSSIBLE_TYPES.map(
+            `Cannot serialize trie: Unknown trie type "${type}". Expected type to be one of ${POSSIBLE_TYPES.map(
                 JSON.stringify
-            ).join(", ") }`
+            ).join(", ")}`
         );
     }
 

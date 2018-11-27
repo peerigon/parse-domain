@@ -50,7 +50,7 @@ describe("snapshots", () => {
             const hostname = testArgs[0];
             const expectedResult = testArgs[1];
 
-            it(`'${ hostname }' returns ${ expectedResult }`, () => {
+            it(`'${hostname}' returns ${expectedResult}`, () => {
                 expect(lookUp(parsedTrie, hostname)).to.equal(expectedResult);
             });
         });

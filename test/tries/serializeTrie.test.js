@@ -32,16 +32,16 @@ describe("serializeTrie()", () => {
         // This example is from the private domains list.
         // They are without the company domain (.ua in this case)
         [["cc.ua", "inf.ua", "ltd.ua"], "ua>cc,inf,ltd"],
-    ].forEach((args) => {
+    ].forEach(args => {
         const parsedList = args[0];
         const expectedString = args[1];
 
-        it(`maps ${ JSON.stringify(parsedList) } on ${ JSON.stringify(expectedString) }`, () => {
+        it(`maps ${JSON.stringify(parsedList)} on ${JSON.stringify(expectedString)}`, () => {
             expect(serializeTrie(parsedList)).to.equal(expectedString);
         });
     });
 
-    describe(`type ${ serializeTrie.TYPE_LIGHT }`, () => {
+    describe(`type ${serializeTrie.TYPE_LIGHT}`, () => {
         const type = serializeTrie.TYPE_LIGHT;
 
         [
@@ -53,17 +53,17 @@ describe("serializeTrie()", () => {
             // Real-world use cases
             [["com", "de", "uk", "co.uk"], "uk>co"],
             [["jp", "岐阜.jp", "静岡.jp", "موقع"], "jp>岐阜,静岡"],
-        ].forEach((args) => {
+        ].forEach(args => {
             const parsedList = args[0];
             const expectedString = args[1];
 
-            it(`maps ${ JSON.stringify(parsedList) } on ${ JSON.stringify(expectedString) }`, () => {
+            it(`maps ${JSON.stringify(parsedList)} on ${JSON.stringify(expectedString)}`, () => {
                 expect(serializeTrie(parsedList, type)).to.equal(expectedString);
             });
         });
     });
 
-    describe(`type ${ serializeTrie.TYPE_COMPLETE }`, () => {
+    describe(`type ${serializeTrie.TYPE_COMPLETE}`, () => {
         const type = serializeTrie.TYPE_COMPLETE;
 
         [
@@ -78,11 +78,11 @@ describe("serializeTrie()", () => {
             [["pl", "gov.pl", "ap.gov.pl", "net.pl"], "pl>gov>ap<net"],
             [["pl", "gov.pl", "ap.gov.pl", "uk", "ac.uk", "co.uk"], "pl>gov>ap|uk>ac,co"],
             [["jp", "岐阜.jp", "静岡.jp", "موقع"], "jp>岐阜,静岡|موقع"],
-        ].forEach((args) => {
+        ].forEach(args => {
             const parsedList = args[0];
             const expectedString = args[1];
 
-            it(`maps ${ JSON.stringify(parsedList) } on ${ JSON.stringify(expectedString) }`, () => {
+            it(`maps ${JSON.stringify(parsedList)} on ${JSON.stringify(expectedString)}`, () => {
                 expect(serializeTrie(parsedList, type)).to.equal(expectedString);
             });
         });

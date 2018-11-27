@@ -109,7 +109,7 @@ describe("parseDomain(url)", () => {
     });
 
     it("should include private tlds", () => {
-        expect(parseDomain("foo.blogspot.com", { privateTlds: true })).to.eql({
+        expect(parseDomain("foo.blogspot.com", {privateTlds: true})).to.eql({
             subdomain: "",
             domain: "foo",
             tld: "blogspot.com",
@@ -153,7 +153,7 @@ describe("parseDomain(url)", () => {
     });
 
     it("should work with custom top-level domains (eg .local)", () => {
-        const options = { customTlds: ["local"] };
+        const options = {customTlds: ["local"]};
 
         expect(parseDomain("mymachine.local", options)).to.eql({
             subdomain: "",
@@ -171,7 +171,7 @@ describe("parseDomain(url)", () => {
     });
 
     it("should also work with custom top-level domains passed as regexps", () => {
-        const options = { customTlds: /(\.local|localhost)$/ };
+        const options = {customTlds: /(\.local|localhost)$/};
 
         expect(parseDomain("mymachine.local", options)).to.eql({
             subdomain: "",
