@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file. See [standa
 <a name="2.1.7"></a>
 ## [2.1.7](https://github.com/peerigon/parse-domain/compare/v2.1.6...v2.1.7) (2018-11-27)
 
-
+* Update dependencies [#57](https://github.com/peerigon/parse-domain/pull/57). Removes malicious code which has been introduced by event-stream ([more information](https://snyk.io/blog/malicious-code-found-in-npm-package-event-stream)).
 
 <a name="2.1.6"></a>
 ## [2.1.6](https://github.com/peerigon/parse-domain/compare/v2.1.5...v2.1.6) (2018-10-19)
