@@ -26,7 +26,7 @@ describe("snapshots", () => {
             fs.writeFileSync(pathToParsePubSuffixListSnapshot, JSON.stringify(parsedList));
         });
     });
-    describe("serialieTrie()", () => {
+    describe("serializeTrie()", () => {
         it("matches the approved snapshot", () => {
             const parsedList = JSON.parse(fs.readFileSync(pathToParsePubSuffixListSnapshot, "utf8"));
             const snapshot = JSON.parse(fs.readFileSync(pathToSerializeTrieSnapshot, "utf8"));
