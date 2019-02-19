@@ -56,7 +56,7 @@ function parseDomain(url, options) {
     let urlSplit;
     let domain;
 
-    if (normalizedUrl === null) {
+    if (!normalizedUrl) {
         return null;
     }
 
