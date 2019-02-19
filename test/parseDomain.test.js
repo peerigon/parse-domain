@@ -170,6 +170,14 @@ describe("parseDomain(url)", () => {
         });
     });
 
+    it("should parse police.uk as tld", () => {
+        expect(parseDomain("example.police.uk")).to.eql({
+            subdomain: "",
+            domain: "example",
+            tld: "police.uk",
+        });
+    });
+
     it("should also work with custom top-level domains passed as regexps", () => {
         const options = {customTlds: /(\.local|localhost)$/};
 

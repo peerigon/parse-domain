@@ -42,6 +42,7 @@ function lineToString(line, i, arr) {
         const prevLine = arr[i - 1];
 
         indexOfDifference = findIndexOfDifference(line, prevLine);
+
         if (indexOfDifference === -1) {
             // Identical lines
             return "";
@@ -49,7 +50,7 @@ function lineToString(line, i, arr) {
         if (indexOfDifference === 0) {
             // line and prevLine are completely different
             separatorFromPrev = SEPARATORS.RESET;
-        } else if (prevLine.length === line.length && indexOfDifference === line.length - 1) {
+        } else if (prevLine.length <= line.length && indexOfDifference === prevLine.length - 1) {
             // only the last part of line and prevLine are different
             separatorFromPrev = SEPARATORS.SAME;
         } else if (indexOfDifference > prevLine.length - 1) {

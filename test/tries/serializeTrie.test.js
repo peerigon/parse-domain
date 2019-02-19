@@ -78,6 +78,7 @@ describe("serializeTrie()", () => {
             [["pl", "gov.pl", "ap.gov.pl", "net.pl"], "pl>gov>ap<net"],
             [["pl", "gov.pl", "ap.gov.pl", "uk", "ac.uk", "co.uk"], "pl>gov>ap|uk>ac,co"],
             [["jp", "岐阜.jp", "静岡.jp", "موقع"], "jp>岐阜,静岡|موقع"],
+            [["uk", "ac.uk", "police.uk", "*.sch.uk"], "uk>ac,police,sch>*"],
         ].forEach(args => {
             const parsedList = args[0];
             const expectedString = args[1];
