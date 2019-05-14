@@ -37,7 +37,7 @@
   "license": "Unlicense",
   "dependencies": {
     "chai": "^4.2.0",
-    "got": "^9.6.0",
+    "got": "^8.3.2",
     "mkdirp": "^0.5.1",
     "mocha": "^6.1.4"
   },
