@@ -62,8 +62,13 @@ function parseDomain(url, options) {
 
     const normalizedOptions = normalize.options(options);
 
-    // urlSplit can't be null because urlParts will always match at the third capture
     urlSplit = normalizedUrl.match(urlParts);
+
+    // urlSplit is null if the url contains certain characters like '\n', '\r'.
+    if (urlSplit === null) {
+        return null;
+    }
+
     domain = urlSplit[3]; // domain will now be something like sub.domain.example.com
 
     tld = matchTld(domain, normalizedOptions);

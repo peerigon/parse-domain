@@ -144,6 +144,15 @@ describe("parseDomain(url)", () => {
         expect(parseDomain("")).to.equal(null);
     });
 
+    it("should return null if the given value contains invalid characters", () => {
+        expect(parseDomain("http://hell.d\ne.ibm.com")).to.equal(null);
+        expect(parseDomain("\xa0")).to.equal(null);
+    });
+
+    it("should return null if the given is an empty string with a space character", () => {
+        expect(parseDomain(" ")).to.equal(null);
+    });
+
     it("should work with domains that could match multiple tlds", () => {
         expect(parseDomain("http://hello.de.ibm.com")).to.eql({
             subdomain: "hello.de",
