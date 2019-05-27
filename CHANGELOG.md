@@ -1,6 +1,18 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [2.1.8](https://github.com/peerigon/parse-domain/compare/v2.1.7...v2.1.8) (2019-05-27)
+
+
+### Bug Fixes
+
+* Add timeout to download public suffix list ([#56](https://github.com/peerigon/parse-domain/issues/56)) ([1fbd49c](https://github.com/peerigon/parse-domain/commit/1fbd49c))
+* Fix error where a lot of domains were not detected ([fc80789](https://github.com/peerigon/parse-domain/commit/fc80789)), closes [#64](https://github.com/peerigon/parse-domain/issues/64)
+* Fix sanity check during npm run build:tries ([a3c1eeb](https://github.com/peerigon/parse-domain/commit/a3c1eeb))
+* Fix thrown error with input that only contains whitespaces  ([1d1a24a](https://github.com/peerigon/parse-domain/commit/1d1a24a)), closes [#32](https://github.com/peerigon/parse-domain/issues/32) [#61](https://github.com/peerigon/parse-domain/issues/61)
+
+
 
 <a name="2.1.7"></a>
 ## [2.1.7](https://github.com/peerigon/parse-domain/compare/v2.1.6...v2.1.7) (2018-11-27)
