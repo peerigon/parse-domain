@@ -5,7 +5,7 @@ parse-domain
 [![](https://img.shields.io/npm/v/parse-domain.svg)](https://www.npmjs.com/package/parse-domain)
 [![](https://img.shields.io/npm/dm/parse-domain.svg)](https://www.npmjs.com/package/parse-domain)
 [![Dependency Status](https://david-dm.org/peerigon/parse-domain.svg)](https://david-dm.org/peerigon/parse-domain)
-[![Build Status](https://travis-ci.org/peerigon/parse-domain.svg?branch=master)](https://travis-ci.org/peerigon/parse-domain)
+[![Build Status](https://travis-ci.com/peerigon/parse-domain.svg?branch=master)](https://travis-ci.com/peerigon/parse-domain)
 [![Coverage Status](https://img.shields.io/coveralls/peerigon/parse-domain.svg)](https://coveralls.io/r/peerigon/parse-domain?branch=master)
 [![Known Vulnerabilities](https://snyk.io/test/github/peerigon/parse-domain/badge.svg)](https://snyk.io/test/github/peerigon/parse-domain)
 
