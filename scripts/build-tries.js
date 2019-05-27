@@ -44,7 +44,7 @@ const tries = [
 
 process.stderr.write(`Downloading public suffix list from ${PUBLIC_SUFFIX_URL}... `);
 
-got(PUBLIC_SUFFIX_URL)
+got(PUBLIC_SUFFIX_URL, { timeout: 60*1000 })
     .then(res => {
         process.stderr.write("ok" + os.EOL);
 
