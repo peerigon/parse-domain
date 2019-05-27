@@ -142,6 +142,8 @@ describe("parseDomain(url)", () => {
         expect(parseDomain(undefined)).to.equal(null);
         expect(parseDomain({})).to.equal(null);
         expect(parseDomain("")).to.equal(null);
+        expect(parseDomain(" ")).to.equal(null);
+        expect(parseDomain("\xa0")).to.equal(null);
     });
 
     it("should work with domains that could match multiple tlds", () => {
