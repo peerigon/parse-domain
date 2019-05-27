@@ -1,5 +1,9 @@
 "use strict";
 
+// Disabling promise ESLint rules because we can't use async/await here
+// before all supported Node versions support it.
+/* eslint-disable promise/always-return, promise/prefer-await-to-callbacks */
+
 const os = require("os");
 const fs = require("fs");
 const path = require("path");
@@ -38,7 +42,7 @@ const tries = [
     },
 ];
 
-process.stderr.write(`Downloading public suffix list from ${ PUBLIC_SUFFIX_URL }... `);
+process.stderr.write(`Downloading public suffix list from ${PUBLIC_SUFFIX_URL}... `);
 
 got(PUBLIC_SUFFIX_URL)
     .then(res => {
@@ -61,7 +65,7 @@ got(PUBLIC_SUFFIX_URL)
                 };
             })
             .forEach(file => {
-                process.stderr.write(`Writing ${ file.path }... `);
+                process.stderr.write(`Writing ${file.path}... `);
                 mkdirp.sync(path.dirname(file.path));
                 fs.writeFileSync(file.path, file.content, "utf8");
                 process.stderr.write("ok" + os.EOL);
@@ -69,16 +73,17 @@ got(PUBLIC_SUFFIX_URL)
     )
     .then(() => {
         process.stderr.write("Running sanity check... ");
-        childProcess.spawnSync("mocha -R dot", {
+
+        childProcess.execFileSync(process.execPath, [require.resolve("mocha/bin/_mocha"), "-R", "dot"], {
             cwd: rootPath,
             encoding: "utf8",
-            stdio: "ignore",
         });
+
         process.stderr.write("ok" + os.EOL);
     })
     .catch(err => {
         console.error("");
-        console.error("Could not update list of known top-level domains for parse-domain because of " + err.message);
+        console.error(`Could not update list of known top-level domains for parse-domain because of "${err.message}"`);
 
         const prebuiltList = JSON.parse(fs.readFileSync(path.resolve(triesPath, tries[0].filename), "utf8"));
 
