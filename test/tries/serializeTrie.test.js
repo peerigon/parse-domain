@@ -78,6 +78,7 @@ describe("serializeTrie()", () => {
             [["pl", "gov.pl", "ap.gov.pl", "net.pl"], "pl>gov>ap<net"],
             [["pl", "gov.pl", "ap.gov.pl", "uk", "ac.uk", "co.uk"], "pl>gov>ap|uk>ac,co"],
             [["jp", "岐阜.jp", "静岡.jp", "موقع"], "jp>岐阜,静岡|موقع"],
+            // https://github.com/peerigon/parse-domain/pull/65
             [["uk", "ac.uk", "police.uk", "*.sch.uk"], "uk>ac,police,sch>*"],
         ].forEach(args => {
             const parsedList = args[0];
@@ -93,7 +94,7 @@ describe("serializeTrie()", () => {
         expect(() => {
             serializeTrie([], "unsupported type");
         }).to.throw(
-            'Cannot serialize trie: Unknown trie type "unsupported type". Expected type to be one of "complete", "light"'
+            'Cannot serialize trie: Unknown trie type "unsupported type". Expected type to be one of complete, light'
         );
     });
 });

@@ -50,7 +50,7 @@ function lineToString(line, i, arr) {
         if (indexOfDifference === 0) {
             // line and prevLine are completely different
             separatorFromPrev = SEPARATORS.RESET;
-        } else if (prevLine.length <= line.length && indexOfDifference === prevLine.length - 1) {
+        } else if (indexOfDifference === prevLine.length - 1) {
             // only the last part of line and prevLine are different
             separatorFromPrev = SEPARATORS.SAME;
         } else if (indexOfDifference > prevLine.length - 1) {
@@ -60,7 +60,18 @@ function lineToString(line, i, arr) {
         } else {
             // line and prevLine are different, but share a common root at indexOfDifference - 1
             // we now need to go up the hierarchy to the common root
-            separatorFromPrev = new Array(prevLine.length - indexOfDifference - 1).fill(SEPARATORS.UP)
+            const levelsUp = prevLine.length - indexOfDifference - 1;
+
+            /* istanbul ignore if */
+            if (levelsUp < 1) {
+                // This is just a sanity check to ensure that serializeTrie() fails early if
+                // public suffix contains some unexpected rules.
+                // separatorFromPrev should never be an empty string if i > 0
+                // See https://github.com/peerigon/parse-domain/pull/65
+                throw new Error("Cannot serialize trie: The public suffix list contains unexpected rules.");
+            }
+
+            separatorFromPrev = new Array(levelsUp).fill(SEPARATORS.UP)
                 .join("");
         }
     }
@@ -95,9 +106,7 @@ function serializeTrie(parsedList, type) {
 
     if (POSSIBLE_TYPES.indexOf(type) === -1) {
         throw new Error(
-            `Cannot serialize trie: Unknown trie type "${type}". Expected type to be one of ${POSSIBLE_TYPES.map(
-                JSON.stringify
-            ).join(", ")}`
+            `Cannot serialize trie: Unknown trie type "${type}". Expected type to be one of ${POSSIBLE_TYPES.join(", ")}`
         );
     }
 

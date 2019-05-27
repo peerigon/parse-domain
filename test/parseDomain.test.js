@@ -172,6 +172,7 @@ describe("parseDomain(url)", () => {
         });
     });
 
+    // See https://github.com/peerigon/parse-domain/pull/65
     it("should parse police.uk as tld", () => {
         expect(parseDomain("example.police.uk")).to.eql({
             subdomain: "",
