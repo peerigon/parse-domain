@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.1](https://github.com/peerigon/parse-domain/compare/v2.2.0...v2.2.1) (2019-05-28)
+
+
+### Bug Fixes
+
+* Fix 'run-s: command not found' on postinstall ([ce42e2e](https://github.com/peerigon/parse-domain/commit/ce42e2e)), closes [#72](https://github.com/peerigon/parse-domain/issues/72)
+* Fix problem where malformed URLs threw an error ([#70](https://github.com/peerigon/parse-domain/issues/70)) ([28d7e4b](https://github.com/peerigon/parse-domain/commit/28d7e4b))
+
+
+
 ## [2.2.0](https://github.com/peerigon/parse-domain/compare/v2.1.8...v2.2.0) (2019-05-27)
 
 
