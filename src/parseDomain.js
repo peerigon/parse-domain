@@ -70,8 +70,8 @@ function parseDomain(url, options) {
     }
 
     domain = urlSplit[3]; // domain will now be something like sub.domain.example.com
-
     tld = matchTld(domain, normalizedOptions);
+
     if (tld === null) {
         return null;
     }
@@ -83,7 +83,9 @@ function parseDomain(url, options) {
         // removes the remaining dot, if present (added to handle localhost)
         tld = tld.slice(1);
     }
+
     domain = urlSplit.pop();
+
     const subdomain = urlSplit.join(".");
 
     return {

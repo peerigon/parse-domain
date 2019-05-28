@@ -141,14 +141,13 @@ describe("parseDomain(url)", () => {
     it("should return null if the given value is not a string", () => {
         expect(parseDomain(undefined)).to.equal(null);
         expect(parseDomain({})).to.equal(null);
-        expect(parseDomain("")).to.equal(null);
-        expect(parseDomain(" ")).to.equal(null);
-        expect(parseDomain("\xa0")).to.equal(null);
     });
 
-    it("should return null if the given value contains invalid characters", () => {
-        expect(parseDomain("http://hell.d\ne.ibm.com")).to.equal(null);
+    it("should return null if the given string is not a valid URL", () => {
         expect(parseDomain("\xa0")).to.equal(null);
+        expect(parseDomain("")).to.equal(null);
+        expect(parseDomain(" ")).to.equal(null);
+        expect(parseDomain("http://hell.d\ne.ibm.com")).to.equal(null);
     });
 
     it("should return null if the given is an empty string with a space character", () => {
