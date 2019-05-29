@@ -1,18 +1,18 @@
 export as namespace parseDomain;
 
 declare namespace parseDomain {
-  interface IParseOptions {
-    customTlds?: RegExp | string[];
-    privateTlds?: boolean;
-  }
+    interface ParseOptions {
+        customTlds?: RegExp | Array<string>;
+        privateTlds?: boolean;
+    }
 
-  interface IParsedDomain {
-    domain?: string;
-    subdomain?: string;
-    tld?: string;
-  }
+    interface ParsedDomain {
+        domain: string;
+        subdomain: string;
+        tld: string;
+    }
 }
 
-declare function parseDomain (url: string, options?: parseDomain.IParseOptions): parseDomain.IParsedDomain;
+declare function parseDomain(url: string, options?: parseDomain.ParseOptions): parseDomain.ParsedDomain | null;
 
 export = parseDomain;
