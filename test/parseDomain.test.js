@@ -180,15 +180,6 @@ describe("parseDomain(url)", () => {
         });
     });
 
-    // See https://github.com/peerigon/parse-domain/pull/65
-    it("should parse police.uk as tld", () => {
-        expect(parseDomain("example.police.uk")).to.eql({
-            subdomain: "",
-            domain: "example",
-            tld: "police.uk",
-        });
-    });
-
     it("should also work with custom top-level domains passed as regexps", () => {
         const options = {customTlds: /(\.local|localhost)$/};
 
@@ -214,6 +205,26 @@ describe("parseDomain(url)", () => {
             subdomain: "",
             domain: "example",
             tld: "com",
+        });
+    });
+
+    describe("real-world use cases", () => {
+        // See https://github.com/peerigon/parse-domain/pull/65
+        it("should parse police.uk as tld", () => {
+            expect(parseDomain("example.police.uk")).to.eql({
+                subdomain: "",
+                domain: "example",
+                tld: "police.uk",
+            });
+        });
+
+        // See https://github.com/peerigon/parse-domain/issues/67
+        it.skip("should parse gouv.fr as tld", () => {
+            expect(parseDomain("dev.classea12.beta.gouv.fr", {privateTlds: true})).to.eql({
+                tld: "gouv.fr",
+                domain: "beta",
+                subdomain: "dev.classea12",
+            });
         });
     });
 });
