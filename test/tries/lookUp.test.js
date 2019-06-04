@@ -70,6 +70,17 @@ describe("lookUp()", () => {
 
         expect(lookUp(trie, hostname)).to.equal("c.d");
     });
+    // This is currently not supported by our lookUp() function.
+    // It should be supported according to publicsuffix.org
+    // but there is no single instance of it in the actual list.
+    it.skip("interprets wildcards in the trie correctly (nested)", () => {
+        const trie = new Set();
+        const hostname = "a.b.c.d";
+
+        trie.add("d.*.b");
+
+        expect(lookUp(trie, hostname)).to.equal("b.c.d");
+    });
     it("interprets exceptions of wildcards in the trie correctly (simple)", () => {
         const trie = new Set();
         const hostname = "c.b.a";

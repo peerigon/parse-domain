@@ -21,6 +21,12 @@ function matchTld(domain, options) {
         }
     }
 
+    const tlds = [lookUp(icannTrie, domain)];
+
+    if (options.privateTlds) {
+        tlds.push(lookUp(privateTrie, domain));
+    }
+
     const tries = (options.privateTlds ? [privateTrie] : emptyArr).concat(icannTrie);
 
     for (const trie of tries) {

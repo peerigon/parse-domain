@@ -219,7 +219,7 @@ describe("parseDomain(url)", () => {
         });
 
         // See https://github.com/peerigon/parse-domain/issues/67
-        it.only("should parse gouv.fr as tld", () => {
+        it("should parse gouv.fr as tld", () => {
             expect(parseDomain("dev.classea12.beta.gouv.fr", {privateTlds: true})).to.eql({
                 tld: "gouv.fr",
                 domain: "beta",
