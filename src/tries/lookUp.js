@@ -5,33 +5,36 @@ const EXCEPTION = "!";
 
 function lookUp(trie, hostname) {
     const domains = hostname.split(".").reverse();
-    const tlds = [];
-    let currentTrie = trie;
 
-    for (let i = 0; i < domains.length; i++) {
-        const domain = domains[i];
-        const isWildcardRule = currentTrie.has(WILDCARD);
+    while (domains.length) {
+        const domain = domains.pop();
 
-        if (isWildcardRule) {
-            if (currentTrie.has(EXCEPTION + domain) === false) {
-                tlds.push(domain);
+        if (domains.length === 0) {
+            return trie.has(domain) ? domain : null;
+        }
+
+        const joinedDomains = domains.join(".");
+        const hasWildcardRule = trie.has(`${joinedDomains}.${WILDCARD}`);
+
+        if (hasWildcardRule) {
+            if (trie.has(`${joinedDomains}.${EXCEPTION}${domain}`)) {
+                return domains.reverse().join(".");
             }
-            break;
-        }
-        if (currentTrie.has(domain) === false) {
-            break;
-        }
-        tlds.push(domain);
 
-        const value = currentTrie.get(domain);
-
-        if (value === true) {
-            break;
+            return domains
+                .concat(domain)
+                .reverse()
+                .join(".");
         }
-        currentTrie = value;
+        if (trie.has(`${joinedDomains}.${domain}`)) {
+            return domains
+                .concat(domain)
+                .reverse()
+                .join(".");
+        }
     }
 
-    return tlds.length === 0 ? null : tlds.reverse().join(".");
+    return null;
 }
 
 module.exports = lookUp;

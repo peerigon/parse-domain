@@ -3,15 +3,15 @@
 const SEPARATORS = require("./separators");
 
 function parseTrie(input) {
-    let map = new Map();
-    const parentMaps = [map];
+    const tlds = new Set();
+    let parentDomains = [];
     let domain = "";
 
-    function setDomain(value) {
+    function addCurrentDomainAsTld() {
         if (domain === "") {
             return;
         }
-        map.set(domain, value);
+        tlds.add(parentDomains.concat(domain).join("."));
         domain = "";
     }
 
@@ -20,27 +20,24 @@ function parseTrie(input) {
 
         switch (char) {
             case SEPARATORS.SAME: {
-                setDomain(true);
+                addCurrentDomainAsTld();
                 continue;
             }
             case SEPARATORS.DOWN: {
-                const childMap = new Map();
+                const parentDomain = domain;
 
-                setDomain(childMap);
-                parentMaps.push(map);
-                map = childMap;
+                addCurrentDomainAsTld();
+                parentDomains.push(parentDomain);
                 continue;
             }
             case SEPARATORS.RESET: {
-                setDomain(true);
-                // Remove all parent maps but the top most
-                parentMaps.length = 1;
-                map = parentMaps[0];
+                addCurrentDomainAsTld();
+                parentDomains = [];
                 continue;
             }
             case SEPARATORS.UP: {
-                setDomain(true);
-                map = parentMaps.pop();
+                addCurrentDomainAsTld();
+                parentDomains.pop();
                 continue;
             }
         }
@@ -48,9 +45,9 @@ function parseTrie(input) {
         domain += char;
     }
 
-    setDomain(true);
+    addCurrentDomainAsTld();
 
-    return parentMaps[0];
+    return tlds;
 }
 
 module.exports = parseTrie;

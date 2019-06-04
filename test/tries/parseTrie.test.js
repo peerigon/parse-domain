@@ -1,162 +1,111 @@
 "use strict";
 
 const chai = require("chai");
-const parseTrie = require("../../lib/tries/parseTrie");
+const parseTrie = require("../../src/tries/parseTrie");
 
 const expect = chai.expect;
 
 describe("parseTrie()", () => {
     describe("basic cases", () => {
-        it("returns a map", () => {
-            expect(parseTrie("")).to.be.instanceOf(Map);
+        it("returns a set", () => {
+            expect(parseTrie("")).to.be.instanceOf(Set);
         });
 
-        it("returns an empty map when an empty string is given", () => {
+        it("returns an empty set when an empty string is given", () => {
             const trie = parseTrie("");
 
             expect(trie.size).to.equal(0);
         });
-
-        it("returns a map with the given domain as key and true as value", () => {
-            const trie = parseTrie("some-domain");
-            const someDomain = trie.get("some-domain");
-
-            expect(someDomain).to.equal(true);
-        });
     });
 
     describe("with SAME separator", () => {
-        it("returns a map with the given domains as key and true as value", () => {
+        it("returns a set with the expected domains", () => {
             const trie = parseTrie("a,b,c");
-            const a = trie.get("a");
-            const b = trie.get("b");
-            const c = trie.get("c");
 
-            expect(a).to.equal(true);
-            expect(b).to.equal(true);
-            expect(c).to.equal(true);
+            expect(trie.has("a")).to.equal(true);
+            expect(trie.has("b")).to.equal(true);
+            expect(trie.has("c")).to.equal(true);
+            expect(trie.size).to.equal(3);
         });
     });
 
-    describe("and with DOWN separator", () => {
-        it("returns a nested map", () => {
-            const trie = parseTrie("a>a");
-            const a = trie.get("a");
-            const aa = a.get("a");
-
-            expect(aa).to.equal(true);
-        });
-
-        it("returns a deeply nested map", () => {
+    describe("with DOWN separator", () => {
+        it("returns a set with the expected domains", () => {
             const trie = parseTrie("a>a>a");
-            const a = trie.get("a");
-            const aa = a.get("a");
-            const aaa = aa.get("a");
 
-            expect(aa).to.be.instanceOf(Map);
-            expect(aaa).to.equal(true);
-        });
-
-        it("returns a nested map with the given domains as key and true as value", () => {
-            const trie = parseTrie("a>a,b,c");
-            const a = trie.get("a");
-            const aa = a.get("a");
-            const ab = a.get("b");
-            const ac = a.get("c");
-
-            expect(aa).to.equal(true);
-            expect(ab).to.equal(true);
-            expect(ac).to.equal(true);
+            expect(trie.has("a")).to.equal(true);
+            expect(trie.has("a.a")).to.equal(true);
+            expect(trie.has("a.a.a")).to.equal(true);
+            expect(trie.size).to.equal(3);
         });
     });
 
     describe("and with UP separator", () => {
-        it("returns a map with maps", () => {
+        it("returns a set with the expected domains", () => {
             const trie = parseTrie("a>a,b<b>a,b");
-            const a = trie.get("a");
-            const aa = a.get("a");
-            const ab = a.get("a");
-            const b = trie.get("b");
-            const ba = b.get("a");
-            const bb = b.get("b");
-
-            expect(aa).to.equal(true);
-            expect(ab).to.equal(true);
-            expect(ba).to.equal(true);
-            expect(bb).to.equal(true);
+            
+            expect(trie.has("a")).to.equal(true);
+            expect(trie.has("a.a")).to.equal(true);
+            expect(trie.has("a.b")).to.equal(true);
+            expect(trie.has("b")).to.equal(true);
+            expect(trie.has("b.a")).to.equal(true);
+            expect(trie.has("b.b")).to.equal(true);
+            expect(trie.size).to.equal(6);
         });
 
         it("goes up multiple levels", () => {
             const trie = parseTrie("a>a>a>a<<<b");
-            const a = trie.get("a");
-            const aa = a.get("a");
-            const aaa = aa.get("a");
-            const aaaa = aaa.get("a");
-            const b = trie.get("b");
-
-            expect(aaaa).to.equal(true);
-            expect(b).to.equal(true);
+            
+            expect(trie.has("b")).to.equal(true);
+            expect(trie.size).to.equal(5);
         });
     });
 
     describe("and with RESET separator", () => {
         it("resets the domain level", () => {
             const trie = parseTrie("a>a|b");
-            const a = trie.get("a");
-            const aa = a.get("a");
-            const b = trie.get("b");
 
-            expect(aa).to.equal(true);
-            expect(b).to.equal(true);
+            expect(trie.has("b")).to.equal(true);
+            expect(trie.size).to.equal(3);
         });
 
         it("works also on the top-level", () => {
             const trie = parseTrie("a|b");
-            const a = trie.get("a");
-            const b = trie.get("b");
 
-            expect(a).to.equal(true);
-            expect(b).to.equal(true);
+            expect(trie.has("b")).to.equal(true);
+            expect(trie.size).to.equal(2);
         });
+    });
 
-        it("returns the expected trie", () => {
-            const trie = parseTrie("a>a>a|b>a|c");
-            const a = trie.get("a");
-            const aa = a.get("a");
-            const aaa = aa.get("a");
-            const b = trie.get("b");
-            const ba = b.get("a");
-            const c = trie.get("c");
+    describe("with other special characters like * and !", () => {
+        it("does not treat them special", () => {
+            const trie = parseTrie("*,!>*,!");
 
-            expect(aaa).to.equal(true);
-            expect(ba).to.equal(true);
-            expect(c).to.equal(true);
+            expect(trie.has("*")).to.equal(true);
+            expect(trie.has("!")).to.equal(true);
+            expect(trie.has("!.*")).to.equal(true);
+            expect(trie.has("!.!")).to.equal(true);
         });
     });
 
     describe("complex cases", () => {
-        it("parses 'a>a>a>a<<b,c|b>a>a<b>a>a,b' without errors", () => {
+        it("parses 'a>a>a>a<<b,c|b>a>a<b>a>a,b' correctly", () => {
             const trie = parseTrie("a>a>a>a<<b,c|b>a>a<b>a>a,b");
-            const a = trie.get("a");
-            const aa = a.get("a");
-            const aaa = aa.get("a");
-            const aaaa = aaa.get("a");
-            const ab = a.get("b");
-            const ac = a.get("c");
-            const b = trie.get("b");
-            const ba = b.get("a");
-            const baa = ba.get("a");
-            const bb = b.get("b");
-            const bba = bb.get("a");
-            const bbaa = bba.get("a");
-            const bbab = bba.get("b");
 
-            expect(aaaa).to.equal(true);
-            expect(ab).to.equal(true);
-            expect(ac).to.equal(true);
-            expect(baa).to.equal(true);
-            expect(bbaa).to.equal(true);
-            expect(bbab).to.equal(true);
+            expect(trie.has("a")).to.equal(true);
+            expect(trie.has("a.a")).to.equal(true);
+            expect(trie.has("a.a.a")).to.equal(true);
+            expect(trie.has("a.a.a.a")).to.equal(true);
+            expect(trie.has("a.b")).to.equal(true);
+            expect(trie.has("a.c")).to.equal(true);
+            expect(trie.has("b")).to.equal(true);
+            expect(trie.has("b.a")).to.equal(true);
+            expect(trie.has("b.a.a")).to.equal(true);
+            expect(trie.has("b.b")).to.equal(true);
+            expect(trie.has("b.b.a")).to.equal(true);
+            expect(trie.has("b.b.a.a")).to.equal(true);
+            expect(trie.has("b.b.a.b")).to.equal(true);
+            expect(trie.size).to.equal(13);
         });
     });
 });

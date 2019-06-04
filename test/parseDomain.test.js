@@ -3,7 +3,7 @@
 const chai = require("chai");
 
 const expect = chai.expect;
-const parseDomain = require("../lib/parseDomain.js");
+const parseDomain = require("../src/parseDomain.js");
 
 chai.config.includeStack = true;
 
@@ -219,7 +219,7 @@ describe("parseDomain(url)", () => {
         });
 
         // See https://github.com/peerigon/parse-domain/issues/67
-        it.skip("should parse gouv.fr as tld", () => {
+        it.only("should parse gouv.fr as tld", () => {
             expect(parseDomain("dev.classea12.beta.gouv.fr", {privateTlds: true})).to.eql({
                 tld: "gouv.fr",
                 domain: "beta",
