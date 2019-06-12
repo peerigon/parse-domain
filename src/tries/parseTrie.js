@@ -1,6 +1,6 @@
 "use strict";
 
-const SEPARATORS = require("./separators");
+const characters = require("./characters");
 
 function parseTrie(input) {
     const tlds = new Set();
@@ -19,23 +19,23 @@ function parseTrie(input) {
         const char = input.charAt(i);
 
         switch (char) {
-            case SEPARATORS.SAME: {
+            case characters.SAME: {
                 addCurrentDomainAsTld();
                 continue;
             }
-            case SEPARATORS.DOWN: {
+            case characters.DOWN: {
                 const parentDomain = domain;
 
                 addCurrentDomainAsTld();
                 parentDomains.push(parentDomain);
                 continue;
             }
-            case SEPARATORS.RESET: {
+            case characters.RESET: {
                 addCurrentDomainAsTld();
                 parentDomains = [];
                 continue;
             }
-            case SEPARATORS.UP: {
+            case characters.UP: {
                 addCurrentDomainAsTld();
                 parentDomains.pop();
                 continue;

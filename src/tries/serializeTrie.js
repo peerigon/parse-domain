@@ -1,6 +1,6 @@
 "use strict";
 
-const SEPARATORS = require("./separators");
+const characters = require("./characters");
 
 const TYPE_COMPLETE = "complete";
 const TYPE_LIGHT = "light";
@@ -49,14 +49,14 @@ function lineToString(line, i, arr) {
         }
         if (indexOfDifference === 0) {
             // line and prevLine are completely different
-            separatorFromPrev = SEPARATORS.RESET;
+            separatorFromPrev = characters.RESET;
         } else if (indexOfDifference === prevLine.length - 1) {
             // only the last part of line and prevLine are different
-            separatorFromPrev = SEPARATORS.SAME;
+            separatorFromPrev = characters.SAME;
         } else if (indexOfDifference > prevLine.length - 1) {
             // we don't need to go up the hierarchy first because prevLine is part of line
             // so let's just start with an initial down separator
-            separatorFromPrev = SEPARATORS.DOWN;
+            separatorFromPrev = characters.DOWN;
         } else {
             // line and prevLine are different, but share a common root at indexOfDifference - 1
             // we now need to go up the hierarchy to the common root
@@ -71,12 +71,12 @@ function lineToString(line, i, arr) {
                 throw new Error("Cannot serialize trie: The public suffix list contains unexpected rules.");
             }
 
-            separatorFromPrev = new Array(levelsUp).fill(SEPARATORS.UP)
+            separatorFromPrev = new Array(levelsUp).fill(characters.UP)
                 .join("");
         }
     }
 
-    return separatorFromPrev + line.slice(indexOfDifference).join(SEPARATORS.DOWN);
+    return separatorFromPrev + line.slice(indexOfDifference).join(characters.DOWN);
 }
 
 function serializeTrie(parsedList, type) {
