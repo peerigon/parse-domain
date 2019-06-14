@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.1](https://github.com/peerigon/parse-domain/compare/v2.3.0...v2.3.1) (2019-06-14)
+
+
+### Bug Fixes
+
+* TypeScript definition not available on npm module ([8173362](https://github.com/peerigon/parse-domain/commit/8173362))
+* updatedAt timestamp breaks bundle caching ([#75](https://github.com/peerigon/parse-domain/issues/75), [#60](https://github.com/peerigon/parse-domain/issues/60)) ([27199d5](https://github.com/peerigon/parse-domain/commit/27199d5))
+
+
+
 ## [2.3.0](https://github.com/peerigon/parse-domain/compare/v2.2.1...v2.3.0) (2019-05-29)
 
 
