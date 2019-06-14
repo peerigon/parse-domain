@@ -1,6 +1,6 @@
 parse-domain
 ============
-**Splits a URL into sub-domain, domain and the top-level domain.**
+**Splits a URL into sub-domain, domain and the top-level domain. Provides TypeScript typings.**
 
 [![](https://img.shields.io/npm/v/parse-domain.svg)](https://www.npmjs.com/package/parse-domain)
 [![](https://img.shields.io/npm/dm/parse-domain.svg)](https://www.npmjs.com/package/parse-domain)
