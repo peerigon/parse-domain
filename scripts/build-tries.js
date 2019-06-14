@@ -59,7 +59,6 @@ got(PUBLIC_SUFFIX_URL, {timeout: 60 * 1000})
                 return {
                     path: path.resolve(triesPath, trie.filename),
                     content: JSON.stringify({
-                        updatedAt: new Date().toISOString(),
                         trie: serializeTrie(parsedList, trie.type),
                     }),
                 };
@@ -85,9 +84,10 @@ got(PUBLIC_SUFFIX_URL, {timeout: 60 * 1000})
         console.error("");
         console.error(`Could not update list of known top-level domains for parse-domain because of "${err.message}"`);
 
-        const prebuiltList = JSON.parse(fs.readFileSync(path.resolve(triesPath, tries[0].filename), "utf8"));
+        const filePath = path.resolve(triesPath, tries[0].filename);
+        const fileCreatedTime = fs.statSync(filePath).birthtime;
 
-        console.error("Using possibly outdated prebuilt list from " + new Date(prebuiltList.updatedAt).toDateString());
+        console.error("Using possibly outdated prebuilt list from " + new Date(fileCreatedTime).toDateString());
 
         // We can recover using the (possibly outdated) prebuilt list, hence exit code 0
         process.exit(0); // eslint-disable-line no-process-exit
