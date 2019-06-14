@@ -26,6 +26,7 @@ const serializeTrie = require("../lib/tries/serializeTrie");
 const PUBLIC_SUFFIX_URL = "https://publicsuffix.org/list/public_suffix_list.dat";
 const rootPath = path.resolve(__dirname, "..");
 const triesPath = path.resolve(rootPath, "build", "tries");
+const metaJsonFilename = path.resolve(triesPath, "meta.json");
 const tries = [
     {
         listName: "icann",
@@ -59,7 +60,6 @@ got(PUBLIC_SUFFIX_URL, {timeout: 60 * 1000})
                 return {
                     path: path.resolve(triesPath, trie.filename),
                     content: JSON.stringify({
-                        updatedAt: new Date().toISOString(),
                         trie: serializeTrie(parsedList, trie.type),
                     }),
                 };
@@ -80,14 +80,22 @@ got(PUBLIC_SUFFIX_URL, {timeout: 60 * 1000})
         });
 
         process.stderr.write("ok" + os.EOL);
+
+        fs.writeFileSync(
+            metaJsonFilename,
+            JSON.stringify({
+                updatedAt: new Date().toISOString(),
+            }),
+            "utf8"
+        );
     })
     .catch(err => {
         console.error("");
         console.error(`Could not update list of known top-level domains for parse-domain because of "${err.message}"`);
 
-        const prebuiltList = JSON.parse(fs.readFileSync(path.resolve(triesPath, tries[0].filename), "utf8"));
+        const metaJson = JSON.parse(fs.readFileSync(metaJsonFilename, "utf8"));
 
-        console.error("Using possibly outdated prebuilt list from " + new Date(prebuiltList.updatedAt).toDateString());
+        console.error("Using possibly outdated prebuilt list from " + new Date(metaJson.updatedAt).toDateString());
 
         // We can recover using the (possibly outdated) prebuilt list, hence exit code 0
         process.exit(0); // eslint-disable-line no-process-exit
