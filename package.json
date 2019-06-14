@@ -3,7 +3,7 @@
   "version": "2.3.0",
   "description": "Splits an url into sub-domain, domain and effective top-level-domain",
   "main": "./lib/parseDomain.js",
-  "types": "./lib/index.d.ts",
+  "types": "./src/index.d.ts",
   "scripts": {
     "build": "run-s build:lib build:tries",
     "build:lib": "run-s build:lib:clean build:lib:babel",
@@ -61,6 +61,7 @@
     "scripts",
     "lists",
     "test",
-    "build"
+    "build",
+    "./src/index.d.ts"
   ]
 }
