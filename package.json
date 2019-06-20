@@ -8,7 +8,7 @@
     "build": "run-s build:lib build:tries",
     "build:lib": "run-s build:lib:clean build:lib:babel",
     "build:lib:clean": "rimraf lib",
-    "build:lib:babel": "babel src --out-dir lib",
+    "build:lib:babel": "babel src --out-dir lib --copy-files",
     "build:tries": "node scripts/build-tries.js",
     "postinstall": "run-s build:tries",
     "prepublish": "run-s build",
