@@ -3,38 +3,32 @@
 const icannTrie = require("../lists/icann.complete");
 const privateTrie = require("../lists/private.complete");
 const normalize = require("./normalize.js");
-const lookUp = require("./tries/lookUp");
+const lookUp = require("./trie/lookUp");
 
 // eslint-disable-next-line
-const urlParts = /^(:?\/\/|https?:\/\/)?([^/]*@)?(.+?)(:\d{2,5})?([/?].*)?$/; // 1 = protocol, 2 = auth, 3 = domain, 4 = port, 5 = path
+const urlParts = /^(:?\/\/|https?:\/\/)?([^/]*@)?(.+?)(:\d{2,5})?([/?].*)?$/; // 1 = protocol, 2 = auth, 3 = hostname, 4 = port, 5 = path
 const dot = /\./g;
 const emptyArr = [];
 
-function matchTld(domain, options) {
+function matchTld(hostname, options) {
     // for potentially unrecognized tlds, try matching against custom tlds
     if (options.customTlds) {
         // try matching against a built regexp of custom tlds
-        const tld = domain.match(options.customTlds);
+        const tld = hostname.match(options.customTlds);
 
         if (tld !== null) {
             return tld[0];
         }
     }
+    const domains = hostname.split(".");
+    const icannTlds = lookUp(icannTrie, domains);
+    const privateTlds = options.privateTlds ? lookUp(privateTrie, domains) : emptyArr;
 
-    const tlds = [lookUp(icannTrie, domain)];
-
-    if (options.privateTlds) {
-        tlds.push(lookUp(privateTrie, domain));
+    if (privateTlds.length > icannTlds.length) {
+        return "." + privateTlds.join(".");
     }
-
-    const tries = (options.privateTlds ? [privateTrie] : emptyArr).concat(icannTrie);
-
-    for (const trie of tries) {
-        const tld = lookUp(trie, domain);
-
-        if (tld !== null) {
-            return "." + tld;
-        }
+    if (icannTlds.length > 0) {
+        return "." + icannTlds.join(".");
     }
 
     return null;
@@ -60,7 +54,7 @@ function parseDomain(url, options) {
     const normalizedUrl = normalize.url(url);
     let tld = null;
     let urlSplit;
-    let domain;
+    let hostname;
 
     if (!normalizedUrl) {
         return null;
@@ -75,28 +69,28 @@ function parseDomain(url, options) {
         return null;
     }
 
-    domain = urlSplit[3]; // domain will now be something like sub.domain.example.com
-    tld = matchTld(domain, normalizedOptions);
+    hostname = urlSplit[3]; // domain will now be something like sub.domain.example.com
+    tld = matchTld(hostname, normalizedOptions);
 
     if (tld === null) {
         return null;
     }
 
     // remove tld and split by dot
-    urlSplit = domain.slice(0, -tld.length).split(dot);
+    urlSplit = hostname.slice(0, -tld.length).split(dot);
 
     if (tld.charAt(0) === ".") {
         // removes the remaining dot, if present (added to handle localhost)
         tld = tld.slice(1);
     }
 
-    domain = urlSplit.pop();
+    hostname = urlSplit.pop();
 
     const subdomain = urlSplit.join(".");
 
     return {
         tld,
-        domain,
+        domain: hostname,
         subdomain,
     };
 }

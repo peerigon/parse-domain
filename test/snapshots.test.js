@@ -3,10 +3,8 @@
 const fs = require("fs");
 const path = require("path");
 const chai = require("chai");
-const parsePubSuffixList = require("../lib/tries/parsePubSuffixList");
-const serializeTrie = require("../lib/tries/serializeTrie");
-const parseTrie = require("../lib/tries/parseTrie");
-const lookUp = require("../lib/tries/lookUp");
+const parsePubSuffixList = require("../lib/trie/parsePubSuffixList");
+const serializeTrie = require("../lib/trie/serializeTrie");
 
 const expect = chai.expect;
 const TEST_SNAPSHOT = true;
@@ -34,25 +32,6 @@ describe("snapshots", () => {
 
             TEST_SNAPSHOT && expect(serializedTrie).to.eql(snapshot);
             fs.writeFileSync(pathToSerializeTrieSnapshot, JSON.stringify(serializedTrie));
-        });
-    });
-    describe("parseTrie() and lookUp() calling lookUp() with the result from parseTrie(snapshot) and hostname", () => {
-        const serializedTrie = JSON.parse(fs.readFileSync(pathToSerializeTrieSnapshot, "utf8"));
-        const parsedTrie = parseTrie(serializedTrie);
-
-        [
-            ["example.com", "com"],
-            ["example.a.com", "com"],
-            ["example.uk", "uk"],
-            ["example.co.uk", "co.uk"],
-            ["example.ab.uk", "uk"],
-        ].forEach(testArgs => {
-            const hostname = testArgs[0];
-            const expectedResult = testArgs[1];
-
-            it(`'${hostname}' returns ${expectedResult}`, () => {
-                expect(lookUp(parsedTrie, hostname)).to.equal(expectedResult);
-            });
         });
     });
 });
