@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.2](https://github.com/peerigon/parse-domain/compare/v2.3.1...v2.3.2) (2019-08-10)
+
+
+### Bug Fixes
+
+* Fix bug when parsing private TLDs ([#79](https://github.com/peerigon/parse-domain/issues/79)) ([69162fc](https://github.com/peerigon/parse-domain/commit/69162fc)), closes [#67](https://github.com/peerigon/parse-domain/issues/67)
+
+
+
 ### [2.3.1](https://github.com/peerigon/parse-domain/compare/v2.3.0...v2.3.1) (2019-06-14)
 
 
