@@ -12,7 +12,7 @@ const got = require("got");
 const mkdirp = require("mkdirp");
 
 try {
-    require.resolve("../lib/tries/parsePubSuffixList");
+    require.resolve("../lib/trie/parsePubSuffixList");
 } catch (error) {
     // This conditions occurs when the CI system or a developer checks out the repo for the first time.
     // It happens because the postinstall hook kicks in *before* the lib is built.
@@ -20,8 +20,8 @@ try {
     console.error("Lib does not exist yet, skipping build-tries step.");
     process.exit(0); // eslint-disable-line no-process-exit
 }
-const parsePubSuffixList = require("../lib/tries/parsePubSuffixList");
-const serializeTrie = require("../lib/tries/serializeTrie");
+const parsePubSuffixList = require("../lib/trie/parsePubSuffixList");
+const serializeTrie = require("../lib/trie/serializeTrie");
 
 const PUBLIC_SUFFIX_URL = "https://publicsuffix.org/list/public_suffix_list.dat";
 const rootPath = path.resolve(__dirname, "..");
