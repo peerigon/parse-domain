@@ -2,11 +2,9 @@
 
 const fs = require("fs");
 const path = require("path");
-const chai = require("chai");
 const parsePubSuffixList = require("../lib/trie/parsePubSuffixList");
 const serializeTrie = require("../lib/trie/serializeTrie");
 
-const expect = chai.expect;
 const TEST_SNAPSHOT = true;
 const pathToFixtures = path.resolve(__dirname, "fixtures");
 const pathToSnapshots = path.resolve(__dirname, "snapshots");
@@ -15,22 +13,22 @@ const pathToSerializeTrieSnapshot = path.resolve(pathToSnapshots, "serializeTrie
 
 describe("snapshots", () => {
     describe("parsePubSuffixList()", () => {
-        it("matches the approved snapshot", () => {
+        test("matches the approved snapshot", () => {
             const pubSuffixList = fs.readFileSync(path.resolve(pathToFixtures, "pubSuffixList.txt"), "utf8");
             const parsedList = parsePubSuffixList(pubSuffixList);
             const snapshot = JSON.parse(fs.readFileSync(pathToParsePubSuffixListSnapshot, "utf8"));
 
-            TEST_SNAPSHOT && expect(parsedList).to.eql(snapshot);
+            TEST_SNAPSHOT && expect(parsedList).toEqual(snapshot);
             fs.writeFileSync(pathToParsePubSuffixListSnapshot, JSON.stringify(parsedList));
         });
     });
     describe("serializeTrie()", () => {
-        it("matches the approved snapshot", () => {
+        test("matches the approved snapshot", () => {
             const parsedList = JSON.parse(fs.readFileSync(pathToParsePubSuffixListSnapshot, "utf8"));
             const snapshot = JSON.parse(fs.readFileSync(pathToSerializeTrieSnapshot, "utf8"));
             const serializedTrie = serializeTrie(parsedList.icann);
 
-            TEST_SNAPSHOT && expect(serializedTrie).to.eql(snapshot);
+            TEST_SNAPSHOT && expect(serializedTrie).toEqual(snapshot);
             fs.writeFileSync(pathToSerializeTrieSnapshot, JSON.stringify(serializedTrie));
         });
     });

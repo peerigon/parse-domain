@@ -74,7 +74,7 @@ got(PUBLIC_SUFFIX_URL, {timeout: 60 * 1000})
     .then(() => {
         process.stderr.write("Running sanity check... ");
 
-        childProcess.execFileSync(process.execPath, [require.resolve("mocha/bin/_mocha"), "-R", "dot"], {
+        childProcess.execFileSync(process.execPath, [require.resolve(".bin/jest")], {
             cwd: rootPath,
             encoding: "utf8",
         });

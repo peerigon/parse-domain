@@ -1,217 +1,219 @@
 "use strict";
 
-const chai = require("chai");
-
-const expect = chai.expect;
 const parseDomain = require("../lib/parseDomain.js");
 
-chai.config.includeStack = true;
-
 describe("parseDomain(url)", () => {
-    it("should remove the protocol", () => {
-        expect(parseDomain("http://example.com")).to.eql({
+    test("should remove the protocol", () => {
+        expect(parseDomain("http://example.com")).toEqual({
             subdomain: "",
             domain: "example",
             tld: "com",
         });
-        expect(parseDomain("//example.com")).to.eql({
+        expect(parseDomain("//example.com")).toEqual({
             subdomain: "",
             domain: "example",
             tld: "com",
         });
-        expect(parseDomain("https://example.com")).to.eql({
+        expect(parseDomain("https://example.com")).toEqual({
             subdomain: "",
             domain: "example",
             tld: "com",
         });
     });
 
-    it("should remove sub-domains", () => {
-        expect(parseDomain("www.example.com")).to.eql({
+    test("should remove sub-domains", () => {
+        expect(parseDomain("www.example.com")).toEqual({
             subdomain: "www",
             domain: "example",
             tld: "com",
         });
-        expect(parseDomain("www.some.other.subdomain.example.com")).to.eql({
+        expect(parseDomain("www.some.other.subdomain.example.com")).toEqual({
             subdomain: "www.some.other.subdomain",
             domain: "example",
             tld: "com",
         });
     });
 
-    it("should remove the path", () => {
-        expect(parseDomain("example.com/some/path?and&query")).to.eql({
+    test("should remove the path", () => {
+        expect(parseDomain("example.com/some/path?and&query")).toEqual({
             subdomain: "",
             domain: "example",
             tld: "com",
         });
-        expect(parseDomain("example.com/")).to.eql({
-            subdomain: "",
-            domain: "example",
-            tld: "com",
-        });
-    });
-
-    it("should remove the query string", () => {
-        expect(parseDomain("example.com?and&query")).to.eql({
+        expect(parseDomain("example.com/")).toEqual({
             subdomain: "",
             domain: "example",
             tld: "com",
         });
     });
 
-    it("should remove special characters", () => {
-        expect(parseDomain("http://m.example.com\r")).to.eql({
+    test("should remove the query string", () => {
+        expect(parseDomain("example.com?and&query")).toEqual({
+            subdomain: "",
+            domain: "example",
+            tld: "com",
+        });
+    });
+
+    test("should remove special characters", () => {
+        expect(parseDomain("http://m.example.com\r")).toEqual({
             subdomain: "m",
             domain: "example",
             tld: "com",
         });
     });
 
-    it("should remove the port", () => {
-        expect(parseDomain("example.com:8080")).to.eql({
+    test("should remove the port", () => {
+        expect(parseDomain("example.com:8080")).toEqual({
             subdomain: "",
             domain: "example",
             tld: "com",
         });
     });
 
-    it("should remove the authentication", () => {
-        expect(parseDomain("user:password@example.com")).to.eql({
+    test("should remove the authentication", () => {
+        expect(parseDomain("user:password@example.com")).toEqual({
             subdomain: "",
             domain: "example",
             tld: "com",
         });
     });
 
-    it("should allow @ characters in the path", () => {
-        expect(parseDomain("https://medium.com/@username/")).to.eql({
+    test("should allow @ characters in the path", () => {
+        expect(parseDomain("https://medium.com/@username/")).toEqual({
             subdomain: "",
             domain: "medium",
             tld: "com",
         });
     });
 
-    it("should also work with three-level domains like .co.uk", () => {
-        expect(parseDomain("www.example.co.uk")).to.eql({
+    test("should also work with three-level domains like .co.uk", () => {
+        expect(parseDomain("www.example.co.uk")).toEqual({
             subdomain: "www",
             domain: "example",
             tld: "co.uk",
         });
     });
 
-    it("should not include private domains like blogspot.com by default", () => {
-        expect(parseDomain("foo.blogspot.com")).to.eql({
+    test("should not include private domains like blogspot.com by default", () => {
+        expect(parseDomain("foo.blogspot.com")).toEqual({
             subdomain: "foo",
             domain: "blogspot",
             tld: "com",
         });
     });
 
-    it("should include private tlds", () => {
-        expect(parseDomain("foo.blogspot.com", {privateTlds: true})).to.eql({
+    test("should include private tlds", () => {
+        expect(parseDomain("foo.blogspot.com", {privateTlds: true})).toEqual({
             subdomain: "",
             domain: "foo",
             tld: "blogspot.com",
         });
     });
 
-    it("should work when all url parts are present", () => {
-        expect(parseDomain("https://user@www.some.other.subdomain.example.co.uk:8080/some/path?and&query#hash")).to.eql(
-            {
-                subdomain: "www.some.other.subdomain",
-                domain: "example",
-                tld: "co.uk",
-            }
-        );
+    test("should work when all url parts are present", () => {
+        expect(parseDomain("https://user@www.some.other.subdomain.example.co.uk:8080/some/path?and&query#hash")).toEqual({
+            subdomain: "www.some.other.subdomain",
+            domain: "example",
+            tld: "co.uk",
+        });
     });
 
-    it("should also work with the minimum", () => {
-        expect(parseDomain("example.com")).to.eql({
+    test("should also work with the minimum", () => {
+        expect(parseDomain("example.com")).toEqual({
             subdomain: "",
             domain: "example",
             tld: "com",
         });
     });
 
-    it("should return null if the given url contains an unsupported top-level domain", () => {
-        expect(parseDomain("example.kk")).to.equal(null);
+    test(
+        "should return null if the given url contains an unsupported top-level domain",
+        () => {
+            expect(parseDomain("example.kk")).toBeNull();
+        }
+    );
+
+    test("should return null if the given value is not a string", () => {
+        expect(parseDomain(undefined)).toBeNull();
+        expect(parseDomain({})).toBeNull();
     });
 
-    it("should return null if the given value is not a string", () => {
-        expect(parseDomain(undefined)).to.equal(null);
-        expect(parseDomain({})).to.equal(null);
+    test("should return null if the given string is not a valid URL", () => {
+        expect(parseDomain("\xa0")).toBeNull();
+        expect(parseDomain("")).toBeNull();
+        expect(parseDomain(" ")).toBeNull();
+        expect(parseDomain("http://hell.d\ne.ibm.com")).toBeNull();
     });
 
-    it("should return null if the given string is not a valid URL", () => {
-        expect(parseDomain("\xa0")).to.equal(null);
-        expect(parseDomain("")).to.equal(null);
-        expect(parseDomain(" ")).to.equal(null);
-        expect(parseDomain("http://hell.d\ne.ibm.com")).to.equal(null);
-    });
+    test(
+        "should return null if the given is an empty string with a space character",
+        () => {
+            expect(parseDomain(" ")).toBeNull();
+        }
+    );
 
-    it("should return null if the given is an empty string with a space character", () => {
-        expect(parseDomain(" ")).to.equal(null);
-    });
-
-    it("should work with domains that could match multiple tlds", () => {
-        expect(parseDomain("http://hello.de.ibm.com")).to.eql({
+    test("should work with domains that could match multiple tlds", () => {
+        expect(parseDomain("http://hello.de.ibm.com")).toEqual({
             subdomain: "hello.de",
             domain: "ibm",
             tld: "com",
         });
     });
 
-    it("should work with custom top-level domains (eg .local)", () => {
+    test("should work with custom top-level domains (eg .local)", () => {
         const options = {customTlds: ["local"]};
 
-        expect(parseDomain("mymachine.local", options)).to.eql({
+        expect(parseDomain("mymachine.local", options)).toEqual({
             subdomain: "",
             domain: "mymachine",
             tld: "local",
         });
 
         // Sanity checks if the option does not misbehave
-        expect(parseDomain("mymachine.local")).to.eql(null);
-        expect(parseDomain("http://example.com", options)).to.eql({
+        expect(parseDomain("mymachine.local")).toBe(null);
+        expect(parseDomain("http://example.com", options)).toEqual({
             subdomain: "",
             domain: "example",
             tld: "com",
         });
     });
 
-    it("should also work with custom top-level domains passed as regexps", () => {
-        const options = {customTlds: /(\.local|localhost)$/};
+    test(
+        "should also work with custom top-level domains passed as regexps",
+        () => {
+            const options = {customTlds: /(\.local|localhost)$/};
 
-        expect(parseDomain("mymachine.local", options)).to.eql({
-            subdomain: "",
-            domain: "mymachine",
-            tld: "local",
-        });
-        expect(parseDomain("localhost", options)).to.eql({
-            subdomain: "",
-            domain: "",
-            tld: "localhost",
-        });
-        expect(parseDomain("localhost:8080", options)).to.eql({
-            subdomain: "",
-            domain: "",
-            tld: "localhost",
-        });
+            expect(parseDomain("mymachine.local", options)).toEqual({
+                subdomain: "",
+                domain: "mymachine",
+                tld: "local",
+            });
+            expect(parseDomain("localhost", options)).toEqual({
+                subdomain: "",
+                domain: "",
+                tld: "localhost",
+            });
+            expect(parseDomain("localhost:8080", options)).toEqual({
+                subdomain: "",
+                domain: "",
+                tld: "localhost",
+            });
 
-        // Sanity checks if the option does not misbehave
-        expect(parseDomain("mymachine.local")).to.eql(null);
-        expect(parseDomain("http://example.com", options)).to.eql({
-            subdomain: "",
-            domain: "example",
-            tld: "com",
-        });
-    });
+            // Sanity checks if the option does not misbehave
+            expect(parseDomain("mymachine.local")).toBe(null);
+            expect(parseDomain("http://example.com", options)).toEqual({
+                subdomain: "",
+                domain: "example",
+                tld: "com",
+            });
+        }
+    );
 
     describe("real-world use cases", () => {
         // See https://github.com/peerigon/parse-domain/pull/65
-        it("should parse police.uk as tld", () => {
-            expect(parseDomain("example.police.uk")).to.eql({
+        test("should parse police.uk as tld", () => {
+            expect(parseDomain("example.police.uk")).toEqual({
                 subdomain: "",
                 domain: "example",
                 tld: "police.uk",
@@ -219,8 +221,8 @@ describe("parseDomain(url)", () => {
         });
 
         // See https://github.com/peerigon/parse-domain/issues/67
-        it("should parse gouv.fr as tld", () => {
-            expect(parseDomain("dev.classea12.beta.gouv.fr", {privateTlds: true})).to.eql({
+        test("should parse gouv.fr as tld", () => {
+            expect(parseDomain("dev.classea12.beta.gouv.fr", {privateTlds: true})).toEqual({
                 tld: "gouv.fr",
                 domain: "beta",
                 subdomain: "dev.classea12",
@@ -229,9 +231,8 @@ describe("parseDomain(url)", () => {
     });
 
     describe("official test suite", () => {
-        it("passes all inputs", () => {
+        test("passes all inputs", () => {
             function checkPublicSuffix(input, expectedTld) {
-                console.log(input);
                 const result = parseDomain(input, {privateTlds: true});
 
                 if (expectedTld === null) {
@@ -239,10 +240,10 @@ describe("parseDomain(url)", () => {
                     // should not be registerable.
                     // Our module will return an empty string for the domain
                     // in that case. The tld should match the input.
-                    expect(result.tld).to.equal(input.toLowerCase());
-                    expect(result.domain).to.equal("");
+                    expect(result.tld).toBe(input.toLowerCase());
+                    expect(result.domain).toBe("");
                 } else {
-                    expect(result.domain + "." + result.tld).to.equal(expectedTld);
+                    expect(result.domain + "." + result.tld).toBe(expectedTld);
                 }
             }
 
