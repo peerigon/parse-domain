@@ -1,9 +1,6 @@
 "use strict";
 
-const chai = require("chai");
 const serializeTrie = require("../../lib/trie/serializeTrie");
-
-const expect = chai.expect;
 
 describe("serializeTrie()", () => {
     [
@@ -36,9 +33,12 @@ describe("serializeTrie()", () => {
         const parsedList = args[0];
         const expectedString = args[1];
 
-        it(`maps ${JSON.stringify(parsedList)} on ${JSON.stringify(expectedString)}`, () => {
-            expect(serializeTrie(parsedList)).to.equal(expectedString);
-        });
+        test(
+            `maps ${JSON.stringify(parsedList)} on ${JSON.stringify(expectedString)}`,
+            () => {
+                expect(serializeTrie(parsedList)).toBe(expectedString);
+            }
+        );
     });
 
     describe(`type ${serializeTrie.TYPE_LIGHT}`, () => {
@@ -57,9 +57,12 @@ describe("serializeTrie()", () => {
             const parsedList = args[0];
             const expectedString = args[1];
 
-            it(`maps ${JSON.stringify(parsedList)} on ${JSON.stringify(expectedString)}`, () => {
-                expect(serializeTrie(parsedList, type)).to.equal(expectedString);
-            });
+            test(
+                `maps ${JSON.stringify(parsedList)} on ${JSON.stringify(expectedString)}`,
+                () => {
+                    expect(serializeTrie(parsedList, type)).toBe(expectedString);
+                }
+            );
         });
     });
 
@@ -84,16 +87,19 @@ describe("serializeTrie()", () => {
             const parsedList = args[0];
             const expectedString = args[1];
 
-            it(`maps ${JSON.stringify(parsedList)} on ${JSON.stringify(expectedString)}`, () => {
-                expect(serializeTrie(parsedList, type)).to.equal(expectedString);
-            });
+            test(
+                `maps ${JSON.stringify(parsedList)} on ${JSON.stringify(expectedString)}`,
+                () => {
+                    expect(serializeTrie(parsedList, type)).toBe(expectedString);
+                }
+            );
         });
     });
 
     describe("wrong usage", () => {
         expect(() => {
             serializeTrie([], "unsupported type");
-        }).to.throw(
+        }).toThrowError(
             'Cannot serialize trie: Unknown trie type "unsupported type". Expected type to be one of complete, light'
         );
     });
