@@ -1,10 +1,6 @@
 "use strict";
 
-const chai = require("chai");
-
 const parseDomain = require("../lib/parseDomain.js");
-
-chai.config.includeStack = true;
 
 describe("parseDomain(url)", () => {
     test("should remove the protocol", () => {
@@ -237,7 +233,6 @@ describe("parseDomain(url)", () => {
     describe("official test suite", () => {
         test("passes all inputs", () => {
             function checkPublicSuffix(input, expectedTld) {
-                console.log(input);
                 const result = parseDomain(input, {privateTlds: true});
 
                 if (expectedTld === null) {
