@@ -6,7 +6,7 @@ parse-domain
 [![](https://img.shields.io/npm/dm/parse-domain.svg)](https://www.npmjs.com/package/parse-domain)
 [![Dependency Status](https://david-dm.org/peerigon/parse-domain.svg)](https://david-dm.org/peerigon/parse-domain)
 [![Build Status](https://travis-ci.com/peerigon/parse-domain.svg?branch=master)](https://travis-ci.com/peerigon/parse-domain)
-[![Coverage Status](https://img.shields.io/coveralls/peerigon/parse-domain.svg)](https://coveralls.io/r/peerigon/parse-domain?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/peerigon/parse-domain/badge.svg?branch=master)](https://coveralls.io/github/peerigon/parse-domain?branch=master)
 [![Known Vulnerabilities](https://snyk.io/test/github/peerigon/parse-domain/badge.svg)](https://snyk.io/test/github/peerigon/parse-domain)
 
 Since domains are handled differently across different countries and organizations, splitting a URL into sub-domain, domain and top-level-domain parts is not a simple regexp. **parse-domain** uses a [large list of known top-level domains](https://publicsuffix.org/list/public_suffix_list.dat) from publicsuffix.org to recognize different parts of the domain.
