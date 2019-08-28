@@ -1,0 +1,8 @@
+{
+	"plugins": ["no-null"],
+	"extends": ["peerigon/typescript"],
+	"rules": {
+		"import/no-default-export": "error"
+		// "no-null/no-null": "error"
+	}
+}

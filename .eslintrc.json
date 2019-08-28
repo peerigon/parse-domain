@@ -1,10 +1,16 @@
 {
-    "extends": [
-        "peerigon/base",
-        "peerigon/node"
-    ],
-    "env": {
-        "node": true
-    },
-    "root": true
+	"extends": ["peerigon", "peerigon/node", "peerigon/styles/prefer-arrow"],
+	"env": {
+		"node": true
+	},
+	"root": true,
+	"rules": {
+		// "indent": [
+		// 	"error",
+		// 	"tab",
+		// 	options["indent"],
+		// ], // http://eslint.org/docs/rules/indent
+		// "@typescript-eslint/indent": ["error", "tab", options["indent"]], // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/indent.md
+		"no-tabs": ["error", {"allowIndentationTabs": true}]
+	}
 }
