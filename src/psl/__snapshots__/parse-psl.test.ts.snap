@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`parsePublicSuffixList() It matches the snapshot when given the test fixture 1`] = `
+exports[`parsePublicSuffixList() matches the snapshot when given the test fixture 1`] = `
 Object {
   "icann": Array [
     "ac",

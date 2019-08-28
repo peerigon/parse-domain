@@ -4,31 +4,6 @@ const serializeTrie = require("../../lib/trie/serializeTrie");
 
 describe("serializeTrie()", () => {
     [
-        [[], ""],
-        // Identical lines are ignored
-        [["a.a", "a.a", "a.a"], "a>a"],
-        // Down separators are applied
-        [["a", "a.a", "a.a.a", "a.a.a.a"], "a>a>a>a"],
-        // The occurence order has no impact on the result
-        [["a.a.a.a", "a.a.a", "a.a", "a"], "a>a>a>a"],
-        // Same level separators are applied
-        [["a.a", "b.a", "c.a"], "a>a,b,c"],
-        // Up separators are applied
-        [["a", "a.a", "a.a.a", "a.b.a", "a.c.a"], "a>a>a<b>a<c>a"],
-        // Reset separators are applied
-        [["a.a.a.a", "b.b.b", "c.c"], "a>a>a>a|b>b>b|c>c"],
-        // Mixed cases
-        [["a.a.a.a", "b.a", "c.a", "a.a.b", "a.a.b.b", "b.a.b.b"], "a>a>a>a<<b,c|b>a>a<b>a>a,b"],
-        // Real-world use cases
-        [["uk", "ac.uk", "co.uk"], "uk>ac,co"],
-        [["pl", "gov.pl", "ap.gov.pl"], "pl>gov>ap"],
-        [["pl", "gov.pl", "ap.gov.pl", "net.pl"], "pl>gov>ap<net"],
-        [["pl", "gov.pl", "ap.gov.pl", "uk", "ac.uk", "co.uk"], "pl>gov>ap|uk>ac,co"],
-        // Meaningful characters like the wildcard and the negation are not omitted
-        [["*.ck", "!www.ck"], "ck>!www,*"],
-        // This example is from the private domains list.
-        // They are without the company domain (.ua in this case)
-        [["cc.ua", "inf.ua", "ltd.ua"], "ua>cc,inf,ltd"],
     ].forEach(args => {
         const parsedList = args[0];
         const expectedString = args[1];

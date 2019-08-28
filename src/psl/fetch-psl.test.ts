@@ -14,7 +14,7 @@ describe("fetchPublicSuffixList()", () => {
 		jest.useRealTimers();
 	});
 
-	test("It fetches the public suffix list as text", async () => {
+	test("fetches the public suffix list as text", async () => {
 		nock(publicSuffixUrl.origin)
 			.get(publicSuffixUrl.pathname)
 			.reply(200, "Public suffix list");
@@ -24,7 +24,7 @@ describe("fetchPublicSuffixList()", () => {
 		expect(list).toEqual("Public suffix list");
 	});
 
-	test("It times out after PUBLIC_SUFFIX_FETCH_TIMEOUT", async () => {
+	test("times out after PUBLIC_SUFFIX_FETCH_TIMEOUT", async () => {
 		nock(publicSuffixUrl.origin)
 			.get(publicSuffixUrl.pathname)
 			.delayConnection(Number.MAX_SAFE_INTEGER)
