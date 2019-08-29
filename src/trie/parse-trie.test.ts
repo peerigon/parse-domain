@@ -1,29 +1,7 @@
 import {parseTrie} from "./parse-trie";
-import {NODE_TYPE_ROOT, NODE_TYPE_CHILD, TrieRootNode, TrieChildNode, TrieNode} from "./nodes";
+import {expectRoot, expectChild} from "../tests/assertions/nodes";
 
 describe("parseTrie()", () => {
-	const expectRoot = ({root, childrenSize}: {root: TrieRootNode; childrenSize: number}) => {
-		expect(root.type).toBe(NODE_TYPE_ROOT);
-		expect(root.children.size).toBe(childrenSize);
-	};
-
-	const expectChild = ({
-		child,
-		parent,
-		domain,
-		childrenSize,
-	}: {
-		child: TrieChildNode;
-		domain: string;
-		childrenSize: number;
-		parent: TrieNode;
-	}) => {
-		expect(child.type).toBe(NODE_TYPE_CHILD);
-		expect(child.domain).toBe(domain);
-		expect(child.children.size).toBe(childrenSize);
-		expect(child.parent).toBe(parent);
-	};
-
 	test("when called with '' it returns the root node with no children", () => {
 		const root = parseTrie("");
 

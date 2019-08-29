@@ -2,28 +2,26 @@ import {writeFileSync, readFileSync} from "fs";
 import {
 	pathToPslFile,
 	pathToIcannCompleteTrie,
-	pathToIcannLightTrie,
 	pathToPrivateTrie,
 	pathToTrieMetaFile,
 } from "../paths";
 import {parsePublicSuffixList} from "../psl/parse-psl";
-import {serializeTrie, TrieTypes} from "../trie/serialize-trie";
+import {serializeTrie} from "../trie/serialize-trie";
+import { createTrieFromList } from "../trie/create-trie";
 
 const buildTries = async (): Promise<void> => {
 	const pslContent = readFileSync(pathToPslFile, "utf8");
 	const parsedPsl = parsePublicSuffixList(pslContent);
+	const icannTrie = createTrieFromList(parsedPsl.icann);
+	const privateTrie = createTrieFromList(parsedPsl.private);
 
 	writeFileSync(
 		pathToIcannCompleteTrie,
-		JSON.stringify(serializeTrie(parsedPsl.icann, TrieTypes.Complete)),
-	);
-	writeFileSync(
-		pathToIcannLightTrie,
-		JSON.stringify(serializeTrie(parsedPsl.icann, TrieTypes.Light)),
+		JSON.stringify(serializeTrie(icannTrie)),
 	);
 	writeFileSync(
 		pathToPrivateTrie,
-		JSON.stringify(serializeTrie(parsedPsl.private, TrieTypes.Complete)),
+		JSON.stringify(serializeTrie(privateTrie)),
 	);
 
 	writeFileSync(

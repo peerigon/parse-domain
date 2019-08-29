@@ -2,70 +2,74 @@ import {readFileSync} from "fs";
 import {resolve} from "path";
 import {serializeTrie} from "./serialize-trie";
 import {parsePublicSuffixList} from "../psl/parse-psl";
+import {createRootNode, createOrGetChild} from "./nodes";
+import {createTrieFromList} from "./create-trie";
 
 describe("serializeTrie()", () => {
-	const pathToPslFixture = resolve(
-		__dirname,
-		"..",
-		"tests",
-		"fixtures",
-		"public-suffix-list.txt",
-	);
+	test("when passed a root node without children it returns an empty string", () => {
+		const root = createRootNode();
 
-	const fixtureContent = readFileSync(pathToPslFixture, "utf8");
-
-	test("When passed an empty array it returns an empty string", () => {
-		expect(serializeTrie([])).toBe("");
+		expect(serializeTrie(root)).toBe("");
 	});
 
-	test("It doesn't include duplicated lines", () => {
-		expect(serializeTrie(["a.a", "a.a", "a.a"])).toBe("a>a");
+	test("uses down separators as expected", () => {
+		const root = createRootNode();
+		const a = createOrGetChild(root, "a");
+		const b = createOrGetChild(a, "b");
+
+		createOrGetChild(b, "c");
+
+		expect(serializeTrie(root)).toBe("a>b>c");
 	});
 
-	test("It applies down separators as expected", () => {
-		expect(serializeTrie(["a", "a.a", "a.a.a", "a.a.a.a"])).toBe("a>a>a>a");
+	test("uses same level separators as expected", () => {
+		const root = createRootNode();
+
+		createOrGetChild(root, "a");
+		createOrGetChild(root, "b");
+		createOrGetChild(root, "c");
+
+		expect(serializeTrie(root)).toBe("a,b,c");
 	});
 
-	test("It applies same level separators as expected", () => {
-		expect(serializeTrie(["a.a", "b.a", "c.a"])).toBe("a>a,b,c");
+	test("uses up separators as expected", () => {
+		const root = createRootNode();
+		const a = createOrGetChild(root, "a");
+
+		createOrGetChild(a, "b");
+		createOrGetChild(root, "c");
+
+		expect(serializeTrie(root)).toBe("a>b<c");
 	});
 
-	test("It applies up separators as expected", () => {
-		expect(serializeTrie(["a", "a.a", "a.a.a", "a.b.a", "a.c.a"])).toBe("a>a>a<b>a<c>a");
+	test("works with real-world use cases", () => {
+		const root = createRootNode();
+		const uk = createOrGetChild(root, "uk");
+		const pl = createOrGetChild(root, "pl");
+		const govPl = createOrGetChild(pl, "gov");
+
+		createOrGetChild(uk, "ac");
+		createOrGetChild(uk, "co");
+		createOrGetChild(govPl, "ap");
+
+		expect(serializeTrie(root)).toBe("uk>ac,co<pl>gov>ap");
 	});
 
-	test("It applies reset separators as expected", () => {
-		expect(serializeTrie(["a.a.a.a", "b.b.b", "c.c"])).toBe("a>a>a>a|b>b>b|c>c");
-	});
-
-	test("It also mixes separators", () => {
-		expect(serializeTrie(["a.a.a.a", "b.a", "c.a", "a.a.b", "a.a.b.b", "b.a.b.b"])).toBe(
-			"a>a>a>a<<b,c|b>a>a<b>a>a,b",
+	test("matches the snapshot when given the parsed test fixture", () => {
+		const pathToPslFixture = resolve(
+			__dirname,
+			"..",
+			"tests",
+			"fixtures",
+			"public-suffix-list.txt",
 		);
-	});
 
-	test("The occurence order has no impact on the result", () => {
-		expect(serializeTrie(["b.a.b.b", "c.a", "b.a", "a.a.a.a", "a.a.b", "a.a.b.b"])).toBe(
-			"a>a>a>a<<b,c|b>a>a<b>a>a,b",
-		);
-	});
-
-	test("The wildcard and the negation characters are not omitted", () => {
-		expect(serializeTrie(["*.ck", "!www.ck"])).toBe("ck>!www,*");
-	});
-
-	test("It works with real-world use cases", () => {
-		expect(serializeTrie(["uk", "ac.uk", "co.uk"])).toBe("uk>ac,co");
-		expect(serializeTrie(["pl", "gov.pl", "ap.gov.pl"])).toBe("pl>gov>ap");
-		expect(serializeTrie(["pl", "gov.pl", "ap.gov.pl", "uk", "ac.uk", "co.uk"])).toBe(
-			"pl>gov>ap|uk>ac,co",
-		);
-	});
-
-	test("It matches the snapshot when given the parsed test fixture", () => {
+		const fixtureContent = readFileSync(pathToPslFixture, "utf8");
 		const parsedFixture = parsePublicSuffixList(fixtureContent);
+		const icannTrie = createTrieFromList(parsedFixture.icann);
+		const privateTrie = createTrieFromList(parsedFixture.icann);
 
-		expect(serializeTrie(parsedFixture.icann)).toMatchSnapshot();
-		expect(serializeTrie(parsedFixture.private)).toMatchSnapshot();
+		expect(serializeTrie(icannTrie)).toMatchSnapshot();
+		expect(serializeTrie(privateTrie)).toMatchSnapshot();
 	});
 });
