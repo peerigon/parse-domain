@@ -156,16 +156,14 @@ describe("parseDomain()", () => {
 		checkPublicSuffix("shishi.中国", "shishi.中国");
 		checkPublicSuffix("中国", null);
 		// Same as above, but punycoded.
-		// NOTE: punycode is not supported, the caller is responsible
-		// for converting it first.
-		// checkPublicSuffix("xn--85x722f.com.cn", "xn--85x722f.com.cn");
-		// checkPublicSuffix("xn--85x722f.xn--55qx5d.cn", "xn--85x722f.xn--55qx5d.cn");
-		// checkPublicSuffix("www.xn--85x722f.xn--55qx5d.cn", "xn--85x722f.xn--55qx5d.cn");
-		// checkPublicSuffix("shishi.xn--55qx5d.cn", "shishi.xn--55qx5d.cn");
-		// checkPublicSuffix("xn--55qx5d.cn", null);
-		// checkPublicSuffix("xn--85x722f.xn--fiqs8s", "xn--85x722f.xn--fiqs8s");
-		// checkPublicSuffix("www.xn--85x722f.xn--fiqs8s", "xn--85x722f.xn--fiqs8s");
-		// checkPublicSuffix("shishi.xn--fiqs8s", "shishi.xn--fiqs8s");
-		// checkPublicSuffix("xn--fiqs8s", null);
+		checkPublicSuffix("xn--85x722f.com.cn", "xn--85x722f.com.cn");
+		checkPublicSuffix("xn--85x722f.xn--55qx5d.cn", "xn--85x722f.xn--55qx5d.cn");
+		checkPublicSuffix("www.xn--85x722f.xn--55qx5d.cn", "xn--85x722f.xn--55qx5d.cn");
+		checkPublicSuffix("shishi.xn--55qx5d.cn", "shishi.xn--55qx5d.cn");
+		checkPublicSuffix("xn--55qx5d.cn", null);
+		checkPublicSuffix("xn--85x722f.xn--fiqs8s", "xn--85x722f.xn--fiqs8s");
+		checkPublicSuffix("www.xn--85x722f.xn--fiqs8s", "xn--85x722f.xn--fiqs8s");
+		checkPublicSuffix("shishi.xn--fiqs8s", "shishi.xn--fiqs8s");
+		checkPublicSuffix("xn--fiqs8s", null);
 	});	
 });
