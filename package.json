@@ -38,10 +38,10 @@
   "license": "Unlicense",
   "dependencies": {
     "got": "^8.3.2",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.1",
+    "npm-run-all": "^4.1.5"
   },
   "devDependencies": {
-    "npm-run-all": "^4.1.5",
     "jest": "^24.9.0",
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
