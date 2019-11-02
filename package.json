@@ -1,6 +1,6 @@
 {
   "name": "parse-domain",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "Splits an url into sub-domain, domain and effective top-level-domain",
   "main": "./lib/parseDomain.js",
   "types": "./src/index.d.ts",
