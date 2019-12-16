@@ -36,11 +36,7 @@
   },
   "author": "peerigon <developers@peerigon.com>",
   "license": "Unlicense",
-  "dependencies": {
-    "got": "^8.3.2",
-    "mkdirp": "^0.5.1",
-    "npm-run-all": "^4.1.5"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
@@ -51,6 +47,9 @@
     "eslint-plugin-jsdoc": "^4.8.4",
     "jest": "^24.9.0",
     "rimraf": "^2.6.3",
+    "got": "^8.3.2",
+    "mkdirp": "^0.5.1",
+    "npm-run-all": "^4.1.5",
     "standard-version": "^6.0.1",
     "updtr": "^3.1.0"
   },
