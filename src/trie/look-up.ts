@@ -1,14 +1,14 @@
 import * as characters from "./characters";
 import {TrieNode} from "./nodes";
-import {Domains} from "../domains";
+import {Labels} from "../parse-domain";
 
-export const lookUpTldsInTrie = (domains: Domains, trie: TrieNode): Domains => {
-	const domainsToCheck = domains.slice();
-	const tlds: Domains = [];
+export const lookUpTldsInTrie = (labels: Labels, trie: TrieNode): Labels => {
+	const labelsToCheck = labels.slice();
+	const tlds: Labels = [];
 	let node = trie;
 
-	while (domainsToCheck.length !== 0) {
-		const domain = domainsToCheck.pop() as string;
+	while (labelsToCheck.length !== 0) {
+		const domain = labelsToCheck.pop() as string;
 
 		if (node.children.has(characters.WILDCARD)) {
 			if (node.children.has(characters.EXCEPTION + domain)) {
@@ -26,4 +26,16 @@ export const lookUpTldsInTrie = (domains: Domains, trie: TrieNode): Domains => {
 	}
 
 	return tlds;
+};
+
+export const lookUpTldsInArray = (labels: Labels, tlds: Array<Labels>): Labels => {
+	const labelsJoined = labels.join("");
+
+	const index = tlds.findIndex(tld => {
+		const tldJoined = tld.join("");
+
+		return labelsJoined.endsWith(tldJoined);
+	});
+
+	return index === -1 ? [] : tlds[index];
 };

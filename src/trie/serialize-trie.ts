@@ -1,14 +1,5 @@
-import {TrieRootNode, TrieNode, NODE_TYPE_CHILD, TrieChildNode} from "./nodes";
-import {DOWN, UP, matchSeparatorsAtStringEnd, SAME} from "./characters";
-
-const serializeSubTrie = (node: TrieNode): string => {
-	return Array.from(node.children.values(), (child): string => {
-		// Since the depth of our tries is usually never higher than 5 recursion is ok here
-		const serializedChild = serializeSubTrie(child);
-
-		return child.domain + (serializedChild === "" ? "" : (DOWN + serializedChild + UP));
-	}).join(",");
-};
+import {TrieRootNode, TrieChildNode} from "./nodes";
+import {DOWN, UP, SAME} from "./characters";
 
 export const serializeTrie = (root: TrieRootNode): string => {
 	type QueueItem = TrieChildNode | typeof UP | undefined;
@@ -55,9 +46,4 @@ export const serializeTrie = (root: TrieRootNode): string => {
 	}
 
 	return serialized;
-
-	// return serializeSubTrie(root)
-	// 	.replace(matchSeparatorsAtStringEnd, "")
-	// 	// UP + SAME is the result of our "stupid" join() and can be simplified to just UP
-	// 	.replace(UP + SAME, UP);
 };

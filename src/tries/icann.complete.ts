@@ -1,6 +1,4 @@
 import {parseTrie} from "../trie/parse-trie";
 import serializedTrie from "../../build/tries/icann.complete.json";
 
-export const icannCompleteTrie = parseTrie(serializedTrie);
-
-console.log(icannCompleteTrie.children.get("jp")!.children.get("kyoto")!.children.entries());
+export const icannCompleteTrie = parseTrie(serializedTrie.trie);

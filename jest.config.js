@@ -5,6 +5,11 @@ module.exports = {
 	transform: {
 		"^.+\\.tsx?$": "ts-jest",
 	},
+	globals: {
+		"ts-jest": {
+			diagnostics: false,
+		},
+	},
 	// There's currently a problem with collecting the coverage data on Travis
 	// in combination with our scripts/link-src.js approach.
 	// Seems like Jest is handling symlinks inconsistenly on macOS and Linux.

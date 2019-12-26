@@ -1,0 +1,4 @@
+- Octet === string.length? Convert to punycode before, then we can just use .length probably
+- Add note about ".local" and "localhost" to README
+- Add support for trailing and leading dot? Check test case
+- Add IDNA (i18n) support

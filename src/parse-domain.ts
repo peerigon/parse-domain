@@ -1,54 +1,88 @@
 import {icannCompleteTrie} from "./tries/icann.complete";
 import {privateTrie} from "./tries/private.complete";
 import {lookUpTldsInTrie} from "./trie/look-up";
-import {Domains} from "./domains";
+import {ValidationError, sanitize, SanitizationResultType} from "./sanitize";
 
-type ParsedDomain = {
-	subdomain?: string;
-	domain?: string;
-	tld?: string;
+export type Labels = Array<string>;
+
+export enum ParseResultType {
+	Invalid,
+	NotListed,
+	Listed,
+}
+
+export type ParseResultInvalid = {
+	hostname: string;
+	type: ParseResultType.Invalid;
+	errors: Array<ValidationError>;
 };
 
-const lookUpTlds = (domains: Domains): Domains | undefined => {
-	const icannTlds = lookUpTldsInTrie(domains, icannCompleteTrie);
-	const privateTlds = lookUpTldsInTrie(domains, privateTrie);
+export type ParseResultNotListed = {
+	hostname: string;
+	type: ParseResultType.NotListed;
+	domains: Labels;
+};
 
-	if (privateTlds.length > icannTlds.length) {
-		return privateTlds;
-	}
-	if (icannTlds.length > 0) {
-		return icannTlds;
-	}
+type ParseResultListedDomains = {
+	subDomains: Labels;
+	domain: string | undefined;
+	topLevelDomains: Labels;
+};
 
-	return undefined;
+export type ParseResultListed = ParseResultListedDomains & {
+	hostname: string;
+	type: ParseResultType.Listed;
+	icann: ParseResultListedDomains;
+};
+
+export type ParseResult = ParseResultInvalid | ParseResultNotListed | ParseResultListed;
+
+const getAtIndex = <Item>(array: Array<Item>, index: number): Item | undefined => {
+	return index >= 0 && index < array.length ? array[index] : undefined;
+};
+
+const splitLabelsIntoDomains = (labels: Labels, index: number): ParseResultListedDomains => {
+	return {
+		subDomains: labels.slice(0, Math.max(0, index)),
+		domain: getAtIndex(labels, index),
+		topLevelDomains: labels.slice(index + 1),
+	};
 };
 
 /* eslint-disable jsdoc/no-undefined-types */
 /**
  * TODO: Write JSDoc
  */
-export const parseDomain = (hostname: string): ParsedDomain => {
-	const domains = hostname.toLowerCase().split(".");
-	const tlds = lookUpTlds(domains);
-	let subdomain;
-	let domain;
-	let tld;
+export const parseDomain = (hostname: string): ParseResult => {
+	const sanitizationResult = sanitize(hostname);
 
-	if (tlds !== undefined) {
-		const indexOfDomain = domains.length - tlds.length - 1;
-
-		tld = tlds.join(".");
-		if (indexOfDomain >= 0) {
-			domain = domains[indexOfDomain];
-			if (indexOfDomain >= 1) {
-				subdomain = domains.slice(0, indexOfDomain).join(".");
-			}
-		}
+	if (sanitizationResult.type === SanitizationResultType.Error) {
+		return {
+			type: ParseResultType.Invalid,
+			hostname,
+			errors: sanitizationResult.errors,
+		};
 	}
 
+	const labels = sanitizationResult.labels;
+	const icannTlds = lookUpTldsInTrie(labels, icannCompleteTrie);
+	const privateTlds = lookUpTldsInTrie(labels, privateTrie);
+
+	if (icannTlds.length === 0 && privateTlds.length === 0) {
+		return {
+			type: ParseResultType.NotListed,
+			hostname,
+			domains: labels,
+		};
+	}
+
+	const indexOfPublicSuffixDomain = labels.length - Math.max(privateTlds.length, icannTlds.length) - 1;
+	const indexOfIcannDomain = labels.length - icannTlds.length - 1;
+
 	return {
-		subdomain,
-		domain,
-		tld,
+		hostname,
+		type: ParseResultType.Listed,
+		icann: splitLabelsIntoDomains(labels, indexOfIcannDomain),
+		...splitLabelsIntoDomains(labels, indexOfPublicSuffixDomain),
 	};
 };
