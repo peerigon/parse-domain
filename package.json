@@ -5,14 +5,9 @@
   "main": "./lib/parseDomain.js",
   "types": "./src/index.d.ts",
   "scripts": {
-    "build": "run-s build:lib build:tries",
-    "build:lib": "run-s build:lib:clean build:lib:babel",
-    "build:tries": "node scripts/build-tries.js",
     "release": "standard-version",
-    "pretest": "run-s build:lib:clean pretest:link",
-    "pretest:link": "node scripts/link-src.js",
     "test": "jest",
-    "posttest": "eslint src test",
+    "posttest": "eslint src --ext ts",
     "update": "updtr"
   },
   "keywords": [

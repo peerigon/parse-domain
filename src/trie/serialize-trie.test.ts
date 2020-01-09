@@ -19,7 +19,7 @@ describe("serializeTrie()", () => {
 
 		createOrGetChild(b, "c");
 
-		expect(serializeTrie(root)).toBe("a>b>c");
+		expect(serializeTrie(root)).toMatchInlineSnapshot("\"a>b>c\"");
 	});
 
 	test("uses same level separators as expected", () => {
@@ -29,7 +29,7 @@ describe("serializeTrie()", () => {
 		createOrGetChild(root, "b");
 		createOrGetChild(root, "c");
 
-		expect(serializeTrie(root)).toBe("a,b,c");
+		expect(serializeTrie(root)).toMatchInlineSnapshot("\"a,b,c\"");
 	});
 
 	test("uses up separators as expected", () => {
@@ -39,7 +39,16 @@ describe("serializeTrie()", () => {
 		createOrGetChild(a, "b");
 		createOrGetChild(root, "c");
 
-		expect(serializeTrie(root)).toBe("a>b<c");
+		expect(serializeTrie(root)).toMatchInlineSnapshot("\"a>b<c\"");
+	});
+
+	test("translates all non-ASCII characters to punycode", () => {
+		const root = createRootNode();
+		const a = createOrGetChild(root, "岐阜");
+
+		createOrGetChild(a, "موقع");
+
+		expect(serializeTrie(root)).toMatchInlineSnapshot("\"xn--nit225k>xn--4gbrim\"");
 	});
 
 	test("works with real-world use cases", () => {
@@ -52,7 +61,7 @@ describe("serializeTrie()", () => {
 		createOrGetChild(uk, "co");
 		createOrGetChild(govPl, "ap");
 
-		expect(serializeTrie(root)).toBe("uk>ac,co<pl>gov>ap");
+		expect(serializeTrie(root)).toMatchInlineSnapshot("\"uk>ac,co<pl>gov>ap\"");
 	});
 
 	test("matches the snapshot when given the parsed test fixture", () => {

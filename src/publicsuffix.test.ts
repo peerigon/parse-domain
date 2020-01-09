@@ -418,18 +418,83 @@ describe("Official test suite from https://raw.githubusercontent.com/publicsuffi
 		domain: undefined,
 		topLevelDomains: [toASCII("公司"), "cn"],
 	});
-	// checkPublicSuffix("食狮.中国", "食狮.中国");
-	// checkPublicSuffix("www.食狮.中国", "食狮.中国");
-	// checkPublicSuffix("shishi.中国", "shishi.中国");
-	// checkPublicSuffix("中国", null);
+	checkPublicSuffix("食狮.中国", "食狮.中国", {
+		type: ParseResultType.Listed,
+		subDomains: [],
+		domain: toASCII("食狮"),
+		topLevelDomains: [toASCII("中国")],
+	});
+	checkPublicSuffix("www.食狮.中国", "食狮.中国", {
+		type: ParseResultType.Listed,
+		subDomains: ["www"],
+		domain: toASCII("食狮"),
+		topLevelDomains: [toASCII("中国")],
+	});
+	checkPublicSuffix("shishi.中国", "shishi.中国", {
+		type: ParseResultType.Listed,
+		subDomains: [],
+		domain: "shishi",
+		topLevelDomains: [toASCII("中国")],
+	});
+	checkPublicSuffix("中国", null, {
+		type: ParseResultType.Listed,
+		subDomains: [],
+		domain: undefined,
+		topLevelDomains: [toASCII("中国")],
+	});
 	// Same as above, but punycoded.
-	// checkPublicSuffix("xn--85x722f.com.cn", "xn--85x722f.com.cn");
-	// checkPublicSuffix("xn--85x722f.xn--55qx5d.cn", "xn--85x722f.xn--55qx5d.cn");
-	// checkPublicSuffix("www.xn--85x722f.xn--55qx5d.cn", "xn--85x722f.xn--55qx5d.cn");
-	// checkPublicSuffix("shishi.xn--55qx5d.cn", "shishi.xn--55qx5d.cn");
-	// checkPublicSuffix("xn--55qx5d.cn", null);
-	// checkPublicSuffix("xn--85x722f.xn--fiqs8s", "xn--85x722f.xn--fiqs8s");
-	// checkPublicSuffix("www.xn--85x722f.xn--fiqs8s", "xn--85x722f.xn--fiqs8s");
-	// checkPublicSuffix("shishi.xn--fiqs8s", "shishi.xn--fiqs8s");
-	// checkPublicSuffix("xn--fiqs8s", null);
+	checkPublicSuffix("xn--85x722f.com.cn", "xn--85x722f.com.cn", {
+		type: ParseResultType.Listed,
+		subDomains: [],
+		domain: toASCII("食狮"),
+		topLevelDomains: ["com", "cn"],
+	});
+	checkPublicSuffix("xn--85x722f.xn--55qx5d.cn", "xn--85x722f.xn--55qx5d.cn", {
+		type: ParseResultType.Listed,
+		subDomains: [],
+		domain: toASCII("食狮"),
+		topLevelDomains: [toASCII("公司"), "cn"],
+	});
+	checkPublicSuffix("www.xn--85x722f.xn--55qx5d.cn", "xn--85x722f.xn--55qx5d.cn", {
+		type: ParseResultType.Listed,
+		subDomains: ["www"],
+		domain: toASCII("食狮"),
+		topLevelDomains: [toASCII("公司"), "cn"],
+	});
+	checkPublicSuffix("shishi.xn--55qx5d.cn", "shishi.xn--55qx5d.cn", {
+		type: ParseResultType.Listed,
+		subDomains: [],
+		domain: "shishi",
+		topLevelDomains: [toASCII("公司"), "cn"],
+	});
+	checkPublicSuffix("xn--55qx5d.cn", null, {
+		type: ParseResultType.Listed,
+		subDomains: [],
+		domain: undefined,
+		topLevelDomains: [toASCII("公司"), "cn"],
+	});
+	checkPublicSuffix("xn--85x722f.xn--fiqs8s", "xn--85x722f.xn--fiqs8s", {
+		type: ParseResultType.Listed,
+		subDomains: [],
+		domain: toASCII("食狮"),
+		topLevelDomains: [toASCII("中国")],
+	});
+	checkPublicSuffix("www.xn--85x722f.xn--fiqs8s", "xn--85x722f.xn--fiqs8s", {
+		type: ParseResultType.Listed,
+		subDomains: ["www"],
+		domain: toASCII("食狮"),
+		topLevelDomains: [toASCII("中国")],
+	});
+	checkPublicSuffix("shishi.xn--fiqs8s", "shishi.xn--fiqs8s", {
+		type: ParseResultType.Listed,
+		subDomains: [],
+		domain: "shishi",
+		topLevelDomains: [toASCII("中国")],
+	});
+	checkPublicSuffix("xn--fiqs8s", null, {
+		type: ParseResultType.Listed,
+		subDomains: [],
+		domain: undefined,
+		topLevelDomains: [toASCII("中国")],
+	});
 });

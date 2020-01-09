@@ -1,5 +1,5 @@
-import {icannCompleteTrie} from "./tries/icann.complete";
-import {privateTrie} from "./tries/private.complete";
+import {icannCompleteTrie} from "./tries/icann";
+import {privateTrie} from "./tries/private";
 import {lookUpTldsInTrie} from "./trie/look-up";
 import {ValidationError, sanitize, SanitizationResultType} from "./sanitize";
 

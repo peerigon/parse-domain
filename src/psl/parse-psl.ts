@@ -1,4 +1,3 @@
-import {toASCII} from "punycode";
 import {
 	PUBLIC_SUFFIX_MARKER_ICANN_START,
 	PUBLIC_SUFFIX_MARKER_ICANN_END,
@@ -40,19 +39,13 @@ export const parsePublicSuffixList = (listContent: string): ParsedPublicSuffixLi
 			PUBLIC_SUFFIX_MARKER_ICANN_END,
 		)
 			.split(matchNewLine)
-			.filter(containsRule)
-			// Punycode encoded rules are longer, but it's still better than including the punycode library into the runtime code of parse-domain.
-			// Gzip is also very effective in removing the duplicate characters.
-			// Please also note:
-			// new URL().hostname is punycode encoded which means that we must compare punycode encoded hostnames against our rules at runtime.
-			.map(line => toASCII(line)),
+			.filter(containsRule),
 		private: extractByMarkers(
 			listContent,
 			PUBLIC_SUFFIX_MARKER_PRIVATE_START,
 			PUBLIC_SUFFIX_MARKER_PRIVATE_END,
 		)
 			.split(matchNewLine)
-			.filter(containsRule)
-			.map(line => toASCII(line)),
+			.filter(containsRule),
 	};
 };
