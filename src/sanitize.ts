@@ -10,9 +10,10 @@ const LABEL_LENGTH_MAX = 63;
 const DOMAIN_LENGTH_MAX = 253;
 
 export enum ValidationErrorType {
+	DomainMaxLength,
 	LabelMinLength,
 	LabelMaxLength,
-	DomainMaxLength,
+	LabelInvalidCharacter,
 }
 
 export type ValidationError = {
@@ -70,6 +71,18 @@ const createLabelMaxLengthError = (label: string, column: number) => {
 	};
 };
 
+const createLabelInvalidCharacterError = (
+	label: string,
+	invalidCharacter: string,
+	column: number,
+) => {
+	return {
+		type: ValidationErrorType.LabelInvalidCharacter,
+		message: `Label "${label}" contains invalid character "${invalidCharacter}" at column ${column}.`,
+		column,
+	};
+};
+
 export const sanitize = (domain: string): SanitizationResult => {
 	if (domain.length > DOMAIN_LENGTH_MAX) {
 		return {
@@ -95,6 +108,18 @@ export const sanitize = (domain: string): SanitizationResult => {
 			labelValidationErrors.push(createLabelMinLengthError(label, column));
 		} else if (label.length > LABEL_LENGTH_MAX) {
 			labelValidationErrors.push(createLabelMaxLengthError(label, column));
+		}
+
+		const invalidCharacter = /[^\d\-a-z]/i.exec(label);
+
+		if (invalidCharacter !== null) {
+			labelValidationErrors.push(
+				createLabelInvalidCharacterError(
+					label,
+					invalidCharacter[0],
+					invalidCharacter.index,
+				),
+			);
 		}
 
 		column += label.length + LABEL_SEPARATOR.length;

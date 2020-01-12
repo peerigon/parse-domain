@@ -1,7 +1,7 @@
 import {promises as fs} from "fs";
 import {
 	pathToPslFile,
-	pathToIcannCompleteTrie,
+	pathToIcannTrie,
 	pathToPrivateTrie,
 } from "../paths";
 import {parsePublicSuffixList} from "../psl/parse-psl";
@@ -16,7 +16,7 @@ const buildTries = async (): Promise<void> => {
 
 	await Promise.all([
 		fs.writeFile(
-			pathToIcannCompleteTrie,
+			pathToIcannTrie,
 			JSON.stringify(serializeTrie(icannTrie)),
 		),
 		fs.writeFile(

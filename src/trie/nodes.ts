@@ -7,7 +7,7 @@ export type TrieRootNode = {
 };
 export type TrieChildNode = {
 	type: typeof NODE_TYPE_CHILD;
-	domain: string;
+	label: string;
 	children: Map<string, TrieChildNode>;
 	parent: TrieNode;
 };
@@ -21,23 +21,17 @@ export const createRootNode = (): TrieRootNode => {
 	};
 };
 
-export const createOrGetChild = (parent: TrieNode, domain: string): TrieChildNode => {
-	let child = parent.children.get(domain);
+export const createOrGetChild = (parent: TrieNode, label: string): TrieChildNode => {
+	let child = parent.children.get(label);
 
 	if (child === undefined) {
-		if (parent.children.has(domain)) {
-			throw new Error(
-				`Cannot adopt child: parent has already a child with the domain '${domain}'`,
-			);
-		}
 		child = {
 			type: NODE_TYPE_CHILD,
-			domain,
+			label,
 			children: new Map(),
 			parent,
 		};
-		parent.children.set(domain, child);
-		child.parent = parent;
+		parent.children.set(label, child);
 	}
 
 	return child;

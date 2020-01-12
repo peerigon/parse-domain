@@ -237,10 +237,57 @@ describe("parseDomain()", () => {
 		});
 	});
 
+	test("returns type ParseResultType.Invalid and error information for a hostname that contains an invalid character", () => {
+		expect(parseDomain("some-静")).toMatchObject({
+			type: ParseResultType.Invalid,
+			errors: expect.arrayContaining([
+				expect.objectContaining({
+					type: ValidationErrorType.LabelInvalidCharacter,
+					message: "Label \"some-静\" contains invalid character \"静\" at column 5.",
+					column: 5,
+				}),
+			]),
+		});
+		expect(parseDomain("some-静.com")).toMatchObject({
+			type: ParseResultType.Invalid,
+			errors: expect.arrayContaining([
+				expect.objectContaining({
+					type: ValidationErrorType.LabelInvalidCharacter,
+					message: "Label \"some-静\" contains invalid character \"静\" at column 5.",
+					column: 5,
+				}),
+			]),
+		});
+	});
+
 	test("accepts a trailing dot as valid root label", () => {
 		expect(parseDomain("www.example.com.")).toMatchObject({
 			subDomains: ["www"],
 			domain: "example",
+			topLevelDomains: ["com"],
+		});
+	});
+
+	test("accepts uppercase letters and preserves the case", () => {
+		expect(parseDomain("WWW.EXAMPLE.COM")).toMatchObject({
+			subDomains: ["WWW"],
+			domain: "EXAMPLE",
+			topLevelDomains: ["COM"],
+		});
+	});
+
+	test("accepts hyphens", () => {
+		expect(parseDomain("w-w-w.e-x-a-m-p-l-e.com")).toMatchObject({
+			subDomains: ["w-w-w"],
+			domain: "e-x-a-m-p-l-e",
+			topLevelDomains: ["com"],
+		});
+	});
+
+	test("accepts numbers", () => {
+		expect(parseDomain("123.456.com")).toMatchObject({
+			subDomains: ["123"],
+			domain: "456",
 			topLevelDomains: ["com"],
 		});
 	});

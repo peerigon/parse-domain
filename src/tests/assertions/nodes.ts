@@ -23,7 +23,7 @@ export const expectChild = ({
 	parent: TrieNode;
 }) => {
 	expect(child.type).toBe(NODE_TYPE_CHILD);
-	expect(child.domain).toBe(domain);
+	expect(child.label).toBe(domain);
 	expect(child.children.size).toBe(childrenSize);
 	expect(child.parent).toBe(parent);
 };

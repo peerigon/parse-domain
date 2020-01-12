@@ -82,21 +82,39 @@ describe("parsePublicSuffixList()", () => {
 			PUBLIC_SUFFIX_MARKER_ICANN_START,
 			" ",
 			"a.b.c",
+			" ",
 			"a",
-			"b",
 			"\r",
 			PUBLIC_SUFFIX_MARKER_ICANN_END,
 			PUBLIC_SUFFIX_MARKER_PRIVATE_START,
 			"a.b.c",
 			"\t",
-			"a",
 			"b",
 			PUBLIC_SUFFIX_MARKER_PRIVATE_END,
 		].join("\n");
 
 		expect(parsePublicSuffixList(listContent)).toEqual({
-			icann: ["a.b.c", "a", "b"],
-			private: ["a.b.c", "a", "b"],
+			icann: ["a.b.c", "a"],
+			private: ["a.b.c", "b"],
+		});
+	});
+
+	test("normalizes rules (to punycode, to lower case)", () => {
+		const listContent = [
+			PUBLIC_SUFFIX_MARKER_ICANN_START,
+			" ",
+			"大分",
+			"ÄäÜü",
+			PUBLIC_SUFFIX_MARKER_ICANN_END,
+			PUBLIC_SUFFIX_MARKER_PRIVATE_START,
+			"ÄäÜü",
+			"大分",
+			PUBLIC_SUFFIX_MARKER_PRIVATE_END,
+		].join("\n");
+
+		expect(parsePublicSuffixList(listContent)).toEqual({
+			icann: ["xn--kbrq7o", "xn--7ba2cxa1h"],
+			private: ["xn--7ba2cxa1h", "xn--kbrq7o"],
 		});
 	});
 

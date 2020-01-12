@@ -6,8 +6,8 @@ export const createTrieFromList = (list: Array<string>): TrieRootNode => {
 	for (const rule of list) {
 		let node: TrieNode = root;
 
-		for (const domain of rule.split(".").reverse()) {
-			node = createOrGetChild(node, domain);
+		for (const label of rule.split(".").reverse()) {
+			node = createOrGetChild(node, label);
 		}
 	}
 

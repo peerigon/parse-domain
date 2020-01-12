@@ -8,21 +8,22 @@ export const lookUpTldsInTrie = (labels: Labels, trie: TrieNode): Labels => {
 	let node = trie;
 
 	while (labelsToCheck.length !== 0) {
-		const domain = labelsToCheck.pop() as string;
+		const label = labelsToCheck.pop() as string;
+		const labelLowerCase = label.toLowerCase();
 
 		if (node.children.has(characters.WILDCARD)) {
-			if (node.children.has(characters.EXCEPTION + domain)) {
+			if (node.children.has(characters.EXCEPTION + labelLowerCase)) {
 				break;
 			}
 			node = node.children.get(characters.WILDCARD) as TrieNode;
 		} else {
-			if (node.children.has(domain) === false) {
+			if (node.children.has(labelLowerCase) === false) {
 				break;
 			}
-			node = node.children.get(domain) as TrieNode;
+			node = node.children.get(labelLowerCase) as TrieNode;
 		}
 
-		tlds.unshift(domain);
+		tlds.unshift(label);
 	}
 
 	return tlds;
