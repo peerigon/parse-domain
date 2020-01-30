@@ -43,6 +43,13 @@ const tries = [
     },
 ];
 
+function getBin(binname) {
+    if (process.platform === 'win32') {
+        binname += '.cmd';
+    }
+    return require.resolve(`.bin/${binname}`);
+}
+
 process.stderr.write(`Downloading public suffix list from ${PUBLIC_SUFFIX_URL}... `);
 
 got(PUBLIC_SUFFIX_URL, {timeout: 60 * 1000})
@@ -74,7 +81,7 @@ got(PUBLIC_SUFFIX_URL, {timeout: 60 * 1000})
     .then(() => {
         process.stderr.write("Running sanity check... ");
 
-        childProcess.execFileSync(process.execPath, [require.resolve(".bin/jest")], {
+        childProcess.execFileSync(process.execPath, [getBin("jest")], {
             cwd: rootPath,
             encoding: "utf8",
         });
