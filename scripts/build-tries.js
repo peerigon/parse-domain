@@ -84,7 +84,7 @@ got(PUBLIC_SUFFIX_URL, {timeout: 60 * 1000})
         childProcess.execFileSync(process.execPath, [getBin("jest")], {
             cwd: rootPath,
             encoding: "utf8",
-            shell: process.platform === 'win32'),
+            shell: process.platform === 'win32',
         });
 
         process.stderr.write("ok" + os.EOL);
