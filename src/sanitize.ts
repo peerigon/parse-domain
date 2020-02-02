@@ -10,10 +10,10 @@ const LABEL_LENGTH_MAX = 63;
 const DOMAIN_LENGTH_MAX = 253;
 
 export enum ValidationErrorType {
-	DomainMaxLength,
-	LabelMinLength,
-	LabelMaxLength,
-	LabelInvalidCharacter,
+	DomainMaxLength = "DOMAIN_MAX_LENGTH",
+	LabelMinLength = "LABEL_MIN_LENGTH",
+	LabelMaxLength = "LABEL_MAX_LENGTH",
+	LabelInvalidCharacter = "LABEL_INVALID_CHARACTER",
 }
 
 export type ValidationError = {
@@ -23,8 +23,8 @@ export type ValidationError = {
 };
 
 export enum SanitizationResultType {
-	Ok,
-	Error,
+	Ok = "OK",
+	Error = "ERROR",
 }
 
 export type SanitizationResultOk = {
@@ -104,12 +104,8 @@ export const sanitize = (domain: string): SanitizationResult => {
 	let column = 1;
 
 	for (const label of labels) {
-		if (label.length < LABEL_LENGTH_MIN) {
-			labelValidationErrors.push(createLabelMinLengthError(label, column));
-		} else if (label.length > LABEL_LENGTH_MAX) {
-			labelValidationErrors.push(createLabelMaxLengthError(label, column));
-		}
-
+		// According to https://tools.ietf.org/html/rfc6761 labels should
+		// only contain ASCII letters, digits and hyphens (LDH).
 		const invalidCharacter = /[^\d\-a-z]/i.exec(label);
 
 		if (invalidCharacter !== null) {
@@ -120,6 +116,12 @@ export const sanitize = (domain: string): SanitizationResult => {
 					invalidCharacter.index,
 				),
 			);
+		// We can use .length here to check for the octet size because
+		// label can only contain ASCII LDH characters at this point.
+		} else if (label.length < LABEL_LENGTH_MIN) {
+			labelValidationErrors.push(createLabelMinLengthError(label, column));
+		} else if (label.length > LABEL_LENGTH_MAX) {
+			labelValidationErrors.push(createLabelMaxLengthError(label, column));
 		}
 
 		column += label.length + LABEL_SEPARATOR.length;

@@ -1,6 +1,5 @@
-parse-domain
-============
-**Splits a URL into sub-domain, domain and the top-level domain. Provides TypeScript typings.**
+# parse-domain
+**Splits a hostname into subdomains, domain and top-level domains.**
 
 [![](https://img.shields.io/npm/v/parse-domain.svg)](https://www.npmjs.com/package/parse-domain)
 [![](https://img.shields.io/npm/dm/parse-domain.svg)](https://www.npmjs.com/package/parse-domain)
@@ -9,14 +8,21 @@ parse-domain
 [![Coverage Status](https://coveralls.io/repos/github/peerigon/parse-domain/badge.svg?branch=master)](https://coveralls.io/github/peerigon/parse-domain?branch=master)
 [![Known Vulnerabilities](https://snyk.io/test/github/peerigon/parse-domain/badge.svg)](https://snyk.io/test/github/peerigon/parse-domain)
 
-Since domains are handled differently across different countries and organizations, splitting a URL into sub-domain, domain and top-level-domain parts is not a simple regexp. **parse-domain** uses a [large list of known top-level domains](https://publicsuffix.org/list/public_suffix_list.dat) from publicsuffix.org to recognize different parts of the domain.
+Since domain name registrars are organizing their namespaces in different ways, splitting a hostname into subdomains, domain and top-level domains is not a simple `.split(".")`. **parse-domain** uses a [large list of known top-level domains](https://publicsuffix.org/list/public_suffix_list.dat) from publicsuffix.org to recognize different parts in a domain:
+
+```javascript
+const parseResult = parseDomain("www.some.example.co.uk");
+
+console.log(parseResult.topLevelDomains); // ["co", "uk"]
+console.log(parseResult.domain); // "example"
+console.log(parseResult.subDomains); // ["www", "some"]
+```
 
 This module uses a [trie](https://en.wikipedia.org/wiki/Trie) data structure under the hood to ensure the smallest possible library size and the fastest lookup. The library is roughly 30KB minified and gzipped. Since publicsuffix.org is frequently updated, the data structure is built on `npm install` as a `postinstall` hook. If something goes wrong during that step, the library falls back to a prebuilt list that has been built at the time of publishing.
 
 <br />
 
-Installation
-------------------------------------------------------------------------
+## Installation
 
 ```sh
 npm install parse-domain
@@ -24,8 +30,7 @@ npm install parse-domain
 
 <br />
 
-Usage
-------------------------------------------------------------------------
+## Usage
 
 ```javascript
 

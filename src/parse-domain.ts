@@ -6,9 +6,9 @@ import {ValidationError, sanitize, SanitizationResultType} from "./sanitize";
 export type Labels = Array<string>;
 
 export enum ParseResultType {
-	Invalid,
-	NotListed,
-	Listed,
+	Invalid = "INVALID",
+	NotListed = "NOT_LISTED",
+	Listed = "LISTED",
 }
 
 export type ParseResultInvalid = {
