@@ -2,7 +2,6 @@ import {Labels} from "./parse-domain";
 
 // See https://en.wikipedia.org/wiki/Domain_name
 // See https://tools.ietf.org/html/rfc6761
-
 const LABEL_SEPARATOR = ".";
 const LABEL_ROOT = "";
 const LABEL_LENGTH_MIN = 1;
@@ -106,7 +105,7 @@ export const sanitize = (domain: string): SanitizationResult => {
 	for (const label of labels) {
 		// According to https://tools.ietf.org/html/rfc6761 labels should
 		// only contain ASCII letters, digits and hyphens (LDH).
-		const invalidCharacter = /[^\d\-a-z]/ui.exec(label);
+		const invalidCharacter = /[^\d\-a-z]/iu.exec(label);
 
 		if (invalidCharacter) {
 			labelValidationErrors.push(
@@ -116,9 +115,11 @@ export const sanitize = (domain: string): SanitizationResult => {
 					invalidCharacter.index,
 				),
 			);
-		// We can use .length here to check for the octet size because
-		// label can only contain ASCII LDH characters at this point.
-		} else if (label.length < LABEL_LENGTH_MIN) {
+		} else if (
+			// We can use .length here to check for the octet size because
+			// label can only contain ASCII LDH characters at this point.
+			label.length < LABEL_LENGTH_MIN
+		) {
 			labelValidationErrors.push(createLabelMinLengthError(label, column));
 		} else if (label.length > LABEL_LENGTH_MAX) {
 			labelValidationErrors.push(createLabelMaxLengthError(label, column));

@@ -1,8 +1,4 @@
-import {
-	parseDomain,
-	ParseResultType,
-	ValidationErrorType,
-} from "./index";
+import {parseDomain, ParseResultType, ValidationErrorType} from "./index";
 
 describe("parseDomain()", () => {
 	test("splits a hostname into subDomains, domain and topLevelDomains", () => {
@@ -198,8 +194,7 @@ describe("parseDomain()", () => {
 	});
 
 	test("returns type ParseResultType.Invalid and error information for a hostname with a label that is too long", () => {
-		const labelToLong = new Array(64).fill("x")
-			.join("");
+		const labelToLong = new Array(64).fill("x").join("");
 
 		expect(parseDomain(`${labelToLong}.example.com`)).toMatchObject({
 			type: ParseResultType.Invalid,
@@ -222,8 +217,7 @@ describe("parseDomain()", () => {
 	});
 
 	test("returns type ParseResultType.Invalid and error information for a hostname that is too long", () => {
-		const domain = new Array(127).fill("x")
-			.join(".") + "x";
+		const domain = new Array(127).fill("x").join(".") + "x";
 
 		expect(parseDomain(domain)).toMatchObject({
 			type: ParseResultType.Invalid,
@@ -243,7 +237,8 @@ describe("parseDomain()", () => {
 			errors: expect.arrayContaining([
 				expect.objectContaining({
 					type: ValidationErrorType.LabelInvalidCharacter,
-					message: "Label \"some-静\" contains invalid character \"静\" at column 5.",
+					message:
+						'Label "some-静" contains invalid character "静" at column 5.',
 					column: 5,
 				}),
 			]),
@@ -253,7 +248,8 @@ describe("parseDomain()", () => {
 			errors: expect.arrayContaining([
 				expect.objectContaining({
 					type: ValidationErrorType.LabelInvalidCharacter,
-					message: "Label \"some-静\" contains invalid character \"静\" at column 5.",
+					message:
+						'Label "some-静" contains invalid character "静" at column 5.',
 					column: 5,
 				}),
 			]),

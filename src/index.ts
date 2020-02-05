@@ -1,10 +1,3 @@
-export {
-	ParseResult,
-	ParseResultType,
-	parseDomain,
-} from "./parse-domain";
+export {ParseResult, ParseResultType, parseDomain} from "./parse-domain";
 
-export {
-	ValidationError,
-	ValidationErrorType,
-} from "./sanitize";
+export {ValidationError, ValidationErrorType} from "./sanitize";

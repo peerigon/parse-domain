@@ -1,4 +1,9 @@
-import {TrieRootNode, createRootNode, createOrGetChild, TrieNode} from "./nodes";
+import {
+	TrieRootNode,
+	createRootNode,
+	createOrGetChild,
+	TrieNode,
+} from "./nodes";
 
 export const createTrieFromList = (list: Array<string>): TrieRootNode => {
 	const root = createRootNode();

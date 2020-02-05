@@ -135,9 +135,10 @@ describe("parsePublicSuffixList()", () => {
 	});
 
 	test("throws when the PRIVATE start marker is missing ", () => {
-		const listContent = [PUBLIC_SUFFIX_MARKER_ICANN_START, PUBLIC_SUFFIX_MARKER_ICANN_END].join(
-			"\n",
-		);
+		const listContent = [
+			PUBLIC_SUFFIX_MARKER_ICANN_START,
+			PUBLIC_SUFFIX_MARKER_ICANN_END,
+		].join("\n");
 
 		expect(() => parsePublicSuffixList(listContent)).toThrowError(
 			`Missing start marker ${PUBLIC_SUFFIX_MARKER_PRIVATE_START} in public suffix list`,

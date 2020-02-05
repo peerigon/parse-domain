@@ -1,9 +1,5 @@
 import {promises as fs} from "fs";
-import {
-	pathToPslFile,
-	pathToIcannTrie,
-	pathToPrivateTrie,
-} from "../paths";
+import {pathToPslFile, pathToIcannTrie, pathToPrivateTrie} from "../paths";
 import {parsePublicSuffixList} from "../psl/parse-psl";
 import {serializeTrie} from "../trie/serialize-trie";
 import {createTrieFromList} from "../trie/create-trie";
@@ -15,14 +11,8 @@ const buildTries = async (): Promise<void> => {
 	const privateTrie = createTrieFromList(parsedPsl.private);
 
 	await Promise.all([
-		fs.writeFile(
-			pathToIcannTrie,
-			JSON.stringify(serializeTrie(icannTrie)),
-		),
-		fs.writeFile(
-			pathToPrivateTrie,
-			JSON.stringify(serializeTrie(privateTrie)),
-		),
+		fs.writeFile(pathToIcannTrie, JSON.stringify(serializeTrie(icannTrie))),
+		fs.writeFile(pathToPrivateTrie, JSON.stringify(serializeTrie(privateTrie))),
 	]);
 };
 

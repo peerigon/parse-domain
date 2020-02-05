@@ -6,7 +6,13 @@ import {
 	NODE_TYPE_CHILD,
 } from "../../trie/nodes";
 
-export const expectRoot = ({root, childrenSize}: {root: TrieRootNode; childrenSize: number}) => {
+export const expectRoot = ({
+	root,
+	childrenSize,
+}: {
+	root: TrieRootNode;
+	childrenSize: number;
+}) => {
 	expect(root.type).toBe(NODE_TYPE_ROOT);
 	expect(root.children.size).toBe(childrenSize);
 };

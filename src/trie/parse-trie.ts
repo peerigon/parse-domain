@@ -1,5 +1,11 @@
 import * as characters from "./characters";
-import {createRootNode, createOrGetChild, TrieRootNode, TrieNode, NODE_TYPE_ROOT} from "./nodes";
+import {
+	createRootNode,
+	createOrGetChild,
+	TrieRootNode,
+	TrieNode,
+	NODE_TYPE_ROOT,
+} from "./nodes";
 
 export const parseTrie = (serializedTrie: string): TrieRootNode => {
 	const rootNode = createRootNode();

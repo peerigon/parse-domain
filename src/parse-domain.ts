@@ -35,13 +35,22 @@ export type ParseResultListed = ParseResultListedDomains & {
 	icann: ParseResultListedDomains;
 };
 
-export type ParseResult = ParseResultInvalid | ParseResultNotListed | ParseResultListed;
+export type ParseResult =
+	| ParseResultInvalid
+	| ParseResultNotListed
+	| ParseResultListed;
 
-const getAtIndex = <Item>(array: Array<Item>, index: number): Item | undefined => {
+const getAtIndex = <Item>(
+	array: Array<Item>,
+	index: number,
+): Item | undefined => {
 	return index >= 0 && index < array.length ? array[index] : undefined;
 };
 
-const splitLabelsIntoDomains = (labels: Labels, index: number): ParseResultListedDomains => {
+const splitLabelsIntoDomains = (
+	labels: Labels,
+	index: number,
+): ParseResultListedDomains => {
 	return {
 		subDomains: labels.slice(0, Math.max(0, index)),
 		domain: getAtIndex(labels, index),
@@ -78,7 +87,9 @@ export const parseDomain = (hostname: string): ParseResult => {
 		};
 	}
 
-	const indexOfPublicSuffixDomain = labels.length - Math.max(privateTlds.length, icannTlds.length) - 1;
+	const indexOfPublicSuffixDomain =
+		labels.length - Math.max(privateTlds.length, icannTlds.length) - 1;
+
 	const indexOfIcannDomain = labels.length - icannTlds.length - 1;
 
 	return {

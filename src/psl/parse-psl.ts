@@ -15,12 +15,18 @@ const matchNewLine = /\r?\n/u;
 const matchComment = /^\s*\/\//u;
 const matchWhitespace = /^\s*$/u;
 
-const extractByMarkers = (listContent: string, startMarker: string, endMarker: string): string => {
+const extractByMarkers = (
+	listContent: string,
+	startMarker: string,
+	endMarker: string,
+): string => {
 	const start = listContent.indexOf(startMarker);
 	const end = listContent.indexOf(endMarker);
 
 	if (start === -1) {
-		throw new Error(`Missing start marker ${startMarker} in public suffix list`);
+		throw new Error(
+			`Missing start marker ${startMarker} in public suffix list`,
+		);
 	}
 	if (end === -1) {
 		throw new Error(`Missing end marker ${endMarker} in public suffix list`);
@@ -33,7 +39,7 @@ const containsRule = (line: string): boolean =>
 	matchComment.test(line) === false && matchWhitespace.test(line) === false;
 
 const normalizeRule = (rule: string) =>
-// TODO: Add link to issue in comment
+	// TODO: Add link to issue in comment
 	/*
 	Users of parse-domain should only pass parsed hostnames (e.g. via new URL("...").hostname)
 	to parseDomain(). This frees us from the burden of URL parsing.
@@ -47,7 +53,9 @@ const normalizeRule = (rule: string) =>
 	*/
 	toASCII(rule).toLowerCase();
 
-export const parsePublicSuffixList = (listContent: string): ParsedPublicSuffixList => {
+export const parsePublicSuffixList = (
+	listContent: string,
+): ParsedPublicSuffixList => {
 	return {
 		icann: extractByMarkers(
 			listContent,

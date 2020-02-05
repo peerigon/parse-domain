@@ -1,8 +1,5 @@
 "use strict";
 
 module.exports = {
-	extends: [
-		"peerigon/typescript",
-		"peerigon/styles/typescript-prefer-tabs",
-	],
+	extends: ["peerigon/typescript", "prettier/@typescript-eslint"],
 };
