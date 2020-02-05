@@ -11,9 +11,9 @@ type ParsedPublicSuffixList = {
 	private: Array<string>;
 };
 
-const matchNewLine = /\r?\n/;
-const matchComment = /^\s*\/\//;
-const matchWhitespace = /^\s*$/;
+const matchNewLine = /\r?\n/u;
+const matchComment = /^\s*\/\//u;
+const matchWhitespace = /^\s*$/u;
 
 const extractByMarkers = (listContent: string, startMarker: string, endMarker: string): string => {
 	const start = listContent.indexOf(startMarker);

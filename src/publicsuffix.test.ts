@@ -22,6 +22,7 @@ describe("Official test suite from https://raw.githubusercontent.com/publicsuffi
 		});
 	};
 
+	/* eslint-disable no-null/no-null */
 	// Any copyright is dedicated to the Public Domain.
 	// https://creativecommons.org/publicdomain/zero/1.0/
 
@@ -497,4 +498,5 @@ describe("Official test suite from https://raw.githubusercontent.com/publicsuffi
 		domain: undefined,
 		topLevelDomains: [toASCII("中国")],
 	});
+	/* eslint-enable no-null/no-null */
 });

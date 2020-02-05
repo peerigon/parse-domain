@@ -106,9 +106,9 @@ export const sanitize = (domain: string): SanitizationResult => {
 	for (const label of labels) {
 		// According to https://tools.ietf.org/html/rfc6761 labels should
 		// only contain ASCII letters, digits and hyphens (LDH).
-		const invalidCharacter = /[^\d\-a-z]/i.exec(label);
+		const invalidCharacter = /[^\d\-a-z]/ui.exec(label);
 
-		if (invalidCharacter !== null) {
+		if (invalidCharacter) {
 			labelValidationErrors.push(
 				createLabelInvalidCharacterError(
 					label,

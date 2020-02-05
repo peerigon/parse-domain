@@ -1,4 +1,3 @@
-export const NULL = null;
 export const PUBLIC_SUFFIX_URL = "https://publicsuffix.org/list/public_suffix_list.dat";
 export const PUBLIC_SUFFIX_FETCH_TIMEOUT = 60000; // in milliseconds
 export const PUBLIC_SUFFIX_MARKER_ICANN_START = "// ===BEGIN ICANN DOMAINS===";

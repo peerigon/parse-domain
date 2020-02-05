@@ -49,9 +49,11 @@ const splitLabelsIntoDomains = (labels: Labels, index: number): ParseResultListe
 	};
 };
 
-/* eslint-disable jsdoc/no-undefined-types */
 /**
  * TODO: Write JSDoc
+ *
+ * @param hostname
+ * @returns ParseResult
  */
 export const parseDomain = (hostname: string): ParseResult => {
 	const sanitizationResult = sanitize(hostname);
