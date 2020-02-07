@@ -5,7 +5,7 @@ import {fetchPublicSuffixList} from "../psl/fetch-psl";
 import {pathToPslFile, pathToTrieInfoFile} from "../paths";
 import {FETCH_PSL_EXPECTED_MIN_LENGTH} from "../const";
 
-const fetchPsl = async (): Promise<void> => {
+const fetchPsl = async () => {
 	const pslContent = await fetchPublicSuffixList();
 	const pslPath = resolve(pathToPslFile);
 

@@ -2,7 +2,7 @@ import * as characters from "./characters";
 import {TrieNode} from "./nodes";
 import {Labels} from "../parse-domain";
 
-export const lookUpTldsInTrie = (labels: Labels, trie: TrieNode): Labels => {
+export const lookUpTldsInTrie = (labels: Labels, trie: TrieNode) => {
 	const labelsToCheck = labels.slice();
 	const tlds: Labels = [];
 	let node = trie;

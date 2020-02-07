@@ -7,7 +7,6 @@ module.exports = {
 		"peerigon/styles/no-null",
 		"peerigon/styles/no-default-export",
 		"peerigon/styles/prefer-arrow",
-		"peerigon/styles/prefer-tabs",
 		"prettier",
 	],
 	root: true,

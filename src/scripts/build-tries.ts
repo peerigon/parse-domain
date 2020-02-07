@@ -4,7 +4,7 @@ import {parsePublicSuffixList} from "../psl/parse-psl";
 import {serializeTrie} from "../trie/serialize-trie";
 import {createTrieFromList} from "../trie/create-trie";
 
-const buildTries = async (): Promise<void> => {
+const buildTries = async () => {
 	const pslContent = await fs.readFile(pathToPslFile, "utf8");
 	const parsedPsl = parsePublicSuffixList(pslContent);
 	const icannTrie = createTrieFromList(parsedPsl.icann);

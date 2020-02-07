@@ -59,10 +59,7 @@ const splitLabelsIntoDomains = (
 };
 
 /**
- * TODO: Write JSDoc
- *
- * @param hostname
- * @returns ParseResult
+ * Splits the given hostname in topLevelDomains, a domain and subDomains.
  */
 export const parseDomain = (hostname: string): ParseResult => {
 	const sanitizationResult = sanitize(hostname);

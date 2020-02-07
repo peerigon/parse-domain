@@ -7,7 +7,8 @@
 	"scripts": {
 		"release": "standard-version",
 		"test": "jest",
-		"posttest": "eslint src --ext ts",
+		"test:lint": "eslint *.js src --ext ts",
+		"posttest": "npm run test:lint",
 		"update": "updtr"
 	},
 	"keywords": [
@@ -44,10 +45,11 @@
 		"@types/isomorphic-fetch": "0.0.35",
 		"@types/jest": "^25.1.1",
 		"@types/nock": "^11.1.0",
-		"@typescript-eslint/eslint-plugin": "^2.18.0",
+		"@types/node": "^13.7.0",
+		"@types/punycode": "^2.1.0",
 		"@typescript-eslint/parser": "^2.18.0",
 		"eslint": "^6.8.0",
-		"eslint-config-peerigon": "../eslint-config-peerigon",
+		"eslint-config-peerigon": "^26.0.0-beta.3",
 		"eslint-import-resolver-typescript": "^2.0.0",
 		"eslint-plugin-no-null": "^1.0.2",
 		"eslint-plugin-prefer-arrow": "^1.1.7",

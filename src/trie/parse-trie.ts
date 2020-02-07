@@ -2,12 +2,11 @@ import * as characters from "./characters";
 import {
 	createRootNode,
 	createOrGetChild,
-	TrieRootNode,
 	TrieNode,
 	NODE_TYPE_ROOT,
 } from "./nodes";
 
-export const parseTrie = (serializedTrie: string): TrieRootNode => {
+export const parseTrie = (serializedTrie: string) => {
 	const rootNode = createRootNode();
 	let domain = "";
 	let parentNode: TrieNode = rootNode;

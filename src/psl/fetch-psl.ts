@@ -2,7 +2,7 @@ import fetch from "isomorphic-fetch";
 import timeout from "p-timeout";
 import {PUBLIC_SUFFIX_URL, PUBLIC_SUFFIX_FETCH_TIMEOUT} from "../const";
 
-export const fetchPublicSuffixList = async (): Promise<string> => {
+export const fetchPublicSuffixList = async () => {
 	const response = await timeout(
 		fetch(PUBLIC_SUFFIX_URL),
 		PUBLIC_SUFFIX_FETCH_TIMEOUT,
