@@ -4,7 +4,8 @@ import {
 	PUBLIC_SUFFIX_MARKER_ICANN_END,
 	PUBLIC_SUFFIX_MARKER_PRIVATE_START,
 	PUBLIC_SUFFIX_MARKER_PRIVATE_END,
-} from "../const";
+} from "../config";
+import {createTrieFromList} from "../trie/create-trie";
 
 const matchNewLine = /\r?\n/u;
 const matchComment = /^\s*\/\//u;
@@ -49,7 +50,7 @@ const normalizeRule = (rule: string) =>
 	*/
 	toASCII(rule).toLowerCase();
 
-export const parsePublicSuffixList = (listContent: string) => {
+const parsePsl = (listContent: string) => {
 	return {
 		icann: extractByMarkers(
 			listContent,
@@ -67,5 +68,16 @@ export const parsePublicSuffixList = (listContent: string) => {
 			.split(matchNewLine)
 			.filter(containsRule)
 			.map(normalizeRule),
+	};
+};
+
+export const buildTries = (psl: string) => {
+	const parsedPsl = parsePsl(psl);
+	const icannTrie = createTrieFromList(parsedPsl.icann);
+	const privateTrie = createTrieFromList(parsedPsl.private);
+
+	return {
+		icannTrie,
+		privateTrie,
 	};
 };

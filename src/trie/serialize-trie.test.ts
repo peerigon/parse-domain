@@ -1,7 +1,7 @@
 import {readFileSync} from "fs";
 import {resolve} from "path";
 import {serializeTrie} from "./serialize-trie";
-import {parsePublicSuffixList} from "../psl/parse-psl";
+import {parsePublicSuffixList} from "../psl/build-tries";
 import {createRootNode, createOrGetChild} from "./nodes";
 import {createTrieFromList} from "./create-trie";
 

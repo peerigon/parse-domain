@@ -19,4 +19,5 @@ module.exports = {
 			statements: 100,
 		},
 	},
+	watchPathIgnorePatterns: ["<rootDir>/src/tests/fs"],
 };
