@@ -29,17 +29,17 @@ export const lookUpTldsInTrie = (labels: Labels, trie: TrieNode) => {
 	return tlds;
 };
 
-export const lookUpTldsInArray = (
-	labels: Labels,
-	tlds: Array<Labels>,
-): Labels => {
-	const labelsJoined = labels.join("");
+// export const lookUpTldsInArray = (
+// 	labels: Labels,
+// 	tlds: Array<Labels>,
+// ): Labels => {
+// 	const labelsJoined = labels.join("");
 
-	const index = tlds.findIndex((tld) => {
-		const tldJoined = tld.join("");
+// 	const index = tlds.findIndex((tld) => {
+// 		const tldJoined = tld.join("");
 
-		return labelsJoined.endsWith(tldJoined);
-	});
+// 		return labelsJoined.endsWith(tldJoined);
+// 	});
 
-	return index === -1 ? [] : tlds[index];
-};
+// 	return index === -1 ? [] : tlds[index];
+// };

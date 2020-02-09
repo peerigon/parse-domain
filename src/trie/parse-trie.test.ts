@@ -82,7 +82,7 @@ describe("parseTrie()", () => {
 		expectChild({child: c, parent: root, domain: "c", childrenSize: 0});
 	});
 
-	test("when called with 'a>b<a>d' adds 'b' and 'c' as child of 'a'", () => {
+	test("when called with 'a>b<a>d' it adds 'b' and 'c' as child of 'a'", () => {
 		const root = parseTrie("a>b<a>c");
 		const a = root.children.get("a")!;
 		const b = a.children.get("b")!;
@@ -94,7 +94,7 @@ describe("parseTrie()", () => {
 		expectChild({child: c, parent: a, domain: "c", childrenSize: 0});
 	});
 
-	test("when called with 'a>b>c' adds 'c' as child of 'b'", () => {
+	test("when called with 'a>b>c' it adds 'c' as child of 'b'", () => {
 		const root = parseTrie("a>b>c");
 		const a = root.children.get("a")!;
 		const b = a.children.get("b")!;
@@ -106,11 +106,17 @@ describe("parseTrie()", () => {
 		expectChild({child: c, parent: b, domain: "c", childrenSize: 0});
 	});
 
-	test("when called with 'a>b>c>d|e' adds 'e' as child node of root", () => {
+	test("when called with 'a>b>c>d|e' it adds 'e' as child node of root", () => {
 		const root = parseTrie("a>b>c>d|e");
 		const e = root.children.get("e")!;
 
 		expectRoot({root, childrenSize: 2});
 		expectChild({child: e, parent: root, domain: "e", childrenSize: 0});
+	});
+
+	test("when called with '<' it throws an error with a helpful error message", () => {
+		expect(() => parseTrie("<")).toThrowErrorMatchingInlineSnapshot(
+			`"Error in serialized trie at position 0: Cannot go up, current parent node is already root"`,
+		);
 	});
 });
