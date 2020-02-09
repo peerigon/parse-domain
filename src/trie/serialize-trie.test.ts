@@ -1,9 +1,17 @@
-import {readFileSync} from "fs";
-import {resolve} from "path";
 import {serializeTrie} from "./serialize-trie";
-import {parsePublicSuffixList} from "../psl/build-tries";
+import {buildTries} from "../psl/build-tries";
 import {createRootNode, createOrGetChild} from "./nodes";
-import {createTrieFromList} from "./create-trie";
+import {readPslFixture} from "../tests/fixtures/fixtures";
+import * as characters from "./characters";
+
+const toReadableTrie = (serializedTrie: string) => {
+	const pattern = new RegExp(
+		`([\\${Object.values(characters).join("\\")}])`,
+		"g",
+	);
+
+	return serializedTrie.replace(pattern, "\n$1");
+};
 
 describe("serializeTrie()", () => {
 	test("when passed a root node without children it returns an empty string", () => {
@@ -55,21 +63,11 @@ describe("serializeTrie()", () => {
 		expect(serializeTrie(root)).toMatchInlineSnapshot('"uk>ac,co<pl>gov>ap"');
 	});
 
-	test("matches the snapshot when given the parsed test fixture", () => {
-		const pathToPslFixture = resolve(
-			__dirname,
-			"..",
-			"tests",
-			"fixtures",
-			"public-suffix-list.txt",
-		);
+	test("matches the snapshot when given the parsed test fixture", async () => {
+		const fixtureContent = await readPslFixture();
+		const {icannTrie, privateTrie} = buildTries(fixtureContent);
 
-		const fixtureContent = readFileSync(pathToPslFixture, "utf8");
-		const parsedFixture = parsePublicSuffixList(fixtureContent);
-		const icannTrie = createTrieFromList(parsedFixture.icann);
-		const privateTrie = createTrieFromList(parsedFixture.icann);
-
-		expect(serializeTrie(icannTrie)).toMatchSnapshot();
-		expect(serializeTrie(privateTrie)).toMatchSnapshot();
+		expect(toReadableTrie(serializeTrie(icannTrie))).toMatchSnapshot();
+		expect(toReadableTrie(serializeTrie(privateTrie))).toMatchSnapshot();
 	});
 });

@@ -3,7 +3,6 @@
 	"version": "2.3.2",
 	"description": "Splits an url into sub-domain, domain and effective top-level domain",
 	"main": "./lib/parseDomain.js",
-	"types": "./src/index.d.ts",
 	"scripts": {
 		"release": "standard-version",
 		"test": "jest",

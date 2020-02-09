@@ -12,7 +12,7 @@ module.exports = {
 	},
 	collectCoverage: true,
 	coverageThreshold: {
-		"./src/**/*.js": {
+		"./src/**/*.ts": {
 			branches: 100,
 			functions: 100,
 			lines: 100,
