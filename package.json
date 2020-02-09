@@ -8,7 +8,11 @@
 		"test": "jest",
 		"test:lint": "eslint *.js src --ext ts",
 		"posttest": "npm run test:lint",
+		"build": "tsc -p ./tsconfig.build.es5.json",
 		"update": "updtr"
+	},
+	"bin": {
+		"update": "./lib/bin/update.js"
 	},
 	"keywords": [
 		"domain",

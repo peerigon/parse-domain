@@ -1,9 +1,6 @@
 {
 	"compilerOptions": {
 		"rootDir": ".",
-		"outDir": "dist",
-		"target": "esnext",
-		"module": "commonjs",
 		"strict": true,
 		"sourceMap": true,
 		"esModuleInterop": true,
@@ -11,5 +8,5 @@
 		"resolveJsonModule": true,
 		"forceConsistentCasingInFileNames": true
 	},
-	"include": ["src", "build", "lists"]
+	"include": ["src"]
 }
