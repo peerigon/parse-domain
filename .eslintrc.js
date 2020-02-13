@@ -9,5 +9,8 @@ module.exports = {
 		"peerigon/styles/prefer-arrow",
 		"prettier",
 	],
+	parserOptions: {
+		project: "./tsconfig.json",
+	},
 	root: true,
 };

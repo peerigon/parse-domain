@@ -1,12 +1,10 @@
 {
 	"compilerOptions": {
-		"rootDir": ".",
 		"strict": true,
 		"sourceMap": true,
 		"esModuleInterop": true,
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"forceConsistentCasingInFileNames": true
-	},
-	"include": ["src"]
+	}
 }

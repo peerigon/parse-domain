@@ -1,9 +1,11 @@
 {
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
-		"outDir": "build/esnext",
-		"target": "esnext",
+		"rootDir": "src",
+		"outDir": "build-esm",
+		"target": "es2015",
 		"module": "esnext"
 	},
+	"include": ["src"],
 	"exclude": ["src/**/*.test.ts"]
 }

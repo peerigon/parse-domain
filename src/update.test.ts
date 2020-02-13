@@ -1,15 +1,15 @@
 import {promises as fs} from "fs";
 import {resolve} from "path";
 import nock from "nock";
-import {paths, PUBLIC_SUFFIX_URL} from "../config";
+import {paths, PUBLIC_SUFFIX_URL} from "./config";
 import {update} from "./update";
-import {readPslFixture} from "../tests/fixtures/fixtures";
+import {readPslFixture} from "./tests/fixtures/fixtures";
 
 describe("update()", () => {
 	const publicSuffixUrl = new URL(PUBLIC_SUFFIX_URL);
 	const testFs = resolve(__dirname, "..", "tests", "fs", "update");
 	const isoDatePattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d\.\d\d\dZ/;
-	const pathsEntries = Object.entries(paths);
+	const pathsCopy = JSON.parse(JSON.stringify(paths));
 	let pslFixture: string;
 
 	beforeAll(async () => {
@@ -20,7 +20,7 @@ describe("update()", () => {
 	});
 
 	afterAll(() => {
-		Object.assign(paths, Object.fromEntries(pathsEntries));
+		Object.assign(paths, pathsCopy);
 	});
 
 	test("fetches the public suffix and builds tries plus meta information", async () => {

@@ -1,4 +1,4 @@
-import {parseDomain, ParseResultType, ValidationErrorType} from "./index";
+import {parseDomain, ParseResultType, ValidationErrorType} from "./main";
 
 describe("parseDomain()", () => {
 	test("splits a hostname into subDomains, domain and topLevelDomains", () => {
