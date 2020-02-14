@@ -1,7 +1,9 @@
-import {icannCompleteTrie} from "./tries/icann";
-import {privateTrie} from "./tries/private";
+import icannTrie from "../serialized-tries/icann.json";
+import privateTrie from "../serialized-tries/private.json";
 import {lookUpTldsInTrie} from "./trie/look-up";
 import {ValidationError, sanitize, SanitizationResultType} from "./sanitize";
+import {TrieRootNode} from "./trie/nodes";
+import {parseTrie} from "./trie/parse-trie";
 
 export type Labels = Array<string>;
 
@@ -58,6 +60,9 @@ const splitLabelsIntoDomains = (
 	};
 };
 
+let parsedIcannTrie: TrieRootNode | undefined;
+let parsedPrivateTrie: TrieRootNode | undefined;
+
 /**
  * Splits the given hostname in topLevelDomains, a domain and subDomains.
  */
@@ -72,9 +77,13 @@ export const parseDomain = (hostname: string): ParseResult => {
 		};
 	}
 
+	// Parse the serialized trie lazily
+	parsedIcannTrie = parsedIcannTrie ?? parseTrie(icannTrie);
+	parsedPrivateTrie = parsedPrivateTrie ?? parseTrie(privateTrie);
+
 	const labels = sanitizationResult.labels;
-	const icannTlds = lookUpTldsInTrie(labels, icannCompleteTrie);
-	const privateTlds = lookUpTldsInTrie(labels, privateTrie);
+	const icannTlds = lookUpTldsInTrie(labels, parsedIcannTrie);
+	const privateTlds = lookUpTldsInTrie(labels, parsedPrivateTrie);
 
 	if (icannTlds.length === 0 && privateTlds.length === 0) {
 		return {

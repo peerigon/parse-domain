@@ -1,5 +1,5 @@
 import nock from "nock";
-import {PUBLIC_SUFFIX_URL, PUBLIC_SUFFIX_FETCH_TIMEOUT} from "../config";
+import {PUBLIC_SUFFIX_URL} from "../config";
 import {fetchPsl} from "./fetch-psl";
 import {readPslFixture} from "../tests/fixtures/fixtures";
 
@@ -28,21 +28,6 @@ describe("fetchPsl()", () => {
 		const list = await fetchPsl();
 
 		expect(list).toEqual(pslFixture);
-	});
-
-	test("times out after PUBLIC_SUFFIX_FETCH_TIMEOUT", async () => {
-		nock(publicSuffixUrl.origin)
-			.get(publicSuffixUrl.pathname)
-			.delayConnection(PUBLIC_SUFFIX_FETCH_TIMEOUT + 1000)
-			.reply(200, "");
-
-		const listPromise = fetchPsl();
-
-		jest.advanceTimersByTime(PUBLIC_SUFFIX_FETCH_TIMEOUT);
-
-		await expect(listPromise).rejects.toThrowErrorMatchingInlineSnapshot(
-			'"Cannot fetch public suffix list: Request timeout after 60000 milliseconds"',
-		);
 	});
 
 	test("throws an error if the public suffix list is not long enough", async () => {

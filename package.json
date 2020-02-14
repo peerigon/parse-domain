@@ -9,8 +9,8 @@
 		"test:lint": "eslint *.js src --ext ts",
 		"posttest": "npm run test:lint",
 		"build": "tsc -p ./tsconfig.build-cjs.json",
-		"update:psl-fixture": "ts-node ./scripts/update-psl-fixture.ts",
-		"update:tries": "ts-node ./scripts/update-psl.ts",
+		"update:psl-fixture": "ts-node --transpile-only ./src/scripts/update-psl-fixture.ts",
+		"update:tries": "ts-node --transpile-only ./src/scripts/update-tries.ts",
 		"update:dependencies": "updtr"
 	},
 	"bin": {

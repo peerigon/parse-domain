@@ -19,5 +19,9 @@ module.exports = {
 			statements: 100,
 		},
 	},
+	coveragePathIgnorePatterns: [
+		"<rootDir>/src/tests",
+		"<rootDir>/node_modules/",
+	],
 	watchPathIgnorePatterns: ["<rootDir>/src/tests/fs"],
 };
