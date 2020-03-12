@@ -1,5 +1,4 @@
-import icannTrie from "../serialized-tries/icann.json";
-import privateTrie from "../serialized-tries/private.json";
+import {icannTrie, privateTrie} from "./serialized-tries";
 import {lookUpTldsInTrie} from "./trie/look-up";
 import {ValidationError, sanitize, SanitizationResultType} from "./sanitize";
 import {TrieRootNode} from "./trie/nodes";

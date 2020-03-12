@@ -1,6 +1,13 @@
+import {resolve} from "path";
 import {promises as fs} from "fs";
-import {pathToPslFixture} from "../config";
 import {fetchPsl} from "../psl/fetch-psl";
+
+const pathToPslFixture = resolve(
+	__dirname,
+	"tests",
+	"fixtures",
+	"public-suffix-list.txt",
+);
 
 fetchPsl()
 	.then(async (psl) => {

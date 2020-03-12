@@ -7,9 +7,9 @@ const pathToPslFixture = resolve(__dirname, "public-suffix-list.txt");
 export const updatePslFixture = async () => {
 	const psl = await fetchPsl();
 
-	return await fs.writeFile(pathToPslFixture, psl);
+	await fs.writeFile(pathToPslFixture, psl);
 };
 
 export const readPslFixture = async () => {
-	return await fs.readFile(pathToPslFixture, "utf8");
+	return fs.readFile(pathToPslFixture, "utf8");
 };

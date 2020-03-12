@@ -35,8 +35,10 @@ node_modules
 # Optional REPL history
 .node_repl_history
 
-# We don't check in the compiled files. They are created upon npm publish and npm install.
-build
+# We don't check in compiled files. They are created upon npm publish and npm install.
+build-esm
+build-cjs
+serialized-tries
 
 # Don't include files written by tests
 src/tests/fs
