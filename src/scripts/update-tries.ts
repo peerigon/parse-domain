@@ -1,4 +1,4 @@
-import {resolve, basename} from "path";
+import {resolve} from "path";
 import {promises as fs} from "fs";
 import {fetchBuildSerializeTries} from "../update-tries";
 import {PUBLIC_SUFFIX_URL} from "../config";
