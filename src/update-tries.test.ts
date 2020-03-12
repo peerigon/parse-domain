@@ -1,9 +1,9 @@
 import nock from "nock";
 import {PUBLIC_SUFFIX_URL} from "./config";
-import {updateTries} from "./update-tries";
+import {fetchBuildSerializeTries} from "./update-tries";
 import {readPslFixture} from "./tests/fixtures/fixtures";
 
-describe(updateTries.name, () => {
+describe(fetchBuildSerializeTries.name, () => {
 	const publicSuffixUrl = new URL(PUBLIC_SUFFIX_URL);
 	let pslFixture: string;
 
@@ -16,7 +16,10 @@ describe(updateTries.name, () => {
 			.get(publicSuffixUrl.pathname)
 			.reply(200, pslFixture);
 
-		const {serializedIcannTrie, serializedPrivateTrie} = await updateTries();
+		const {
+			serializedIcannTrie,
+			serializedPrivateTrie,
+		} = await fetchBuildSerializeTries();
 
 		expect(serializedIcannTrie).toMatchSnapshot();
 		expect(serializedPrivateTrie).toMatchSnapshot();

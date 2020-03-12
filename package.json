@@ -13,11 +13,11 @@
 		"build:tsc:cjs": "tsc -p ./tsconfig.build-cjs.json",
 		"build:tsc:esm": "tsc -p ./tsconfig.build-esm.json",
 		"update:psl-fixture": "ts-node --transpile-only ./src/scripts/update-psl-fixture.ts",
-		"update:tries": "ts-node --transpile-only ./src/scripts/update-tries.ts ./build-cjs/serialized-tries  ./build-esm/serialized-tries",
+		"update:tries": "ts-node --transpile-only ./src/scripts/update-tries.ts -- ../../serialized-tries",
 		"update:dependencies": "updtr"
 	},
 	"bin": {
-		"update": "./bin/update.js"
+		"parse-domain-update": "./bin/update.js -- ../../serialized-tries  ../../../build-esm/serialized-tries"
 	},
 	"keywords": [
 		"domain",
