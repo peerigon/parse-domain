@@ -1,5 +1,3 @@
-import {resolve} from "path";
-
 export const PUBLIC_SUFFIX_URL =
 	"https://publicsuffix.org/list/public_suffix_list.dat";
 export const PUBLIC_SUFFIX_MARKER_ICANN_START = "// ===BEGIN ICANN DOMAINS===";
