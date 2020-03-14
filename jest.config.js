@@ -23,5 +23,4 @@ module.exports = {
 		"<rootDir>/src/tests",
 		"<rootDir>/node_modules/",
 	],
-	watchPathIgnorePatterns: ["<rootDir>/src/tests/fs"],
 };

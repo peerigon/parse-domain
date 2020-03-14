@@ -38,6 +38,3 @@ node_modules
 # We don't check in compiled files. They are created upon npm publish and npm install.
 build-esm
 build-cjs
-
-# Don't include files written by tests
-src/tests/fs
