@@ -1,3 +1,15 @@
+# [3.0.0-beta.1](https://github.com/peerigon/parse-domain/compare/v2.4.0-beta.1...v3.0.0-beta.1) (2020-03-14)
+
+
+### Features
+
+* Trigger beta release for next major version ([13287a6](https://github.com/peerigon/parse-domain/commit/13287a6a26de87f7767e34de611e698904b7e07c))
+
+
+### BREAKING CHANGES
+
+* This is a complete rewrite with a changed API
+
 # [2.4.0-beta.1](https://github.com/peerigon/parse-domain/compare/v2.3.2...v2.4.0-beta.1) (2020-03-14)
 
 
