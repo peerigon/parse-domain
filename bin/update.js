@@ -2,8 +2,8 @@
 
 "use strict";
 
+const {EOL} = require("os");
 const {deepStrictEqual} = require("assert");
-const {done} = require("../build-cjs/src/scripts/update-tries.js");
 
 const runSmokeTest = () => {
 	const {parseDomain} = require("../build-cjs/src/main.js");
@@ -47,11 +47,19 @@ const runSmokeTest = () => {
 };
 
 (async () => {
-	await done;
+	process.argv.push(
+		"--",
+		"../../serialized-tries",
+		"../../../build-esm/serialized-tries",
+	);
 
-	console.log("Running smoke test...");
+	await require("../build-cjs/src/scripts/update-tries.js").done;
+
+	process.stderr.write("Running smoke test... ");
 
 	runSmokeTest();
+
+	process.stdout.write("ok" + EOL);
 })().catch((error) => {
 	console.error(`parse-domain update failed: ${error}`);
 	// eslint-disable-next-line no-process-exit

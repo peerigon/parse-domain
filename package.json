@@ -1,7 +1,7 @@
 {
 	"name": "parse-domain",
 	"version": "2.3.2",
-	"description": "Splits an url into sub-domain, domain and effective top-level domain",
+	"description": "Splits a hostname into subdomains, domain and (effective) top-level domains",
 	"main": "./build-cjs/main.js",
 	"scripts": {
 		"test": "jest",
@@ -17,7 +17,7 @@
 		"update:dependencies": "updtr"
 	},
 	"bin": {
-		"parse-domain-update": "./bin/update.js -- ../../serialized-tries  ../../../build-esm/serialized-tries"
+		"parse-domain-update": "./bin/update.js"
 	},
 	"keywords": [
 		"domain",

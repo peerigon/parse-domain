@@ -31,9 +31,9 @@ const writeTriesToFiles = async ({
 				"info.json",
 			);
 
-			console.log(`Writing ${pathToIcannTrie}...`);
-			console.log(`Writing ${pathToPrivateTrie}...`);
-			console.log(`Writing ${pathToTrieInfoFile}...`);
+			console.warn(`Writing ${pathToIcannTrie}...`);
+			console.warn(`Writing ${pathToPrivateTrie}...`);
+			console.warn(`Writing ${pathToTrieInfoFile}...`);
 
 			await Promise.all([
 				fs.writeFile(pathToIcannTrie, JSON.stringify(serializedIcannTrie)),
@@ -50,7 +50,7 @@ const writeTriesToFiles = async ({
 };
 
 export const done = (async () => {
-	console.log(`Fetching public suffix list from ${PUBLIC_SUFFIX_URL}...`);
+	console.warn(`Fetching public suffix list from ${PUBLIC_SUFFIX_URL}...`);
 
 	await writeTriesToFiles(await fetchBuildSerializeTries());
 })();
