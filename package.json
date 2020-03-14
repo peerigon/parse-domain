@@ -5,8 +5,8 @@
 	"main": "./build-cjs/main.js",
 	"scripts": {
 		"test": "jest",
-		"posttest": "run-p posttest:*",
-		"posttest:lint": "eslint *.js src --ext ts",
+		"posttest": "run-s build posttest:*",
+		"posttest:lint": "eslint *.js src bin --ext js,ts",
 		"build": "run-s build:*",
 		"build:cleanup": "rimraf build-cjs build-esm",
 		"build:tsc": "run-p build:tsc:cjs build:tsc:esm",
@@ -54,6 +54,7 @@
 		"@types/nock": "^11.1.0",
 		"@types/node": "^13.9.0",
 		"@types/punycode": "^2.1.0",
+		"@typescript-eslint/eslint-plugin": "^2.23.0",
 		"@typescript-eslint/parser": "^2.23.0",
 		"eslint": "^6.8.0",
 		"eslint-config-peerigon": "^27.5.0",
