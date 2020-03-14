@@ -1,3 +1,10 @@
+# [2.4.0-beta.1](https://github.com/peerigon/parse-domain/compare/v2.3.2...v2.4.0-beta.1) (2020-03-14)
+
+
+### Features
+
+* Trigger beta release ([aa859fa](https://github.com/peerigon/parse-domain/commit/aa859fa5113a2e69edeb7e0b45c4a759edc39c51))
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
