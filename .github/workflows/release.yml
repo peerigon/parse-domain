@@ -21,6 +21,12 @@ jobs:
         run: |
           npm install --ignore-scripts
           npm install @semantic-release/changelog @semantic-release/git --ignore-scripts --no-save
+      - name: update tries
+        run: |
+          npm run update:tries
+      - name: test
+        run: |
+          npm run test
       - name: semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
