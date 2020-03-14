@@ -19,17 +19,17 @@ jobs:
       - uses: actions/checkout@v2
       - name: npm install
         run: |
-          npm install --ignore-scripts
-          npm install @semantic-release/changelog @semantic-release/git --ignore-scripts --no-save
+          npm ci --ignore-scripts
       - name: update tries
         run: |
           npm run update:tries
       - name: test
         run: |
-          npm run test
+          npm test
       - name: semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
+          npm install @semantic-release/changelog @semantic-release/git --ignore-scripts --no-save
           npx semantic-release
