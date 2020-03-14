@@ -34,6 +34,6 @@ jobs:
           npm install @semantic-release/changelog @semantic-release/git --ignore-scripts --no-save
           npx semantic-release
       - name: Coveralls
-        uses: coverallsapp/github-action@v1
+        uses: coverallsapp/github-action@v1.0.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
