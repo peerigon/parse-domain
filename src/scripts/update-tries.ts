@@ -1,8 +1,14 @@
 import {resolve} from "path";
-import {promises as fs} from "fs";
+import fileSystem from "fs";
+import {promisify} from "util";
 import {fetchBuildSerializeTries} from "../update-tries";
 import {PUBLIC_SUFFIX_URL} from "../config";
 import {Await} from "../type-util";
+
+// TODO: Replace this with fs promises once we removed Node 8
+const fs = {
+	writeFile: promisify(fileSystem.writeFile),
+};
 
 const writeTriesToFiles = async ({
 	serializedIcannTrie,
