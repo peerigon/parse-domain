@@ -2,7 +2,8 @@
 	"name": "parse-domain",
 	"version": "2.3.2",
 	"description": "Splits a hostname into subdomains, domain and (effective) top-level domains",
-	"main": "./build-cjs/main.js",
+	"main": "./build-cjs/src/main.js",
+	"module": "./build-esm/src/main.js",
 	"scripts": {
 		"test": "jest",
 		"posttest": "run-s build posttest:*",
