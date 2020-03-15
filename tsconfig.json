@@ -5,6 +5,7 @@
 		"esModuleInterop": true,
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
-		"forceConsistentCasingInFileNames": true
+		"forceConsistentCasingInFileNames": true,
+		"declaration": true
 	}
 }

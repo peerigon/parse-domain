@@ -1,5 +1,5 @@
 import {ok} from "assert";
-import fetch from "isomorphic-fetch";
+import fetch from "node-fetch";
 import {FETCH_PSL_EXPECTED_MIN_LENGTH, PUBLIC_SUFFIX_URL} from "../config";
 
 export const fetchPsl = async () => {

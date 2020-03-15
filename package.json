@@ -37,22 +37,18 @@
 	"author": "peerigon <developers@peerigon.com>",
 	"license": "Unlicense",
 	"files": [
-		"lib",
-		"scripts",
-		"lists",
-		"test",
-		"build",
-		"src/index.d.ts"
+		"bin",
+		"build-cjs",
+		"build-esm"
 	],
 	"dependencies": {
-		"isomorphic-fetch": "^2.2.1",
+		"node-fetch": "^2.6.0",
 		"punycode": "^2.1.1"
 	},
 	"devDependencies": {
-		"@types/isomorphic-fetch": "0.0.35",
 		"@types/jest": "^25.1.4",
-		"@types/nock": "^11.1.0",
 		"@types/node": "^13.9.0",
+		"@types/node-fetch": "^2.5.5",
 		"@types/punycode": "^2.1.0",
 		"@typescript-eslint/eslint-plugin": "^2.23.0",
 		"@typescript-eslint/parser": "^2.23.0",
