@@ -1,3 +1,10 @@
+# [3.0.0-beta.2](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.1...v3.0.0-beta.2) (2020-03-15)
+
+
+### Bug Fixes
+
+* Add missing files in package ([7a770cb](https://github.com/peerigon/parse-domain/commit/7a770cbf9f42af5d0a8b3aec19b0016d05bedf54))
+
 # [3.0.0-beta.1](https://github.com/peerigon/parse-domain/compare/v2.4.0-beta.1...v3.0.0-beta.1) (2020-03-14)
 
 
