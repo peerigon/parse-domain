@@ -1,10 +1,10 @@
 import * as characters from "./characters";
 import {TrieNode} from "./nodes";
-import {Labels} from "../parse-domain";
+import {Label} from "../parse-domain";
 
-export const lookUpTldsInTrie = (labels: Labels, trie: TrieNode) => {
+export const lookUpTldsInTrie = (labels: Array<Label>, trie: TrieNode) => {
 	const labelsToCheck = labels.slice();
-	const tlds: Labels = [];
+	const tlds: Array<Label> = [];
 	let node = trie;
 
 	while (labelsToCheck.length !== 0) {

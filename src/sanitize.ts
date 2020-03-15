@@ -1,4 +1,4 @@
-import {Labels} from "./parse-domain";
+import {Label} from "./parse-domain";
 
 // See https://en.wikipedia.org/wiki/Domain_name
 // See https://tools.ietf.org/html/rfc6761
@@ -29,7 +29,7 @@ export enum SanitizationResultType {
 export type SanitizationResultOk = {
 	type: SanitizationResultType.Ok;
 	originalInput: string;
-	labels: Labels;
+	labels: Array<Label>;
 };
 
 export type SanitizationResultError = {

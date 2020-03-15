@@ -4,7 +4,7 @@ import {ValidationError, sanitize, SanitizationResultType} from "./sanitize";
 import {TrieRootNode} from "./trie/nodes";
 import {parseTrie} from "./trie/parse-trie";
 
-export type Labels = Array<string>;
+export type Label = string;
 
 export enum ParseResultType {
 	Invalid = "INVALID",
@@ -21,13 +21,13 @@ export type ParseResultInvalid = {
 export type ParseResultNotListed = {
 	hostname: string;
 	type: ParseResultType.NotListed;
-	domains: Labels;
+	domains: Array<Label>;
 };
 
 type ParseResultListedDomains = {
-	subDomains: Labels;
-	domain: string | undefined;
-	topLevelDomains: Labels;
+	subDomains: Array<Label>;
+	domain: Label | undefined;
+	topLevelDomains: Array<Label>;
 };
 
 export type ParseResultListed = ParseResultListedDomains & {
@@ -49,7 +49,7 @@ const getAtIndex = <Item>(
 };
 
 const splitLabelsIntoDomains = (
-	labels: Labels,
+	labels: Array<Label>,
 	index: number,
 ): ParseResultListedDomains => {
 	return {
