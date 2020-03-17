@@ -2,8 +2,22 @@
 	"name": "parse-domain",
 	"version": "2.3.2",
 	"description": "Splits a hostname into subdomains, domain and (effective) top-level domains",
+	"keywords": [
+		"domain",
+		"url",
+		"sub-domain",
+		"tld",
+		"parse",
+		"sanitize",
+		"top-level"
+	],
 	"main": "./build-cjs/src/main.js",
 	"module": "./build-esm/src/main.js",
+	"exports": {
+		"node": "./build-cjs/src/main.mjs",
+		"import": "./build-esm/src/main.js",
+		"require": "./build-cjs/src/main.js"
+	},
 	"scripts": {
 		"test": "jest",
 		"posttest": "run-s build posttest:*",
@@ -13,6 +27,7 @@
 		"build:tsc": "run-p build:tsc:cjs build:tsc:esm",
 		"build:tsc:cjs": "tsc -p ./tsconfig.build-cjs.json",
 		"build:tsc:esm": "tsc -p ./tsconfig.build-esm.json",
+		"build:cpy": "cpy ./src/main.mjs ./build-cjs/src",
 		"update:psl-fixture": "ts-node --transpile-only ./src/scripts/update-psl-fixture.ts",
 		"update:tries": "ts-node --transpile-only ./src/scripts/update-tries.ts -- ../../serialized-tries",
 		"update:dependencies": "updtr"
@@ -20,17 +35,6 @@
 	"bin": {
 		"parse-domain-update": "./bin/update.js"
 	},
-	"keywords": [
-		"domain",
-		"url",
-		"sub-domain",
-		"tld",
-		"parse",
-		"extract",
-		"sanitize",
-		"country",
-		"top-level"
-	],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/peerigon/parse-domain.git"
@@ -42,6 +46,7 @@
 		"build-cjs",
 		"build-esm"
 	],
+	"sideEffects": false,
 	"dependencies": {
 		"node-fetch": "^2.6.0",
 		"punycode": "^2.1.1"
@@ -53,6 +58,7 @@
 		"@types/punycode": "^2.1.0",
 		"@typescript-eslint/eslint-plugin": "^2.23.0",
 		"@typescript-eslint/parser": "^2.23.0",
+		"cpy-cli": "^3.1.0",
 		"eslint": "^6.8.0",
 		"eslint-config-peerigon": "^27.5.0",
 		"eslint-import-resolver-typescript": "^2.0.0",
