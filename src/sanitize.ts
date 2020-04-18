@@ -1,7 +1,8 @@
 import {Label} from "./parse-domain";
+import {NO_HOSTNAME} from "./from-url";
 
 // See https://en.wikipedia.org/wiki/Domain_name
-// See https://tools.ietf.org/html/rfc6761
+// See https://tools.ietf.org/html/rfc1034
 const LABEL_SEPARATOR = ".";
 const LABEL_ROOT = "";
 const LABEL_LENGTH_MIN = 1;
@@ -9,6 +10,7 @@ const LABEL_LENGTH_MAX = 63;
 const DOMAIN_LENGTH_MAX = 253;
 
 export enum ValidationErrorType {
+	NoHostname = "NO_HOSTNAME",
 	DomainMaxLength = "DOMAIN_MAX_LENGTH",
 	LabelMinLength = "LABEL_MIN_LENGTH",
 	LabelMaxLength = "LABEL_MAX_LENGTH",
@@ -34,11 +36,19 @@ export type SanitizationResultOk = {
 
 export type SanitizationResultError = {
 	type: SanitizationResultType.Error;
-	originalInput: string;
+	originalInput: string | unknown;
 	errors: Array<ValidationError>;
 };
 
 export type SanitizationResult = SanitizationResultOk | SanitizationResultError;
+
+const createNoHostnameError = (input: unknown) => {
+	return {
+		type: ValidationErrorType.NoHostname,
+		message: `The given input ${String(input)} does not look like a hostname.`,
+		column: 1,
+	};
+};
 
 const createDomainMaxLengthError = (domain: string) => {
 	const length = domain.length;
@@ -82,16 +92,26 @@ const createLabelInvalidCharacterError = (
 	};
 };
 
-export const sanitize = (domain: string): SanitizationResult => {
-	if (domain.length > DOMAIN_LENGTH_MAX) {
+export const sanitize = (
+	input: string | typeof NO_HOSTNAME,
+): SanitizationResult => {
+	// Extra check for non-TypeScript users
+	if (typeof input !== "string") {
 		return {
 			type: SanitizationResultType.Error,
-			originalInput: domain,
-			errors: [createDomainMaxLengthError(domain)],
+			originalInput: input,
+			errors: [createNoHostnameError(input)],
+		};
+	}
+	if (input.length > DOMAIN_LENGTH_MAX) {
+		return {
+			type: SanitizationResultType.Error,
+			originalInput: input,
+			errors: [createDomainMaxLengthError(input)],
 		};
 	}
 
-	const labels = domain.split(LABEL_SEPARATOR);
+	const labels = input.split(LABEL_SEPARATOR);
 	const lastLabel = labels[labels.length - 1];
 
 	// If the last label is the special root label, ignore it
@@ -131,14 +151,14 @@ export const sanitize = (domain: string): SanitizationResult => {
 	if (labelValidationErrors.length > 0) {
 		return {
 			type: SanitizationResultType.Error,
-			originalInput: domain,
+			originalInput: input,
 			errors: labelValidationErrors,
 		};
 	}
 
 	return {
 		type: SanitizationResultType.Ok,
-		originalInput: domain,
+		originalInput: input,
 		labels,
 	};
 };

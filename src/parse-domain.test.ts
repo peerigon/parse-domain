@@ -1,6 +1,8 @@
-import {parseDomain, ParseResultType, ValidationErrorType} from "./main";
+import {parseDomain, ParseResultType} from "./parse-domain";
+import {ValidationErrorType} from "./sanitize";
+import {fromUrl} from "./from-url";
 
-describe("parseDomain()", () => {
+describe(parseDomain.name, () => {
 	test("splits a hostname into subDomains, domain and topLevelDomains", () => {
 		expect(parseDomain("www.example.com")).toMatchObject({
 			subDomains: ["www"],
@@ -123,7 +125,7 @@ describe("parseDomain()", () => {
 		});
 	});
 
-	test("returns also a result according to icann only", () => {
+	test("returns also a result according to ICANN only", () => {
 		expect(parseDomain("www.example.co.uk")).toMatchObject({
 			icann: {
 				subDomains: ["www"],
@@ -140,34 +142,71 @@ describe("parseDomain()", () => {
 		});
 	});
 
-	test("returns type ParseResultType.NotListed for valid hostnames that are not in the list", () => {
-		expect(parseDomain("localhost")).toMatchObject({
-			type: ParseResultType.NotListed,
-		});
-		expect(parseDomain("www.example.test")).toMatchObject({
-			type: ParseResultType.NotListed,
-		});
-		expect(parseDomain("some.local")).toMatchObject({
-			type: ParseResultType.NotListed,
+	test("returns type ParseResultType.Reserved for all reserved TLDs according to RFC 6761, 6762", () => {
+		expect(parseDomain("example")).toMatchObject({
+			type: ParseResultType.Reserved,
 		});
 		// We decided to treat .invalid domains not in a special way.
-		expect(parseDomain("www.example.invalid")).toMatchObject({
+		expect(parseDomain("some.invalid")).toMatchObject({
+			type: ParseResultType.Reserved,
+		});
+		expect(parseDomain("some.localhost")).toMatchObject({
+			type: ParseResultType.Reserved,
+		});
+		expect(parseDomain("test")).toMatchObject({
+			type: ParseResultType.Reserved,
+		});
+		expect(parseDomain("www.some.local")).toMatchObject({
+			type: ParseResultType.Reserved,
+		});
+	});
+
+	test("returns an array of domain labels for all reserved TLDs according to RFC 6761, 6762", () => {
+		expect(parseDomain("example")).toMatchObject({
+			domains: ["example"],
+		});
+		// We decided to treat .invalid domains not in a special way.
+		expect(parseDomain("some.invalid")).toMatchObject({
+			domains: ["some", "invalid"],
+		});
+		expect(parseDomain("some.localhost")).toMatchObject({
+			domains: ["some", "localhost"],
+		});
+		expect(parseDomain("test")).toMatchObject({
+			domains: ["test"],
+		});
+		expect(parseDomain("www.some.local")).toMatchObject({
+			domains: ["www", "some", "local"],
+		});
+	});
+
+	test("returns type ParseResultType.Reserved for an empty string", () => {
+		expect(parseDomain("")).toMatchObject({
+			type: ParseResultType.Reserved,
+		});
+	});
+
+	test("returns an empty domains array for an empty string", () => {
+		expect(parseDomain("")).toMatchObject({
+			domains: [],
+		});
+	});
+
+	test("returns type ParseResultType.NotListed for valid hostnames that are not listed", () => {
+		expect(parseDomain("valid")).toMatchObject({
+			type: ParseResultType.NotListed,
+		});
+		expect(parseDomain("this.is.not-listed")).toMatchObject({
 			type: ParseResultType.NotListed,
 		});
 	});
 
 	test("returns an array of domain labels for valid hostnames that are not listed", () => {
-		expect(parseDomain("localhost")).toMatchObject({
-			domains: ["localhost"],
+		expect(parseDomain("valid")).toMatchObject({
+			domains: ["valid"],
 		});
-		expect(parseDomain("www.example.test")).toMatchObject({
-			domains: ["www", "example", "test"],
-		});
-		expect(parseDomain("some.local")).toMatchObject({
-			domains: ["some", "local"],
-		});
-		expect(parseDomain("www.example.invalid")).toMatchObject({
-			domains: ["www", "example", "invalid"],
+		expect(parseDomain("this.is.not-listed")).toMatchObject({
+			domains: ["this", "is", "not-listed"],
 		});
 	});
 
@@ -188,6 +227,17 @@ describe("parseDomain()", () => {
 			errors: expect.arrayContaining([
 				expect.objectContaining({
 					column: 5,
+				}),
+			]),
+		});
+	});
+
+	test("returns type ParseResultType.Invalid for the domain '.'", () => {
+		expect(parseDomain(".")).toMatchObject({
+			type: ParseResultType.Invalid,
+			errors: expect.arrayContaining([
+				expect.objectContaining({
+					type: ValidationErrorType.LabelMinLength,
 				}),
 			]),
 		});
@@ -251,6 +301,69 @@ describe("parseDomain()", () => {
 					message:
 						'Label "some-静" contains invalid character "静" at column 5.',
 					column: 5,
+				}),
+			]),
+		});
+	});
+
+	test("returns type ParseResultType.Invalid and error information if the input was not domain like", () => {
+		/* eslint-disable @typescript-eslint/ban-ts-ignore, no-null/no-null */
+		// @ts-ignore
+		expect(parseDomain(undefined)).toMatchObject({
+			type: ParseResultType.Invalid,
+			errors: expect.arrayContaining([
+				expect.objectContaining({
+					type: ValidationErrorType.NoHostname,
+					message: "The given input undefined does not look like a hostname.",
+					column: 1,
+				}),
+			]),
+		});
+		// @ts-ignore
+		expect(parseDomain(null)).toMatchObject({
+			type: ParseResultType.Invalid,
+			errors: expect.arrayContaining([
+				expect.objectContaining({
+					type: ValidationErrorType.NoHostname,
+					message: "The given input null does not look like a hostname.",
+					column: 1,
+				}),
+			]),
+		});
+		// @ts-ignore
+		expect(parseDomain(true)).toMatchObject({
+			type: ParseResultType.Invalid,
+			errors: expect.arrayContaining([
+				expect.objectContaining({
+					type: ValidationErrorType.NoHostname,
+					message: "The given input true does not look like a hostname.",
+					column: 1,
+				}),
+			]),
+		});
+		// @ts-ignore
+		expect(parseDomain(1)).toMatchObject({
+			type: ParseResultType.Invalid,
+			errors: expect.arrayContaining([
+				expect.objectContaining({
+					type: ValidationErrorType.NoHostname,
+					message: "The given input 1 does not look like a hostname.",
+					column: 1,
+				}),
+			]),
+		});
+		/* eslint-enable */
+	});
+
+	test("returns type ParseResultType.Invalid and error information if the input was not an URL", () => {
+		expect(parseDomain(fromUrl(""))).toMatchObject({
+			type: ParseResultType.Invalid,
+			errors: expect.arrayContaining([
+				expect.objectContaining({
+					type: ValidationErrorType.NoHostname,
+					message:
+						"The given input Symbol(NO_HOSTNAME) does not look like a hostname.",
+					column: 1,
 				}),
 			]),
 		});
