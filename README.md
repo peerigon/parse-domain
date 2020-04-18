@@ -5,10 +5,10 @@
 [![Version on NPM](https://img.shields.io/npm/v/parse-domain?style=for-the-badge)](https://www.npmjs.com/package/parse-domain)
 [![Semantically released](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=for-the-badge)](https://github.com/semantic-release/semantic-release)
 [![Monthly downloads on NPM](https://img.shields.io/npm/dm/parse-domain?style=for-the-badge)](https://www.npmjs.com/package/parse-domain)
-[![License](https://img.shields.io/npm/l/parse-domain?style=for-the-badge)](https://unlicense.org/)
 [![Dependencies status](https://img.shields.io/david/peerigon/parse-domain?style=for-the-badge)](https://david-dm.org/peerigon/parse-domain)
 [![Known Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/parse-domain?style=for-the-badge)](https://snyk.io/test/github/peerigon/parse-domain)
 [![Coverage Status](https://img.shields.io/coveralls/github/peerigon/parse-domain?style=for-the-badge)](https://coveralls.io/github/peerigon/parse-domain?branch=master)
+[![License](https://img.shields.io/npm/l/parse-domain?style=for-the-badge)](https://unlicense.org/)
 
 Since domain name registrars are organizing their namespaces in different ways, it's not straight-forward to recognize subdomains, domain and top-level domains in a hostname. **parse-domain** validates the given hostname against [RFC 1034](https://tools.ietf.org/html/rfc1034) and uses a [large list of known top-level domains](https://publicsuffix.org/list/public_suffix_list.dat) from publicsuffix.org to split a hostname into different parts:
 
@@ -36,11 +36,13 @@ This module uses a [trie](https://en.wikipedia.org/wiki/Trie) data structure und
 npm install parse-domain
 ```
 
+## Updates
+
 💡 **Please note:** publicsuffix.org is updated several times per month. This package comes with a prebuilt list that has been downloaded at the time of `npm publish`. In order to get an up-to-date list, you should run `npx parse-domain-update` everytime you start or build your application. This will download the latest list from `https://publicsuffix.org/list/public_suffix_list.dat`.
 
 <br />
 
-## Valid inputs
+## Expected input
 
 **⚠️ [`parseDomain`](#api-js-parseDomain) does not parse whole URLs**. You should only pass the [puny-encoded](https://en.wikipedia.org/wiki/Punycode) hostname section of the URL:
 
@@ -50,7 +52,7 @@ npm install parse-domain
 | `münchen.de`                                   | `xn--mnchen-3ya.de`  |
 | `食狮.com.cn?query`                            | `xn--85x722f.com.cn` |
 
-**parseDomain** offers the utility function [`fromUrl`](#api-js-fromUrl) which tries to extract the hostname from a (partial) URL and puny-encodes it:
+There is the utility function [`fromUrl`](#api-js-fromUrl) which tries to extract the hostname from a (partial) URL and puny-encodes it:
 
 ```javascript
 import {parseDomain, fromUrl} from "parse-domain";
@@ -81,7 +83,7 @@ When parsing a domain there are 4 possible results:
   - is not listed in the public suffix list
   - is listed
 
-**parseDomain** returns a [`parseResult`](#api-ts-ParseResult) with a `type` property that allows to distinguish these cases.
+[`parseDomain`](#api-js-parseDomain) returns a [`ParseResult`](#api-ts-ParseResult) with a `type` property that allows to distinguish these cases.
 
 ### 👉 Invalid domains
 
@@ -402,7 +404,7 @@ type ParseResultReserved = {
 🧬 <code>export ParseResultNotListed</code>
 </h3>
 
-This type describes the shape of the parse result that is returned when the given hostname is valid and does not belong to a reserved top-level domain, but is not listed in the public suffix list.
+Describes the shape of the parse result that is returned when the given hostname is valid and does not belong to a reserved top-level domain, but is not listed in the public suffix list.
 
 ```ts
 type ParseResultNotListed = {
@@ -424,7 +426,7 @@ type ParseResultNotListed = {
 🧬 <code>export ParseResultListed</code>
 </h3>
 
-This type represents the parse result that is returned in case the given hostname belongs to a top-level domain that is listed in the public suffix list:
+Describes the shape of the parse result that is returned when the given hostname belongs to a top-level domain that is listed in the public suffix list:
 
 ```ts
 type ParseResultListed = {

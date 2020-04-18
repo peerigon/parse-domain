@@ -402,11 +402,11 @@ describe(parseDomain.name, () => {
 	});
 
 	test("returns the input hostname in the result", () => {
-		expect(parseDomain("www.example.com")).toMatchObject({
-			hostname: "www.example.com",
+		expect(parseDomain("www.EXAMPLE.com")).toMatchObject({
+			hostname: "www.EXAMPLE.com",
 		});
-		expect(parseDomain("www.example.test")).toMatchObject({
-			hostname: "www.example.test",
+		expect(parseDomain("www.EXAMPLE.test")).toMatchObject({
+			hostname: "www.EXAMPLE.test",
 		});
 	});
 });
