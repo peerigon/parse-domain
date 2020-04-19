@@ -1,3 +1,10 @@
+# [3.0.0-beta.4](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.3...v3.0.0-beta.4) (2020-04-19)
+
+
+### Bug Fixes
+
+* ESM and CJS exports for Node 13 ([33eb612](https://github.com/peerigon/parse-domain/commit/33eb6120660c43c03607db22d05269cf7135103a))
+
 # [3.0.0-beta.3](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.2...v3.0.0-beta.3) (2020-04-19)
 
 
