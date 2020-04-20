@@ -1,3 +1,10 @@
+# [3.0.0-beta.6](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.5...v3.0.0-beta.6) (2020-04-20)
+
+
+### Bug Fixes
+
+* smoke-test on Node v8 ([0a2b60a](https://github.com/peerigon/parse-domain/commit/0a2b60aa118d66355224e06de79852778dbfe3f4))
+
 # [3.0.0-beta.5](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.4...v3.0.0-beta.5) (2020-04-20)
 
 
