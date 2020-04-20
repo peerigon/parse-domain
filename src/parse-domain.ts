@@ -60,7 +60,7 @@ export type ParseResultNotListed = ParseResultCommon<
 > &
 	ParseResultCommonValid;
 
-type ParseResultListedDomains = ParseResultCommonValid & {
+type ParseResultListedDomains = {
 	/**
 	 * An array of labels that belong to the subdomain. Can be empty if there was no subdomain in the given hostname.
 	 */
@@ -76,6 +76,7 @@ type ParseResultListedDomains = ParseResultCommonValid & {
 };
 
 export type ParseResultListed = ParseResultCommon<ParseResultType.Listed> &
+	ParseResultCommonValid &
 	ParseResultListedDomains & {
 		/**
 		 * The parse result according to ICANN only without private top-level domains.
@@ -101,7 +102,6 @@ const splitLabelsIntoDomains = (
 	index: number,
 ): ParseResultListedDomains => {
 	return {
-		domains: labels,
 		subDomains: labels.slice(0, Math.max(0, index)),
 		domain: getAtIndex(labels, index),
 		topLevelDomains: labels.slice(index + 1),
@@ -163,6 +163,7 @@ export const parseDomain = (
 	return {
 		hostname,
 		type: ParseResultType.Listed,
+		domains: labels,
 		icann: splitLabelsIntoDomains(labels, indexOfIcannDomain),
 		...splitLabelsIntoDomains(labels, indexOfPublicSuffixDomain),
 	};

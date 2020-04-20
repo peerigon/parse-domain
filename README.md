@@ -10,7 +10,7 @@
 [![Coverage Status](https://img.shields.io/coveralls/github/peerigon/parse-domain?style=for-the-badge)](https://coveralls.io/github/peerigon/parse-domain?branch=master)
 [![License](https://img.shields.io/npm/l/parse-domain?style=for-the-badge)](https://unlicense.org/)
 
-Since domain name registrars are organizing their namespaces in different ways, it's not straight-forward to recognize subdomains, domain and top-level domains in a hostname. **parse-domain** validates the given hostname against [RFC 1034](https://tools.ietf.org/html/rfc1034) and uses a [large list of known top-level domains](https://publicsuffix.org/list/public_suffix_list.dat) from publicsuffix.org to split a hostname into different parts:
+Since domain name registrars organize their namespaces in different ways, it's not straight-forward to recognize subdomains, the domain and top-level domains in a hostname. **parse-domain** validates the given hostname against [RFC 1034](https://tools.ietf.org/html/rfc1034) and uses a [large list of known top-level domains](https://publicsuffix.org/list/public_suffix_list.dat) from publicsuffix.org to split a hostname into subdomains, domain and top-level domains:
 
 ```javascript
 import {parseDomain} from "parse-domain";
@@ -27,6 +27,8 @@ console.log(topLevelDomains); // ["co", "uk"]
 ```
 
 This module uses a [trie](https://en.wikipedia.org/wiki/Trie) data structure under the hood to ensure the smallest possible library size and the fastest lookup. The library is roughly 30KB minified and gzipped.
+
+This module also assumes an ES2015 environment. You need to transpile it down to ES5 (e.g. by using [Babel](https://babeljs.io/)) if you need to support older environments.
 
 <br />
 
