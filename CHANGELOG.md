@@ -1,3 +1,15 @@
+# [3.0.0-beta.7](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.6...v3.0.0-beta.7) (2020-04-20)
+
+
+### Bug Fixes
+
+* GitHub actions ([40fe150](https://github.com/peerigon/parse-domain/commit/40fe150695ae32a61dd7f2695ce787e806b42284))
+
+
+### Features
+
+* Improve GitHub actions ([be142b7](https://github.com/peerigon/parse-domain/commit/be142b79467dc6de873d5bd88f298273af099ce5))
+
 # [3.0.0-beta.6](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.5...v3.0.0-beta.6) (2020-04-20)
 
 
