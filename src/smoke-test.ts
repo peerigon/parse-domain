@@ -1,5 +1,5 @@
 import {deepStrictEqual} from "assert";
-import {parseDomain, fromUrl} from "./main";
+import {parseDomain} from "./main";
 
 deepStrictEqual(parseDomain("www.example.com"), {
 	hostname: "www.example.com",
@@ -40,7 +40,9 @@ deepStrictEqual(parseDomain("www.example.cloudfront.net"), {
 		topLevelDomains: ["net"],
 	},
 });
-deepStrictEqual(parseDomain(fromUrl("www.食狮.公司.cn")), {
+// TODO: Use fromUrl once we dropped Node v8 support
+// deepStrictEqual(parseDomain(fromUrl("www.食狮.公司.cn")), {
+deepStrictEqual(parseDomain("www.xn--85x722f.xn--55qx5d.cn"), {
 	hostname: "www.xn--85x722f.xn--55qx5d.cn",
 	type: "LISTED",
 	domains: ["www", "xn--85x722f", "xn--55qx5d", "cn"],
