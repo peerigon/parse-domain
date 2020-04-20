@@ -1,3 +1,10 @@
+# [3.0.0-beta.8](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.7...v3.0.0-beta.8) (2020-04-20)
+
+
+### Bug Fixes
+
+* Cache in GitHub actions ([28761fc](https://github.com/peerigon/parse-domain/commit/28761fc42b05c474a3c0677743270c1354bfbf59))
+
 # [3.0.0-beta.7](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.6...v3.0.0-beta.7) (2020-04-20)
 
 
