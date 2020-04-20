@@ -1,3 +1,10 @@
+# [3.0.0-beta.5](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.4...v3.0.0-beta.5) (2020-04-20)
+
+
+### Features
+
+* Extract smoke test ([f9e996b](https://github.com/peerigon/parse-domain/commit/f9e996bf062727d156c8b1740f1529ee20f45714))
+
 # [3.0.0-beta.4](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.3...v3.0.0-beta.4) (2020-04-19)
 
 
