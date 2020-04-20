@@ -17,6 +17,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Cache node modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
       - name: npm install
         run: |
           npm ci --ignore-scripts
@@ -34,6 +41,6 @@ jobs:
           npm install @semantic-release/changelog @semantic-release/git --ignore-scripts --no-save
           npx semantic-release
       - name: Coveralls
-        uses: coverallsapp/github-action@v1.0.1
+        uses: coverallsapp/github-action@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
