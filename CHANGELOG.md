@@ -1,3 +1,10 @@
+# [3.0.0-beta.9](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.8...v3.0.0-beta.9) (2020-04-20)
+
+
+### Bug Fixes
+
+* Cache in release job ([60557b2](https://github.com/peerigon/parse-domain/commit/60557b2a5e1a02669e4649c38dfc7148adc37b60))
+
 # [3.0.0-beta.8](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.7...v3.0.0-beta.8) (2020-04-20)
 
 
