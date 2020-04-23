@@ -1,16 +1,17 @@
 # parse-domain
 
-**Splits a hostname into subdomains, domain and (effective) top-level domains. Written in TypeScript.**
+**Splits a hostname into subdomains, domain and (effective) top-level domains.**
 
 [![Version on NPM](https://img.shields.io/npm/v/parse-domain?style=for-the-badge)](https://www.npmjs.com/package/parse-domain)
 [![Semantically released](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=for-the-badge)](https://github.com/semantic-release/semantic-release)
 [![Monthly downloads on NPM](https://img.shields.io/npm/dm/parse-domain?style=for-the-badge)](https://www.npmjs.com/package/parse-domain)
 [![Dependencies status](https://img.shields.io/david/peerigon/parse-domain?style=for-the-badge)](https://david-dm.org/peerigon/parse-domain)
 [![Known Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/parse-domain?style=for-the-badge)](https://snyk.io/test/github/peerigon/parse-domain)
+![Written in TypeScript](https://img.shields.io/npm/types/parse-domain?style=for-the-badge)
 [![Coverage Status](https://img.shields.io/coveralls/github/peerigon/parse-domain?style=for-the-badge)](https://coveralls.io/github/peerigon/parse-domain?branch=master)
 [![License](https://img.shields.io/npm/l/parse-domain?style=for-the-badge)](https://unlicense.org/)
 
-Since domain name registrars organize their namespaces in different ways, it's not straight-forward to split a hostname into subdomains, the domain and top-level domains. **parse-domain** validates the given hostname against [RFC 1034](https://tools.ietf.org/html/rfc1034) and uses a [large list of known top-level domains](https://publicsuffix.org/list/public_suffix_list.dat) from publicsuffix.org to do that:
+Since domain name registrars organize their namespaces in different ways, it's not straight-forward to split a hostname into subdomains, the domain and top-level domains. In order to do that **parse-domain** uses a [large list of known top-level domains](https://publicsuffix.org/list/public_suffix_list.dat) from [publicsuffix.org](https://publicsuffix.org/):
 
 ```javascript
 import {parseDomain} from "parse-domain";
@@ -26,9 +27,9 @@ console.log(domain); // "example"
 console.log(topLevelDomains); // ["co", "uk"]
 ```
 
-This package has been designed for modern Node and browser environments. It assumes an ES2015 environment with `Symbol()` and the global [`URL` constructor](https://developer.mozilla.org/en-US/docs/Web/API/URL) available. You need to transpile it down to ES5 (e.g. by using [Babel](https://babeljs.io/)) if you need to support older environments.
+This package has been designed for modern Node and browser environments, supporting both CommonJS and ECMAScript modules. It assumes an ES2015 environment with [`Symbol()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) and [`URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL) globally available. You need to transpile it down to ES5 (e.g. by using [Babel](https://babeljs.io/)) if you need to support older environments.
 
-The list of top-level domains is stored in a [trie](https://en.wikipedia.org/wiki/Trie) data structure and serialization format to ensure the fastest lookup and the smallest possible library size. The library is roughly 30KB minified and gzipped.
+The list of top-level domains is stored in a [trie](https://en.wikipedia.org/wiki/Trie) data structure and serialization format to ensure the fastest lookup and the smallest possible library size. The library is roughly 30KB minified and gzipped and is side-effect free (this is important for proper [tree-shaking](https://webpack.js.org/guides/tree-shaking/)).
 
 <br />
 
@@ -40,7 +41,7 @@ npm install parse-domain
 
 ## Updates
 
-💡 **Please note:** publicsuffix.org is updated several times per month. This package comes with a prebuilt list that has been downloaded at the time of `npm publish`. In order to get an up-to-date list, you should run `npx parse-domain-update` everytime you start or build your application. This will download the latest list from `https://publicsuffix.org/list/public_suffix_list.dat`.
+💡 **Please note:** [publicsuffix.org](https://publicsuffix.org/) is updated several times per month. This package comes with a prebuilt list that has been downloaded at the time of `npm publish`. In order to get an up-to-date list, you should run `npx parse-domain-update` everytime you start or build your application. This will download the latest list from `https://publicsuffix.org/list/public_suffix_list.dat`.
 
 <br />
 
@@ -73,18 +74,18 @@ import {toUnicode} from "punycode";
 console.log(toUnicode(domain)); // "münchen"
 ```
 
-[`fromUrl`](#api-js-fromUrl) uses the `URL` constructor under the hood. Depending on your target environments you need to make sure that there is a polyfill for it. It's globally available in [all modern browsers](https://caniuse.com/#feat=url) (no IE) and in [Node v10](https://nodejs.org/api/url.html#url_class_url).
+[`fromUrl`](#api-js-fromUrl) parses the URL using [`new URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL). Depending on your target environments you need to make sure that there is a [polyfill](https://www.npmjs.com/package/whatwg-url) for it. It's globally available in [all modern browsers](https://caniuse.com/#feat=url) (no IE) and in [Node v10](https://nodejs.org/api/url.html#url_class_url).
 
 ## Expected output
 
 When parsing a hostname there are 5 possible results:
 
 - invalid
-- it is an IPv4 or IPv6 address
-- formally correct and the domain
-  - is reserved
-  - is not listed in the public suffix list
-  - is listed
+- it is an ip address
+- it is formally correct and the domain is
+  - reserved
+  - not listed in the public suffix list
+  - listed in the public suffix list
 
 [`parseDomain`](#api-js-parseDomain) returns a [`ParseResult`](#api-ts-ParseResult) with a `type` property that allows to distinguish these cases.
 
@@ -115,7 +116,7 @@ console.log(parseResult.type === ParseResultType.Ip); // true
 console.log(parseResult.ipVersion); // 4
 ```
 
-It's debatable if a library for parsing domains should also accept IP addresses. In fact, you could argue that [`parseDomain`](#api-js-parseDomain) should reject an IP address as invalid domain. While this is true from a technical point of view, we decided to report IP addresses in a special way because we assume that a lot of people are using this library to make sense out of a hostname (see [#102](https://github.com/peerigon/parse-domain/issues/102)).
+It's debatable if a library for parsing domains should also accept IP addresses. In fact, you could argue that [`parseDomain`](#api-js-parseDomain) should reject an IP address as invalid. While this is true from a technical point of view, we decided to report IP addresses in a special way because we assume that a lot of people are using this library to make sense from an arbitrary hostname (see [#102](https://github.com/peerigon/parse-domain/issues/102)).
 
 ### 👉 Reserved domains
 
@@ -164,7 +165,7 @@ Some examples for public suffixes:
 - `com` in `example.com`
 - `co.uk` in `example.co.uk`
 - `co` in `example.co`
-- `com.co` in `example.com.co`
+- but also `com.co` in `example.com.co`
 
 If the hostname is listed in the public suffix list, the `parseResult.type` will be `ParseResultType.Listed`:
 
@@ -211,9 +212,9 @@ switch (parseResult.type) {
 }
 ```
 
-### ⚠️ Effective top-level domains vs. ICANN
+### ⚠️ Effective TLDs !== TLDs acknowledged by ICANN
 
-What's surprising to a lot of people is that the definition of public suffix means that regular business domains can become effective top-level domains:
+What's surprising to a lot of people is that the definition of public suffix means that regular user domains can become effective top-level domains:
 
 ```javascript
 const {subDomains, domain, topLevelDomains} = parseDomain(
@@ -225,9 +226,9 @@ console.log(domain); // "parse-domain"
 console.log(topLevelDomains); // ["github", "io"] 🤯
 ```
 
-In this case `github.io` is nothing else than a private domain name registrar. `github.io` is the _effective_ top-level domain and browsers are treating it like that.
+In this case, `github.io` is nothing else than a private domain name registrar. `github.io` is the _effective_ top-level domain and browsers are treating it like that (e.g. for setting [`document.domain`](https://developer.mozilla.org/en-US/docs/Web/API/Document/domain)).
 
-If you're only interested in top-level domains listed in the [ICANN](https://en.wikipedia.org/wiki/ICANN) section of the public suffix list, there's an `icann` property:
+If you want to deviate from the browser's understanding of a top-level domain and you're only interested in top-level domains acknowledged by [ICANN](https://en.wikipedia.org/wiki/ICANN), there's an `icann` property:
 
 ```javascript
 const parseResult = parseDomain("parse-domain.github.io");
@@ -270,7 +271,7 @@ console.log(topLevelDomains); // []
 🧩 <code>export parseDomain(hostname: string | typeof <a href="#api-js-NO_HOSTNAME">NO_HOSTNAME</a>): <a href="#api-ts-ParseResult">ParseResult</a></code>
 </h3>
 
-Takes a hostname (e.g. `"www.example.com"`) and returns a [`ParseResult`](#api-ts-ParseResult). The hostname must only contain letters, digits, hyphens and dots. International hostnames must be puny-encoded. Does not throw an error, even with invalid input.
+Takes a hostname (e.g. `"www.example.com"`) and returns a [`ParseResult`](#api-ts-ParseResult). The hostname must only contain basic latin characters, digits, hyphens and dots. International hostnames must be puny-encoded. Does not throw an error, even with invalid input.
 
 ```javascript
 import {parseDomain} from "parse-domain";
@@ -282,7 +283,7 @@ const parseResult = parseDomain("www.example.com");
 🧩 <code>export fromUrl(input: string): string | typeof <a href="#api-js-NO_HOSTNAME">NO_HOSTNAME</a></code>
 </h3>
 
-Takes a URL-like string and tries to extract the hostname. Requires the global [`URL` constructor](https://developer.mozilla.org/en-US/docs/Web/API/URL) to be available on the platform. Returns the [`NO_HOSTNAME`](#api-js-NO_HOSTNAME) symbol if the input was not a string or the hostname could not be extracted. Take a look [at the test suite](/blob/master/src/from-url.test.ts) for some examples. Does not throw an error, even with invalid input.
+Takes a URL-like string and tries to extract the hostname. Requires the global [`URL` constructor](https://developer.mozilla.org/en-US/docs/Web/API/URL) to be available on the platform. Returns the [`NO_HOSTNAME`](#api-js-NO_HOSTNAME) symbol if the input was not a string or the hostname could not be extracted. Take a look [at the test suite](/src/from-url.test.ts) for some examples. Does not throw an error, even with invalid input.
 
 <h3 id="api-js-NO_HOSTNAME">
 🧩 <code>export NO_HOSTNAME: unique symbol</code>
@@ -294,11 +295,11 @@ Takes a URL-like string and tries to extract the hostname. Requires the global [
 🧬 <code>export ParseResult</code>
 </h3>
 
-A `ParseResult` is either a [`ParseResultInvalid`](#api-ts-ParseResultInvalid), [`ParseResultReserved`](#api-ts-ParseResultReserved), [`ParseResultNotListed`](#api-ts-ParseResultNotListed) or [`ParseResultListed`](#api-ts-ParseResultListed).
+A `ParseResult` is either a [`ParseResultInvalid`](#api-ts-ParseResultInvalid), [`ParseResultIp`](#api-ts-ParseResultIp), [`ParseResultReserved`](#api-ts-ParseResultReserved), [`ParseResultNotListed`](#api-ts-ParseResultNotListed) or [`ParseResultListed`](#api-ts-ParseResultListed).
 
-All parse results have a `type` property that is either `"INVALID"`, `"RESERVED"`, `"NOT_LISTED"` or `"LISTED"`. Use the exported [ParseResultType](#api-js-ParseResultType) to check for the type instead of checking against string literals.
+All parse results have a `type` property that is either `"INVALID", "IP",`"RESERVED"`,`"NOT_LISTED"`or`"LISTED"`. Use the exported [ParseResultType](#api-js-ParseResultType) to check for the type instead of checking against string literals.
 
-All parse results also have a `hostname` property that stores the original hostname that was passed to [`parseDomain`](#api-js-parseDomain).
+All parse results also have a `hostname` property that provides access to the sanitized hostname that was passed to [`parseDomain`](#api-js-parseDomain).
 
 <h3 id="api-js-ParseResultType">
 🧩 <code>export ParseResultType</code>
@@ -332,7 +333,7 @@ Describes the shape of the parse result that is returned when the given hostname
 - The hostname is longer than 253 characters
 - A domain label is shorter than 1 character
 - A domain label is longer than 63 characters
-- A domain label contains a character that is not a letter, digit or hyphen
+- A domain label contains a character that is not a basic latin character, digit or hyphen
 
 ```ts
 type ParseResultInvalid = {
@@ -455,7 +456,7 @@ type ParseResultReserved = {
 🧬 <code>export ParseResultNotListed</code>
 </h3>
 
-Describes the shape of the parse result that is returned when the given hostname is valid and does not belong to a reserved top-level domain, but is not listed in the public suffix list.
+Describes the shape of the parse result that is returned when the given hostname is valid and does not belong to a reserved top-level domain, but is not listed in the downloaded public suffix list.
 
 ```ts
 type ParseResultNotListed = {
