@@ -1,3 +1,10 @@
+# [3.0.0-beta.10](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.9...v3.0.0-beta.10) (2020-04-23)
+
+
+### Features
+
+* Trigger beta release for next major version ([5443240](https://github.com/peerigon/parse-domain/commit/5443240d009b21284d707d6d22a1656970f8a699))
+
 # [3.0.0-beta.9](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.8...v3.0.0-beta.9) (2020-04-20)
 
 
