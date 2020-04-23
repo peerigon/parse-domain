@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/peerigon/parse-domain/compare/v2.3.4...v3.0.0) (2020-04-23)
+
+
+### Features
+
+* Complete rewrite in TypeScript and several bug fixes and improvements ([9f38492](https://github.com/peerigon/parse-domain/commit/9f384921015ab962975ae1d3833507dd7ec0cc52))
+
+
+### BREAKING CHANGES
+
+* This release is a complete rewrite in TypeScript. It fixes some long outstanding bugs and comes with improvements we were planning for quite some time. The major changes are: 1. parseDomain does not accept whole URLs anymore. Only the hostname section of a URL is allowed now. 2. We removed the options object. Custom TLDs are returned as "valid but not listed". The parse result contains both the result with private TLDs and without private TLDs. 3. Dropped Node 6 support. We recommend reading the README since the public API as changed quite a lot.
+
 # [3.0.0-beta.10](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.9...v3.0.0-beta.10) (2020-04-23)
 
 
