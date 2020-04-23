@@ -10,7 +10,7 @@
 [![Coverage Status](https://img.shields.io/coveralls/github/peerigon/parse-domain?style=for-the-badge)](https://coveralls.io/github/peerigon/parse-domain?branch=master)
 [![License](https://img.shields.io/npm/l/parse-domain?style=for-the-badge)](https://unlicense.org/)
 
-Since domain name registrars organize their namespaces in different ways, it's not straight-forward to recognize subdomains, the domain and top-level domains in a hostname. **parse-domain** validates the given hostname against [RFC 1034](https://tools.ietf.org/html/rfc1034) and uses a [large list of known top-level domains](https://publicsuffix.org/list/public_suffix_list.dat) from publicsuffix.org to split a hostname into subdomains, domain and top-level domains:
+Since domain name registrars organize their namespaces in different ways, it's not straight-forward to split a hostname into subdomains, the domain and top-level domains. **parse-domain** validates the given hostname against [RFC 1034](https://tools.ietf.org/html/rfc1034) and uses a [large list of known top-level domains](https://publicsuffix.org/list/public_suffix_list.dat) from publicsuffix.org to do that:
 
 ```javascript
 import {parseDomain} from "parse-domain";
@@ -26,9 +26,9 @@ console.log(domain); // "example"
 console.log(topLevelDomains); // ["co", "uk"]
 ```
 
-This module uses a [trie](https://en.wikipedia.org/wiki/Trie) data structure under the hood to ensure the smallest possible library size and the fastest lookup. The library is roughly 30KB minified and gzipped.
+This package has been designed for modern Node and browser environments. It assumes an ES2015 environment with `Symbol()` and the global [`URL` constructor](https://developer.mozilla.org/en-US/docs/Web/API/URL) available. You need to transpile it down to ES5 (e.g. by using [Babel](https://babeljs.io/)) if you need to support older environments.
 
-This module also assumes an ES2015 environment. You need to transpile it down to ES5 (e.g. by using [Babel](https://babeljs.io/)) if you need to support older environments.
+The list of top-level domains is stored in a [trie](https://en.wikipedia.org/wiki/Trie) data structure and serialization format to ensure the fastest lookup and the smallest possible library size. The library is roughly 30KB minified and gzipped.
 
 <br />
 

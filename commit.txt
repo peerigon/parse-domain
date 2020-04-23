@@ -1,0 +1,10 @@
+feat: Complete rewrite in TypeScript and several bug fixes and improvements
+
+- Run against [psl example domains](https://raw.githubusercontent.com/publicsuffix/list/master/tests/test_psl.txt). Closes https://github.com/peerigon/parse-domain/issues/1
+- Add support for international domain names. Fixes https://github.com/peerigon/parse-domain/issues/16 https://github.com/peerigon/parse-domain/issues/82 and https://github.com/peerigon/parse-domain/issues/44
+- Only accept hostnames instead of whole URLs. Fixes https://github.com/peerigon/parse-domain/issues/49 and https://github.com/peerigon/parse-domain/issues/14
+- Do not auto update tries on npm install. Fixes https://github.com/peerigon/parse-domain/issues/42 https://github.com/peerigon/parse-domain/issues/48 and https://github.com/peerigon/parse-domain/issues/90
+- Use "node-fetch" instead of "got". Fixes https://github.com/peerigon/parse-domain/issues/78 and https://github.com/peerigon/parse-domain/pull/62
+- Use Node's "assert" module instead of Jest for smoke test. Fixes https://github.com/peerigon/parse-domain/issues/92 https://github.com/peerigon/parse-domain/issues/93 https://github.com/peerigon/parse-domain/issues/89 https://github.com/peerigon/parse-domain/pull/91
+
+BREAKING CHANGE: This release is a complete rewrite in TypeScript. It also fixes some outstanding bugs and features some improvements we were planning for quite some time. The major changes are: 1. parseDomain does not accept whole URLs anymore (fixes ). We also added tests 

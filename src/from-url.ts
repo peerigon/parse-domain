@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/default
+import isIp from "is-ip";
+
 const urlPattern = /^[a-z]+:\/\//i;
 
 export const NO_HOSTNAME: unique symbol = Symbol("NO_HOSTNAME");
@@ -18,9 +21,17 @@ export const fromUrl = (urlLike: string) => {
 		? urlLike
 		: `http://${urlLike}`;
 
+	let hostname;
+
 	try {
-		return new URL(url).hostname;
+		hostname = new URL(url).hostname;
 	} catch {
 		return NO_HOSTNAME;
 	}
+
+	if (isIp(hostname)) {
+		return NO_HOSTNAME;
+	}
+
+	return hostname;
 };

@@ -49,6 +49,7 @@
 	],
 	"sideEffects": false,
 	"dependencies": {
+		"is-ip": "^3.1.0",
 		"node-fetch": "^2.6.0",
 		"punycode": "^2.1.1"
 	},

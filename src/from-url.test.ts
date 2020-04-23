@@ -27,7 +27,7 @@ describe(fromUrl.name, () => {
 		expect(fromUrl("com?query")).toBe("com");
 	});
 
-	test("it the root domain for URLs with just the root domain", () => {
+	test("it returns the root domain for URLs with just the root domain", () => {
 		expect(fromUrl(".:8080/path?query")).toBe(".");
 		expect(fromUrl("./?query")).toBe(".");
 		expect(fromUrl(".?query")).toBe(".");
@@ -43,14 +43,23 @@ describe(fromUrl.name, () => {
 		expect(fromUrl("xn--mnchen-3ya.de")).toBe("xn--mnchen-3ya.de");
 	});
 
-	test("it returns undefined for invalid URLs", () => {
+	test("it returns the NO_HOSTNAME symbol for URLs containing IPs", () => {
+		expect(fromUrl("http://192.168.1.1/path?query")).toBe(NO_HOSTNAME);
+		expect(fromUrl("//192.168.1.1")).toBe(NO_HOSTNAME);
+		expect(fromUrl("192.168.1.1")).toBe(NO_HOSTNAME);
+		expect(fromUrl("http://1:2:3:4:5:6:7:8/path?query")).toBe(NO_HOSTNAME);
+		expect(fromUrl("//1:2:3:4:5:6:7:8")).toBe(NO_HOSTNAME);
+		expect(fromUrl("1:2:3:4:5:6:7:8")).toBe(NO_HOSTNAME);
+	});
+
+	test("it returns the NO_HOSTNAME symbol for invalid URLs", () => {
 		expect(fromUrl(":8080/path?query")).toBe(NO_HOSTNAME);
 		expect(fromUrl("/path?query")).toBe(NO_HOSTNAME);
 		expect(fromUrl("?query")).toBe(NO_HOSTNAME);
 		expect(fromUrl("")).toBe(NO_HOSTNAME);
 	});
 
-	test("it returns undefined for invalid input types", () => {
+	test("it returns the NO_HOSTNAME symbol for invalid input types", () => {
 		/* eslint-disable @typescript-eslint/ban-ts-ignore, no-null/no-null */
 		// @ts-ignore
 		expect(fromUrl(undefined)).toBe(NO_HOSTNAME);

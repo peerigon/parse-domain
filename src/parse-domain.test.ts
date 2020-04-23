@@ -145,37 +145,23 @@ describe(parseDomain.name, () => {
 	test("returns type ParseResultType.Reserved for all reserved TLDs according to RFC 6761, 6762", () => {
 		expect(parseDomain("example")).toMatchObject({
 			type: ParseResultType.Reserved,
-		});
-		// We decided to treat .invalid domains not in a special way.
-		expect(parseDomain("some.invalid")).toMatchObject({
-			type: ParseResultType.Reserved,
-		});
-		expect(parseDomain("some.localhost")).toMatchObject({
-			type: ParseResultType.Reserved,
-		});
-		expect(parseDomain("test")).toMatchObject({
-			type: ParseResultType.Reserved,
-		});
-		expect(parseDomain("www.some.local")).toMatchObject({
-			type: ParseResultType.Reserved,
-		});
-	});
-
-	test("returns an array of domain labels for all reserved TLDs according to RFC 6761, 6762", () => {
-		expect(parseDomain("example")).toMatchObject({
 			domains: ["example"],
 		});
 		// We decided to treat .invalid domains not in a special way.
 		expect(parseDomain("some.invalid")).toMatchObject({
+			type: ParseResultType.Reserved,
 			domains: ["some", "invalid"],
 		});
 		expect(parseDomain("some.localhost")).toMatchObject({
+			type: ParseResultType.Reserved,
 			domains: ["some", "localhost"],
 		});
 		expect(parseDomain("test")).toMatchObject({
+			type: ParseResultType.Reserved,
 			domains: ["test"],
 		});
 		expect(parseDomain("www.some.local")).toMatchObject({
+			type: ParseResultType.Reserved,
 			domains: ["www", "some", "local"],
 		});
 	});
@@ -183,11 +169,6 @@ describe(parseDomain.name, () => {
 	test("returns type ParseResultType.Reserved for an empty string", () => {
 		expect(parseDomain("")).toMatchObject({
 			type: ParseResultType.Reserved,
-		});
-	});
-
-	test("returns an empty domains array for an empty string", () => {
-		expect(parseDomain("")).toMatchObject({
 			domains: [],
 		});
 	});
@@ -195,17 +176,10 @@ describe(parseDomain.name, () => {
 	test("returns type ParseResultType.NotListed for valid hostnames that are not listed", () => {
 		expect(parseDomain("valid")).toMatchObject({
 			type: ParseResultType.NotListed,
-		});
-		expect(parseDomain("this.is.not-listed")).toMatchObject({
-			type: ParseResultType.NotListed,
-		});
-	});
-
-	test("returns an array of domain labels for valid hostnames that are not listed", () => {
-		expect(parseDomain("valid")).toMatchObject({
 			domains: ["valid"],
 		});
 		expect(parseDomain("this.is.not-listed")).toMatchObject({
+			type: ParseResultType.NotListed,
 			domains: ["this", "is", "not-listed"],
 		});
 	});
