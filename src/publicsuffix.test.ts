@@ -62,36 +62,36 @@ describe("Official test suite from https://raw.githubusercontent.com/publicsuffi
 	// Unlisted TLD.
 	checkPublicSuffix("example", null, {
 		type: ParseResultType.Reserved,
-		domains: ["example"],
+		labels: ["example"],
 	});
 	checkPublicSuffix("example.example", "example.example", {
 		type: ParseResultType.Reserved,
-		domains: ["example", "example"],
+		labels: ["example", "example"],
 	});
 	checkPublicSuffix("b.example.example", "example.example", {
 		type: ParseResultType.Reserved,
-		domains: ["b", "example", "example"],
+		labels: ["b", "example", "example"],
 	});
 	checkPublicSuffix("a.b.example.example", "example.example", {
 		type: ParseResultType.Reserved,
-		domains: ["a", "b", "example", "example"],
+		labels: ["a", "b", "example", "example"],
 	});
 	// Listed, but non-Internet, TLD.
 	checkPublicSuffix("local", null, {
 		type: ParseResultType.Reserved,
-		domains: ["local"],
+		labels: ["local"],
 	});
 	checkPublicSuffix("example.local", null, {
 		type: ParseResultType.Reserved,
-		domains: ["example", "local"],
+		labels: ["example", "local"],
 	});
 	checkPublicSuffix("b.example.local", null, {
 		type: ParseResultType.Reserved,
-		domains: ["b", "example", "local"],
+		labels: ["b", "example", "local"],
 	});
 	checkPublicSuffix("a.b.example.local", null, {
 		type: ParseResultType.Reserved,
-		domains: ["a", "b", "example", "local"],
+		labels: ["a", "b", "example", "local"],
 	});
 	// TLD with only 1 rule.
 	checkPublicSuffix("biz", null, {

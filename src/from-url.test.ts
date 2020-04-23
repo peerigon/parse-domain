@@ -43,13 +43,18 @@ describe(fromUrl.name, () => {
 		expect(fromUrl("xn--mnchen-3ya.de")).toBe("xn--mnchen-3ya.de");
 	});
 
-	test("it returns the NO_HOSTNAME symbol for URLs containing IPs", () => {
-		expect(fromUrl("http://192.168.1.1/path?query")).toBe(NO_HOSTNAME);
-		expect(fromUrl("//192.168.1.1")).toBe(NO_HOSTNAME);
-		expect(fromUrl("192.168.1.1")).toBe(NO_HOSTNAME);
-		expect(fromUrl("http://1:2:3:4:5:6:7:8/path?query")).toBe(NO_HOSTNAME);
-		expect(fromUrl("//1:2:3:4:5:6:7:8")).toBe(NO_HOSTNAME);
-		expect(fromUrl("1:2:3:4:5:6:7:8")).toBe(NO_HOSTNAME);
+	test("it handles URLs with IPv4", () => {
+		expect(fromUrl("http://192.168.1.1/path?query")).toBe("192.168.1.1");
+		expect(fromUrl("//192.168.1.1")).toBe("192.168.1.1");
+		expect(fromUrl("192.168.1.1")).toBe("192.168.1.1");
+	});
+
+	test("it handles URLs with IPv6", () => {
+		expect(fromUrl("http://[1:2:3:4:5:6:7:8]/path?query")).toBe(
+			"[1:2:3:4:5:6:7:8]",
+		);
+		expect(fromUrl("//[1:2:3:4:5:6:7:8]")).toBe("[1:2:3:4:5:6:7:8]");
+		expect(fromUrl("[1:2:3:4:5:6:7:8]")).toBe("[1:2:3:4:5:6:7:8]");
 	});
 
 	test("it returns the NO_HOSTNAME symbol for invalid URLs", () => {

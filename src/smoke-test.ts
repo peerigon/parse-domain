@@ -4,7 +4,7 @@ import {parseDomain} from "./main";
 deepStrictEqual(parseDomain("www.example.com"), {
 	hostname: "www.example.com",
 	type: "LISTED",
-	domains: ["www", "example", "com"],
+	labels: ["www", "example", "com"],
 	subDomains: ["www"],
 	domain: "example",
 	topLevelDomains: ["com"],
@@ -17,7 +17,7 @@ deepStrictEqual(parseDomain("www.example.com"), {
 deepStrictEqual(parseDomain("www.example.co.uk"), {
 	hostname: "www.example.co.uk",
 	type: "LISTED",
-	domains: ["www", "example", "co", "uk"],
+	labels: ["www", "example", "co", "uk"],
 	subDomains: ["www"],
 	domain: "example",
 	topLevelDomains: ["co", "uk"],
@@ -30,7 +30,7 @@ deepStrictEqual(parseDomain("www.example.co.uk"), {
 deepStrictEqual(parseDomain("www.example.cloudfront.net"), {
 	hostname: "www.example.cloudfront.net",
 	type: "LISTED",
-	domains: ["www", "example", "cloudfront", "net"],
+	labels: ["www", "example", "cloudfront", "net"],
 	subDomains: ["www"],
 	domain: "example",
 	topLevelDomains: ["cloudfront", "net"],
@@ -45,7 +45,7 @@ deepStrictEqual(parseDomain("www.example.cloudfront.net"), {
 deepStrictEqual(parseDomain("www.xn--85x722f.xn--55qx5d.cn"), {
 	hostname: "www.xn--85x722f.xn--55qx5d.cn",
 	type: "LISTED",
-	domains: ["www", "xn--85x722f", "xn--55qx5d", "cn"],
+	labels: ["www", "xn--85x722f", "xn--55qx5d", "cn"],
 	subDomains: ["www"],
 	domain: "xn--85x722f",
 	topLevelDomains: ["xn--55qx5d", "cn"],

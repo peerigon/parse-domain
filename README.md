@@ -77,10 +77,11 @@ console.log(toUnicode(domain)); // "münchen"
 
 ## Expected output
 
-When parsing a domain there are 4 possible results:
+When parsing a hostname there are 5 possible results:
 
 - invalid
-- formally correct and the domain name
+- it is an IPv4 or IPv6 address
+- formally correct and the domain
   - is reserved
   - is not listed in the public suffix list
   - is listed
@@ -101,6 +102,21 @@ console.log(parseResult.type === ParseResultType.Invalid); // true
 
 Check out the [API](#api-ts-ValidationError) if you need more information about the validation error.
 
+### 👉 IP addresses
+
+If the given input is an IP address, `parseResult.type` will be `ParseResultType.Ip`:
+
+```javascript
+import {parseDomain, ParseResultType} from "parse-domain";
+
+const parseResult = parseDomain("192.168.2.1");
+
+console.log(parseResult.type === ParseResultType.Ip); // true
+console.log(parseResult.ipVersion); // 4
+```
+
+It's debatable if a library for parsing domains should also accept IP addresses. In fact, you could argue that [`parseDomain`](#api-js-parseDomain) should reject an IP address as invalid domain. While this is true from a technical point of view, we decided to report IP addresses in a special way because we assume that a lot of people are using this library to make sense out of a hostname (see [#102](https://github.com/peerigon/parse-domain/issues/102)).
+
 ### 👉 Reserved domains
 
 There are 5 top-level domains that are not listed in the public suffix list but reserved according to [RFC 6761](https://tools.ietf.org/html/rfc6761) and [RFC 6762](https://tools.ietf.org/html/rfc6762):
@@ -119,7 +135,7 @@ import {parseDomain, ParseResultType} from "parse-domain";
 const parseResult = parseDomain("pecorino.local");
 
 console.log(parseResult.type === ParseResultType.Reserved); // true
-console.log(parseResult.domains); // ["pecorino", "local"]
+console.log(parseResult.labels); // ["pecorino", "local"]
 ```
 
 ### 👉 Domains that are not listed
@@ -132,7 +148,7 @@ import {parseDomain, ParseResultType} from "parse-domain";
 const parseResult = parseDomain("this.is.not-listed");
 
 console.log(parseResult.type === ParseResultType.NotListed); // true
-console.log(parseResult.domains); // ["this", "is", "not-listed"]
+console.log(parseResult.labels); // ["this", "is", "not-listed"]
 ```
 
 If a domain is not listed, it can be caused by an outdated list. Make sure to [update the list once in a while](#installation).
@@ -150,7 +166,7 @@ Some examples for public suffixes:
 - `co` in `example.co`
 - `com.co` in `example.com.co`
 
-If the hostname contains domains from the public suffix list, the `parseResult.type` will be `ParseResultType.Listed`:
+If the hostname is listed in the public suffix list, the `parseResult.type` will be `ParseResultType.Listed`:
 
 ```javascript
 import {parseDomain, ParseResultType} from "parse-domain";
@@ -158,7 +174,7 @@ import {parseDomain, ParseResultType} from "parse-domain";
 const parseResult = parseDomain("example.co.uk");
 
 console.log(parseResult.type === ParseResultType.Listed); // true
-console.log(parseResult.domains); // ["example", "co", "uk"]
+console.log(parseResult.labels); // ["example", "co", "uk"]
 ```
 
 Now `parseResult` will also provide a `subDomains`, `domain` and `topLevelDomains` property:
@@ -191,7 +207,7 @@ switch (parseResult.type) {
 		break;
 	}
 	default:
-		throw new Error(`${hostname} is an invalid domain`);
+		throw new Error(`${hostname} is an ip address or invalid domain`);
 }
 ```
 
@@ -293,6 +309,7 @@ An object that holds all possible [ParseResult](#api-ts-ParseResult) `type` valu
 ```javascript
 const ParseResultType = {
 	Invalid: "INVALID",
+	Ip: "IP",
 	Reserved: "RESERVED",
 	NotListed: "NOT_LISTED",
 	Listed: "LISTED",
@@ -377,6 +394,38 @@ const ValidationErrorType = {
 
 This type represents all possible `type` values of a [ValidationError](#api-ts-ValidationError).
 
+<h3 id="api-ts-ParseResultIp">
+🧬 <code>export ParseResultIp</code>
+</h3>
+
+This type describes the shape of the parse result that is returned when the given hostname was an IPv4 or IPv6 address.
+
+```ts
+type ParseResultIp = {
+	type: ParseResultType.Ip;
+	hostname: string;
+	ipVersion: 4 | 6;
+};
+
+// Example
+
+{
+	type: "IP",
+	hostname: "192.168.0.1",
+	ipVersion: 4
+}
+```
+
+According to [RFC 3986](https://tools.ietf.org/html/rfc3986#section-3.2.2), IPv6 addresses need to be surrounded by `[` and `]` in URLs. [`parseDomain`](#api-js-parseDomain) accepts both IPv6 address with and without square brackets:
+
+```js
+// Recognized as IPv4 address
+parseDomain("192.168.0.1");
+// Both are recognized as proper IPv6 addresses
+parseDomain("::");
+parseDomain("[::]");
+```
+
 <h3 id="api-ts-ParseResultReserved">
 🧬 <code>export ParseResultReserved</code>
 </h3>
@@ -390,7 +439,7 @@ This type describes the shape of the parse result that is returned when the give
 type ParseResultReserved = {
 	type: ParseResultType.Reserved;
 	hostname: string;
-	domains: Array<string>;
+	labels: Array<string>;
 };
 
 // Example
@@ -398,7 +447,7 @@ type ParseResultReserved = {
 {
 	type: "RESERVED",
 	hostname: "pecorino.local",
-	domains: ["pecorino", "local"]
+	labels: ["pecorino", "local"]
 }
 ```
 
@@ -412,7 +461,7 @@ Describes the shape of the parse result that is returned when the given hostname
 type ParseResultNotListed = {
 	type: ParseResultType.NotListed;
 	hostname: string;
-	domains: Array<string>;
+	labels: Array<string>;
 };
 
 // Example
@@ -420,7 +469,7 @@ type ParseResultNotListed = {
 {
 	type: "NOT_LISTED",
 	hostname: "this.is.not-listed",
-	domains: ["this", "is", "not-listed"]
+	labels: ["this", "is", "not-listed"]
 }
 ```
 
@@ -428,13 +477,13 @@ type ParseResultNotListed = {
 🧬 <code>export ParseResultListed</code>
 </h3>
 
-Describes the shape of the parse result that is returned when the given hostname belongs to a top-level domain that is listed in the public suffix list:
+Describes the shape of the parse result that is returned when the given hostname belongs to a top-level domain that is listed in the public suffix list.
 
 ```ts
 type ParseResultListed = {
 	type: ParseResultType.Listed;
 	hostname: string;
-	domains: Array<string>;
+	labels: Array<string>;
 	subDomains: Array<string>;
 	domain: string | undefined;
 	topLevelDomains: Array<string>;
@@ -450,7 +499,7 @@ type ParseResultListed = {
 {
 	type: "LISTED",
 	hostname: "parse-domain.github.io",
-	domains: ["parse-domain", "github", "io"]
+	labels: ["parse-domain", "github", "io"]
 	subDomains: [],
 	domain: "parse-domain",
 	topLevelDomains: ["github", "io"],

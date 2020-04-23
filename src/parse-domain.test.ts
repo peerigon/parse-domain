@@ -2,6 +2,29 @@ import {parseDomain, ParseResultType} from "./parse-domain";
 import {ValidationErrorType} from "./sanitize";
 import {fromUrl} from "./from-url";
 
+const ipV6Samples = [
+	"::",
+	"1::",
+	"::1",
+	"1::8",
+	"1::7:8",
+	"1:2:3:4:5:6:7:8",
+	"1:2:3:4:5:6::8",
+	"1:2:3:4:5:6:7::",
+	"1:2:3:4:5::7:8",
+	"1:2:3:4:5::8",
+	"1:2:3::8",
+	"1::4:5:6:7:8",
+	"1::6:7:8",
+	"1::3:4:5:6:7:8",
+	"1:2:3:4::6:7:8",
+	"1:2::4:5:6:7:8",
+	"::2:3:4:5:6:7:8",
+	"1:2::8",
+	"2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+	"2001:db8:85a3:0:0:8a2e:370:7334",
+];
+
 describe(parseDomain.name, () => {
 	test("splits a hostname into subDomains, domain and topLevelDomains", () => {
 		expect(parseDomain("www.example.com")).toMatchObject({
@@ -142,45 +165,82 @@ describe(parseDomain.name, () => {
 		});
 	});
 
+	test("returns type ParseResultType.Ip for IPv4 addresses", () => {
+		[
+			"0.0.0.0",
+			"8.8.8.8",
+			"127.0.0.1",
+			"100.100.100.100",
+			"192.168.0.1",
+			"18.101.25.153",
+		].forEach((ipAddress) => {
+			expect(parseDomain(ipAddress)).toMatchObject({
+				type: ParseResultType.Ip,
+				hostname: ipAddress,
+				ipVersion: 4,
+			});
+		});
+	});
+
+	test("returns type ParseResultType.Ip for IPv6 addresses", () => {
+		ipV6Samples.forEach((ipAddress) => {
+			expect(parseDomain(ipAddress)).toMatchObject({
+				type: ParseResultType.Ip,
+				hostname: ipAddress,
+				ipVersion: 6,
+			});
+		});
+	});
+
+	test("returns type ParseResultType.Ip for IPv6 addresses with square brackets according to RFC 3986", () => {
+		ipV6Samples.forEach((ipAddress) => {
+			expect(parseDomain("[" + ipAddress + "]")).toMatchObject({
+				type: ParseResultType.Ip,
+				hostname: ipAddress,
+				ipVersion: 6,
+			});
+		});
+	});
+
 	test("returns type ParseResultType.Reserved for all reserved TLDs according to RFC 6761, 6762", () => {
 		expect(parseDomain("example")).toMatchObject({
 			type: ParseResultType.Reserved,
-			domains: ["example"],
+			labels: ["example"],
 		});
 		// We decided to treat .invalid domains not in a special way.
 		expect(parseDomain("some.invalid")).toMatchObject({
 			type: ParseResultType.Reserved,
-			domains: ["some", "invalid"],
+			labels: ["some", "invalid"],
 		});
 		expect(parseDomain("some.localhost")).toMatchObject({
 			type: ParseResultType.Reserved,
-			domains: ["some", "localhost"],
+			labels: ["some", "localhost"],
 		});
 		expect(parseDomain("test")).toMatchObject({
 			type: ParseResultType.Reserved,
-			domains: ["test"],
+			labels: ["test"],
 		});
 		expect(parseDomain("www.some.local")).toMatchObject({
 			type: ParseResultType.Reserved,
-			domains: ["www", "some", "local"],
+			labels: ["www", "some", "local"],
 		});
 	});
 
 	test("returns type ParseResultType.Reserved for an empty string", () => {
 		expect(parseDomain("")).toMatchObject({
 			type: ParseResultType.Reserved,
-			domains: [],
+			labels: [],
 		});
 	});
 
 	test("returns type ParseResultType.NotListed for valid hostnames that are not listed", () => {
 		expect(parseDomain("valid")).toMatchObject({
 			type: ParseResultType.NotListed,
-			domains: ["valid"],
+			labels: ["valid"],
 		});
 		expect(parseDomain("this.is.not-listed")).toMatchObject({
 			type: ParseResultType.NotListed,
-			domains: ["this", "is", "not-listed"],
+			labels: ["this", "is", "not-listed"],
 		});
 	});
 
@@ -256,14 +316,36 @@ describe(parseDomain.name, () => {
 	});
 
 	test("returns type ParseResultType.Invalid and error information for a hostname that contains an invalid character", () => {
+		// Deliberately testing the '[' and ']' character that is removed from IPv6 addresses
+		expect(parseDomain("[")).toMatchObject({
+			type: ParseResultType.Invalid,
+			errors: expect.arrayContaining([
+				expect.objectContaining({
+					type: ValidationErrorType.LabelInvalidCharacter,
+					message: 'Label "[" contains invalid character "[" at column 1.',
+					column: 1,
+				}),
+			]),
+		});
+		expect(parseDomain("some-label]")).toMatchObject({
+			type: ParseResultType.Invalid,
+			errors: expect.arrayContaining([
+				expect.objectContaining({
+					type: ValidationErrorType.LabelInvalidCharacter,
+					message:
+						'Label "some-label]" contains invalid character "]" at column 11.',
+					column: 11,
+				}),
+			]),
+		});
 		expect(parseDomain("some-静")).toMatchObject({
 			type: ParseResultType.Invalid,
 			errors: expect.arrayContaining([
 				expect.objectContaining({
 					type: ValidationErrorType.LabelInvalidCharacter,
 					message:
-						'Label "some-静" contains invalid character "静" at column 5.',
-					column: 5,
+						'Label "some-静" contains invalid character "静" at column 6.',
+					column: 6,
 				}),
 			]),
 		});
@@ -273,8 +355,8 @@ describe(parseDomain.name, () => {
 				expect.objectContaining({
 					type: ValidationErrorType.LabelInvalidCharacter,
 					message:
-						'Label "some-静" contains invalid character "静" at column 5.',
-					column: 5,
+						'Label "some-静" contains invalid character "静" at column 6.',
+					column: 6,
 				}),
 			]),
 		});

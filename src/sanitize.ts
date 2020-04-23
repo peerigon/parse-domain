@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/default
+import isIp from "is-ip";
 import {Label} from "./parse-domain";
 import {NO_HOSTNAME} from "./from-url";
 
@@ -24,23 +26,32 @@ export type ValidationError = {
 };
 
 export enum SanitizationResultType {
-	Ok = "OK",
+	ValidIp = "VALID_IP",
+	ValidDomain = "VALID_DOMAIN",
 	Error = "ERROR",
 }
 
-export type SanitizationResultOk = {
-	type: SanitizationResultType.Ok;
-	originalInput: string;
+export type SanitizationResultValidIp = {
+	type: SanitizationResultType.ValidIp;
+	ip: string;
+	ipVersion: Exclude<ReturnType<typeof isIp.version>, undefined>;
+};
+
+export type SanitizationResultValidDomain = {
+	type: SanitizationResultType.ValidDomain;
+	domain: string;
 	labels: Array<Label>;
 };
 
 export type SanitizationResultError = {
 	type: SanitizationResultType.Error;
-	originalInput: string | unknown;
 	errors: Array<ValidationError>;
 };
 
-export type SanitizationResult = SanitizationResultOk | SanitizationResultError;
+export type SanitizationResult =
+	| SanitizationResultValidIp
+	| SanitizationResultValidDomain
+	| SanitizationResultError;
 
 const createNoHostnameError = (input: unknown) => {
 	return {
@@ -99,19 +110,32 @@ export const sanitize = (
 	if (typeof input !== "string") {
 		return {
 			type: SanitizationResultType.Error,
-			originalInput: input,
 			errors: [createNoHostnameError(input)],
 		};
 	}
-	if (input.length > DOMAIN_LENGTH_MAX) {
+
+	const inputTrimmed = input.trim();
+	// IPv6 addresses are surrounded by square brackets in URLs
+	// See https://tools.ietf.org/html/rfc3986#section-3.2.2
+	const inputTrimmedAsIp = inputTrimmed.replace(/^\[|]$/g, "");
+	const ipVersion = isIp.version(inputTrimmedAsIp);
+
+	if (ipVersion !== undefined) {
 		return {
-			type: SanitizationResultType.Error,
-			originalInput: input,
-			errors: [createDomainMaxLengthError(input)],
+			type: SanitizationResultType.ValidIp,
+			ip: inputTrimmedAsIp,
+			ipVersion,
 		};
 	}
 
-	const labels = input.split(LABEL_SEPARATOR);
+	if (inputTrimmed.length > DOMAIN_LENGTH_MAX) {
+		return {
+			type: SanitizationResultType.Error,
+			errors: [createDomainMaxLengthError(inputTrimmed)],
+		};
+	}
+
+	const labels = inputTrimmed.split(LABEL_SEPARATOR);
 	const lastLabel = labels[labels.length - 1];
 
 	// If the last label is the special root label, ignore it
@@ -132,7 +156,7 @@ export const sanitize = (
 				createLabelInvalidCharacterError(
 					label,
 					invalidCharacter[0],
-					invalidCharacter.index,
+					invalidCharacter.index + 1,
 				),
 			);
 		} else if (
@@ -151,14 +175,13 @@ export const sanitize = (
 	if (labelValidationErrors.length > 0) {
 		return {
 			type: SanitizationResultType.Error,
-			originalInput: input,
 			errors: labelValidationErrors,
 		};
 	}
 
 	return {
-		type: SanitizationResultType.Ok,
-		originalInput: input,
+		type: SanitizationResultType.ValidDomain,
+		domain: inputTrimmed,
 		labels,
 	};
 };
