@@ -299,7 +299,7 @@ Takes a URL-like string and tries to extract the hostname. Requires the global [
 
 A `ParseResult` is either a [`ParseResultInvalid`](#api-ts-ParseResultInvalid), [`ParseResultIp`](#api-ts-ParseResultIp), [`ParseResultReserved`](#api-ts-ParseResultReserved), [`ParseResultNotListed`](#api-ts-ParseResultNotListed) or [`ParseResultListed`](#api-ts-ParseResultListed).
 
-All parse results have a `type` property that is either `"INVALID", "IP",`"RESERVED"`,`"NOT_LISTED"`or`"LISTED"`. Use the exported [ParseResultType](#api-js-ParseResultType) to check for the type instead of checking against string literals.
+All parse results have a `type` property that is either `"INVALID"`, `"IP"`,`"RESERVED"`,`"NOT_LISTED"`or`"LISTED"`. Use the exported [ParseResultType](#api-js-ParseResultType) to check for the type instead of checking against string literals.
 
 All parse results also have a `hostname` property that provides access to the sanitized hostname that was passed to [`parseDomain`](#api-js-parseDomain).
 
