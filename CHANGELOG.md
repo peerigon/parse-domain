@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/peerigon/parse-domain/compare/v3.0.0...v3.0.1) (2020-04-24)
+
+
+### Bug Fixes
+
+* npx parse-domain-update broken ([#105](https://github.com/peerigon/parse-domain/issues/105)) ([9070030](https://github.com/peerigon/parse-domain/commit/907003044760b1ca9713ec7d0e48e9bd208daa9d))
+
 # [3.0.0](https://github.com/peerigon/parse-domain/compare/v2.3.4...v3.0.0) (2020-04-23)
 
 
