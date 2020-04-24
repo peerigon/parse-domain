@@ -465,8 +465,4 @@ describe(parseDomain.name, () => {
 			hostname: "www.EXAMPLE.test",
 		});
 	});
-
-	test("smoke test", () => {
-		require("./smoke-test.ts");
-	});
 });
