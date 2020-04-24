@@ -1,6 +1,6 @@
 {
 	"name": "parse-domain",
-	"version": "2.3.2",
+	"version": "0.0.0-semantically-released",
 	"description": "Splits a hostname into subdomains, domain and (effective) top-level domains",
 	"keywords": [
 		"domain",
@@ -28,7 +28,7 @@
 		"build:tsc:cjs": "tsc -p ./tsconfig.build-cjs.json",
 		"build:tsc:esm": "tsc -p ./tsconfig.build-esm.json",
 		"build:cpy": "cpy ./src/main.mjs ./build-cjs/src",
-		"build:smoke-test": "node ./build-cjs/src/smoke-test.js",
+		"build:update": "./bin/update.js",
 		"update:psl-fixture": "ts-node --transpile-only ./src/scripts/update-psl-fixture.ts",
 		"update:tries": "ts-node --transpile-only ./src/scripts/update-tries.ts -- ../../serialized-tries",
 		"update:dependencies": "updtr"
