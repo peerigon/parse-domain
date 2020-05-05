@@ -13,6 +13,7 @@
 	],
 	"main": "./build-cjs/src/main.js",
 	"module": "./build-esm/src/main.js",
+	"types": "./build-esm/src/main.d.ts",
 	"exports": {
 		"require": "./build-cjs/src/main.js",
 		"node": "./build-cjs/src/main.mjs",
