@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/peerigon/parse-domain/compare/v3.0.1...v3.0.2) (2020-05-06)
+
+
+### Bug Fixes
+
+* Add types to package.json ([#110](https://github.com/peerigon/parse-domain/issues/110)) ([849ff1a](https://github.com/peerigon/parse-domain/commit/849ff1a932f034e57d51ba70534127d6a8109337))
+
 ## [3.0.1](https://github.com/peerigon/parse-domain/compare/v3.0.0...v3.0.1) (2020-04-24)
 
 
