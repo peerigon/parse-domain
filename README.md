@@ -256,9 +256,9 @@ console.log(topLevelDomains); // ["co", "uk"]
 The empty string `""` represents the [DNS root](https://en.wikipedia.org/wiki/DNS_root_zone) and is considered to be valid. `parseResult.type` will be `ParseResultType.Reserved` in that case:
 
 ```javascript
-const parseResult = parseDomain("");
+const {type, subDomains, domain, topLevelDomains} = parseDomain("");
 
-console.log(parseResult.type === ParseResultType.Reserved); // true
+console.log(type === ParseResultType.Reserved); // true
 console.log(subDomains); // []
 console.log(domain); // undefined
 console.log(topLevelDomains); // []
