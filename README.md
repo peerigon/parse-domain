@@ -16,17 +16,24 @@
 Since domain name registrars organize their namespaces in different ways, it's not straight-forward to split a hostname into subdomains, the domain and top-level domains. In order to do that **parse-domain** uses a [large list of known top-level domains](https://publicsuffix.org/list/public_suffix_list.dat) from [publicsuffix.org](https://publicsuffix.org/):
 
 ```javascript
-import {parseDomain} from "parse-domain";
+import {parseDomain, ParseResultType} from "parse-domain";
 
-const {subDomains, domain, topLevelDomains} = parseDomain(
+const parseResult = parseDomain(
 	// This should be a string with basic latin characters only.
 	// More information below.
 	"www.some.example.co.uk",
 );
 
-console.log(subDomains); // ["www", "some"]
-console.log(domain); // "example"
-console.log(topLevelDomains); // ["co", "uk"]
+// Check if the domain is listed in the public suffix list
+if (parseResult.type === ParseResultType.Listed) {
+	const {subDomains, domain, topLevelDomains} = parseResult;
+
+	console.log(subDomains); // ["www", "some"]
+	console.log(domain); // "example"
+	console.log(topLevelDomains); // ["co", "uk"]
+} else {
+	// Read more about other parseResult types below...
+}
 ```
 
 This package has been designed for modern Node and browser environments, supporting both CommonJS and ECMAScript modules. It assumes an ES2015 environment with [`Symbol()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) and [`URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL) globally available. You need to transpile it down to ES5 (e.g. by using [Babel](https://babeljs.io/)) if you need to support older environments.
