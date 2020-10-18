@@ -461,6 +461,8 @@ type ParseResultReserved = {
 }
 ```
 
+⚠️ Reserved IPs, such as `127.0.0.1`, will not be reported as reserved, but as <a href="#-export-parseresultip">`ParseResultIp`</a>. See [#117](https://github.com/peerigon/parse-domain/issues/117).
+
 <h3 id="api-ts-ParseResultNotListed">
 🧬 <code>export ParseResultNotListed</code>
 </h3>
