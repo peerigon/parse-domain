@@ -3,6 +3,13 @@ const urlPattern = /^[a-z]+:\/\//i;
 export const NO_HOSTNAME: unique symbol = Symbol("NO_HOSTNAME");
 
 export const fromUrl = (urlLike: string) => {
+	/* istanbul ignore next */
+	if (typeof URL !== "function") {
+		throw new Error(
+			"Looks like the new URL() constructor is not globally available in your environment. Please make sure to use a polyfill.",
+		);
+	}
+
 	// Extra check for non-TypeScript users
 	if (typeof urlLike !== "string") {
 		return NO_HOSTNAME;
