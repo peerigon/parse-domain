@@ -1,3 +1,10 @@
+## [3.0.3](https://github.com/peerigon/parse-domain/compare/v3.0.2...v3.0.3) (2020-10-20)
+
+
+### Bug Fixes
+
+* Add check for global URL constructor in fromUrl() ([#119](https://github.com/peerigon/parse-domain/issues/119)) ([4e32480](https://github.com/peerigon/parse-domain/commit/4e3248096a50fc6f5cb35935f6f44bee72efd150))
+
 ## [3.0.2](https://github.com/peerigon/parse-domain/compare/v3.0.1...v3.0.2) (2020-05-06)
 
 
