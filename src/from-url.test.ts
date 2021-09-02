@@ -64,6 +64,13 @@ describe(fromUrl.name, () => {
 		expect(fromUrl("")).toBe(NO_HOSTNAME);
 	});
 
+	test("it handles different schemes", () => {
+		expect(fromUrl("android-app://com.org.example")).toBe("com.org.example");
+		expect(fromUrl("file://root/.config")).toBe("root");
+		expect(fromUrl("mailto://person@mail.com")).toBe('mail.com');
+		expect(fromUrl("coap+ws://example.com")).toBe("example.com");
+	});
+
 	test("it returns the NO_HOSTNAME symbol for invalid input types", () => {
 		/* eslint-disable @typescript-eslint/ban-ts-ignore, no-null/no-null */
 		// @ts-ignore
