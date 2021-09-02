@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [8.x, 10.x, 12.x, 14.x, 16.x]
+        node-version: [12.x, 14.x, 16.x]
 
     steps:
       - uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # pin@v2
