@@ -1,30 +1,43 @@
-name: Release
+name: 🚀 Release
 
 on:
-  push:
+  workflow_run:
+    workflows: ["🧪 Test"]
     branches:
       - master
       - beta
+    types:
+      - completed
 
 jobs:
   prepare:
     runs-on: ubuntu-latest
-    if: "! contains(github.event.head_commit.message, '[skip ci]')"
+    if: "!contains(github.event.head_commit.message, '[skip ci]') && ${{ github.event.workflow_run.conclusion == 'success' }}"
     steps:
       - run: echo "${{ github.event.head_commit.message }}"
   publish:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Cache node modules
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-node-modules
+      - uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # pin@v2
+      # Nice trick to use nvmrc in actions/setup-node
+      # https://github.com/actions/setup-node/issues/32#issuecomment-872375574
+      - name: Read .nvmrc
+        run: echo NVMRC=`cat .nvmrc` >> $GITHUB_ENV
+      - name: Use Node.js
+        uses: actions/setup-node@25316bbc1f10ac9d8798711f44914b1cf3c4e954 # pin@v2
         with:
-          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          node-version: ${{ env.NVMRC }}
+          cache: "npm"
+      - name: Cache node_modules
+        id: cache-node_modules
+        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353 # pin@v2
+        with:
+          path: "**/node_modules"
+          key: node_modules-${{ runner.os }}-node-${{ matrix.node-version }}-${{
+            hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        if: steps.cache-node_modules.outputs.cache-hit != 'true'
         run: |
           npm ci --ignore-scripts
       - name: Test
@@ -39,7 +52,3 @@ jobs:
         run: |
           npm install @semantic-release/changelog @semantic-release/git --ignore-scripts --no-save
           npx semantic-release
-      - name: Save test coverage
-        uses: coverallsapp/github-action@v1.0.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}

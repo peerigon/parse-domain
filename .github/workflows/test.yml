@@ -1,6 +1,14 @@
-name: Test
+name: 🧪 Test
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+      - beta
+  pull_request:
+    branches:
+      - master
+      - beta
 
 jobs:
   build:
@@ -8,22 +16,30 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [8.x, 10.x, 12.x, 14.x]
+        node-version: [8.x, 10.x, 12.x, 14.x, 16.x]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # pin@v2
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@25316bbc1f10ac9d8798711f44914b1cf3c4e954 # pin@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Cache node modules
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-node-modules
+          cache: "npm"
+      - name: Cache node_modules
+        id: cache-node_modules
+        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353 # pin@v2
         with:
-          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+          path: "**/node_modules"
+          key: node_modules-${{ runner.os }}-node-${{ matrix.node-version }}-${{
+            hashFiles('**/package-lock.json') }}
+      - name: Cache .eslintcache
+        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353 # pin@v2
+        with:
+          path: .eslintcache
+          key: eslintcache-${{ runner.os }}-node-${{ matrix.node-version }}-${{
+            hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        if: steps.cache-node_modules.outputs.cache-hit != 'true'
         run: |
           npm ci --ignore-scripts
       - name: Test
@@ -32,6 +48,6 @@ jobs:
         env:
           CI: true
       - name: Save test coverage
-        uses: coverallsapp/github-action@v1.0.1
+        uses: coverallsapp/github-action@9ba913c152ae4be1327bfb9085dc806cedb44057 # pin@1.1.3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
