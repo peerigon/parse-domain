@@ -20,6 +20,6 @@ const { EOL } = require("os");
   process.stdout.write("ok" + EOL);
 })().catch((error) => {
   console.error(`parse-domain update failed: ${error}`);
-  // eslint-disable-next-line no-process-exit
+  // eslint-disable-next-line no-process-exit, node/no-process-exit
   process.exit(1);
 });

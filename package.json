@@ -1,81 +1,82 @@
 {
-	"name": "parse-domain",
-	"version": "0.0.0-semantically-released",
-	"description": "Splits a hostname into subdomains, domain and (effective) top-level domains",
-	"keywords": [
-		"domain",
-		"url",
-		"sub-domain",
-		"tld",
-		"parse",
-		"sanitize",
-		"top-level"
-	],
-	"main": "./build-cjs/src/main.js",
-	"module": "./build-esm/src/main.js",
-	"types": "./build-esm/src/main.d.ts",
-	"exports": {
-		"require": "./build-cjs/src/main.js",
-		"node": "./build-cjs/src/main.mjs",
-		"import": "./build-esm/src/main.js"
-	},
-	"scripts": {
-		"test": "jest",
-		"posttest": "run-s build posttest:*",
-		"posttest:lint": "eslint --cache --ext js,ts *.js src bin",
-		"build": "run-s build:*",
-		"build:cleanup": "rimraf build-cjs build-esm",
-		"build:tsc": "run-p build:tsc:cjs build:tsc:esm",
-		"build:tsc:cjs": "tsc -p ./tsconfig.build-cjs.json",
-		"build:tsc:esm": "tsc -p ./tsconfig.build-esm.json",
-		"build:cpy": "cpy ./src/main.mjs ./build-cjs/src",
-		"build:update": "./bin/update.js",
-		"prepare": "husky install",
-		"update:psl-fixture": "ts-node --transpile-only ./src/scripts/update-psl-fixture.ts",
-		"update:tries": "ts-node --transpile-only ./src/scripts/update-tries.ts -- ../../serialized-tries",
-		"update:dependencies": "updtr"
-	},
-	"bin": {
-		"parse-domain-update": "./bin/update.js"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/peerigon/parse-domain.git"
-	},
-	"author": "peerigon <developers@peerigon.com>",
-	"license": "Unlicense",
-	"files": [
-		"bin",
-		"build-cjs",
-		"build-esm"
-	],
-	"sideEffects": false,
-	"dependencies": {
-		"is-ip": "^3.1.0",
-		"node-fetch": "^2.6.1",
-		"punycode": "^2.1.1"
-	},
-	"devDependencies": {
-		"@types/jest": "^27.0.1",
-		"@types/node": "^16.7.10",
-		"@types/node-fetch": "^2.5.12",
-		"@types/punycode": "^2.1.0",
-		"@typescript-eslint/eslint-plugin": "^4.30.0",
-		"@typescript-eslint/parser": "^4.30.0",
-		"cpy-cli": "^3.1.1",
-		"eslint": "^7.32.0",
-		"eslint-config-peerigon": "^31.0.2",
-		"eslint-plugin-no-null": "^1.0.2",
-		"husky": "^7.0.2",
-		"jest": "^27.1.0",
-		"nock": "^13.1.3",
-		"npm-run-all": "^4.1.5",
-		"prettier": "^2.3.2",
-		"pretty-quick": "^3.1.1",
-		"rimraf": "^3.0.2",
-		"ts-jest": "^27.0.5",
-		"ts-node": "^10.2.1",
-		"typescript": "^4.4.2",
-		"updtr": "^4.0.0"
-	}
+  "name": "parse-domain",
+  "version": "0.0.0-semantically-released",
+  "description": "Splits a hostname into subdomains, domain and (effective) top-level domains",
+  "keywords": [
+    "domain",
+    "url",
+    "sub-domain",
+    "tld",
+    "parse",
+    "sanitize",
+    "top-level"
+  ],
+  "main": "./build-cjs/src/main.js",
+  "module": "./build-esm/src/main.js",
+  "types": "./build-esm/src/main.d.ts",
+  "exports": {
+    "require": "./build-cjs/src/main.js",
+    "node": "./build-cjs/src/main.mjs",
+    "import": "./build-esm/src/main.js"
+  },
+  "scripts": {
+    "test": "jest",
+    "posttest": "run-s build posttest:*",
+    "posttest:lint": "eslint --cache --ext js,ts *.js src bin",
+    "build": "run-s build:*",
+    "build:cleanup": "rimraf build-cjs build-esm",
+    "build:tsc": "run-p build:tsc:cjs build:tsc:esm",
+    "build:tsc:cjs": "tsc -p ./tsconfig.build-cjs.json",
+    "build:tsc:esm": "tsc -p ./tsconfig.build-esm.json",
+    "build:cpy": "cpy ./src/main.mjs ./build-cjs/src",
+    "build:update": "./bin/update.js",
+    "prepare": "husky install",
+    "update:psl-fixture": "ts-node --transpile-only ./src/scripts/update-psl-fixture.ts",
+    "update:tries": "ts-node --transpile-only ./src/scripts/update-tries.ts -- ../../serialized-tries",
+    "update:dependencies": "updtr"
+  },
+  "bin": {
+    "parse-domain-update": "./bin/update.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/peerigon/parse-domain.git"
+  },
+  "author": "peerigon <developers@peerigon.com>",
+  "license": "Unlicense",
+  "files": [
+    "bin",
+    "build-cjs",
+    "build-esm"
+  ],
+  "sideEffects": false,
+  "dependencies": {
+    "is-ip": "^3.1.0",
+    "node-fetch": "^2.6.1",
+    "punycode": "^2.1.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.10",
+    "@types/node-fetch": "^2.5.12",
+    "@types/punycode": "^2.1.0",
+    "@typescript-eslint/eslint-plugin": "^4.30.0",
+    "@typescript-eslint/parser": "^4.30.0",
+    "cpy-cli": "^3.1.1",
+    "eslint": "^7.32.0",
+    "eslint-config-peerigon": "^31.0.2",
+    "eslint-plugin-no-null": "^1.0.2",
+    "eslint-plugin-node": "^11.1.0",
+    "husky": "^7.0.2",
+    "jest": "^27.1.0",
+    "nock": "^13.1.3",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.3.2",
+    "pretty-quick": "^3.1.1",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2",
+    "updtr": "^4.0.0"
+  }
 }
