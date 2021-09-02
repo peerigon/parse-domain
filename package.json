@@ -22,7 +22,7 @@
 	"scripts": {
 		"test": "jest",
 		"posttest": "run-s build posttest:*",
-		"posttest:lint": "eslint *.js src bin --ext js,ts",
+		"posttest:lint": "eslint --cache --ext js,ts *.js src bin",
 		"build": "run-s build:*",
 		"build:cleanup": "rimraf build-cjs build-esm",
 		"build:tsc": "run-p build:tsc:cjs build:tsc:esm",
