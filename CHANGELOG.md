@@ -1,3 +1,10 @@
+## [3.0.4](https://github.com/peerigon/parse-domain/compare/v3.0.3...v3.0.4) (2021-09-02)
+
+
+### Bug Fixes
+
+* Improve scheme support in `fromUrl` ([4c10202](https://github.com/peerigon/parse-domain/commit/4c1020283279d3a6871d37dfdcda697ef78a81d2)), closes [#section-3](https://github.com/peerigon/parse-domain/issues/section-3) [#130](https://github.com/peerigon/parse-domain/issues/130)
+
 ## [3.0.3](https://github.com/peerigon/parse-domain/compare/v3.0.2...v3.0.3) (2020-10-20)
 
 
