@@ -1,3 +1,15 @@
+# [4.0.0](https://github.com/peerigon/parse-domain/compare/v3.0.4...v4.0.0) (2021-09-02)
+
+
+### chore
+
+* Change supported Node versions ([202ff9f](https://github.com/peerigon/parse-domain/commit/202ff9fd19d2509f930fdd55129d08a5327d0d5e))
+
+
+### BREAKING CHANGES
+
+* Node versions below 12 are not officially supported anymore.
+
 ## [3.0.4](https://github.com/peerigon/parse-domain/compare/v3.0.3...v3.0.4) (2021-09-02)
 
 
