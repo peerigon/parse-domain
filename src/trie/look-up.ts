@@ -8,7 +8,7 @@ export const lookUpTldsInTrie = (labels: Array<Label>, trie: TrieNode) => {
 	let node = trie;
 
 	while (labelsToCheck.length !== 0) {
-		const label = labelsToCheck.pop() as string;
+		const label = labelsToCheck.pop()!;
 		const labelLowerCase = label.toLowerCase();
 
 		if (node.children.has(characters.WILDCARD)) {

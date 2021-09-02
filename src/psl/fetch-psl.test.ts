@@ -12,12 +12,7 @@ describe("fetchPsl()", () => {
 	});
 
 	beforeEach(() => {
-		jest.useFakeTimers();
 		nock.cleanAll();
-	});
-
-	afterEach(() => {
-		jest.useRealTimers();
 	});
 
 	test("fetches the public suffix list as text", async () => {

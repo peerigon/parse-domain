@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/default
 import isIp from "is-ip";
 import {Label} from "./parse-domain";
 import {NO_HOSTNAME} from "./from-url";
@@ -149,7 +148,7 @@ export const sanitize = (
 	for (const label of labels) {
 		// According to https://tools.ietf.org/html/rfc6761 labels should
 		// only contain ASCII letters, digits and hyphens (LDH).
-		const invalidCharacter = /[^\d\-a-z]/iu.exec(label);
+		const invalidCharacter = /[^\da-z-]/iu.exec(label);
 
 		if (invalidCharacter) {
 			labelValidationErrors.push(

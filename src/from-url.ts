@@ -1,4 +1,4 @@
-const urlPattern = /^[a-z][*+\-.a-z]+:\/\//i;
+const urlPattern = /^[a-z][*+.a-z-]+:\/\//i;
 
 export const NO_HOSTNAME: unique symbol = Symbol("NO_HOSTNAME");
 

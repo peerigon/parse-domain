@@ -72,14 +72,14 @@ describe(fromUrl.name, () => {
 	});
 
 	test("it returns the NO_HOSTNAME symbol for invalid input types", () => {
-		/* eslint-disable @typescript-eslint/ban-ts-ignore, no-null/no-null */
-		// @ts-ignore
+		// @ts-expect-error This is a deliberate error just for the test
 		expect(fromUrl(undefined)).toBe(NO_HOSTNAME);
-		// @ts-ignore
+		// @ts-expect-error This is a deliberate error just for the test
+		// eslint-disable-next-line no-null/no-null
 		expect(fromUrl(null)).toBe(NO_HOSTNAME);
-		// @ts-ignore
+		// @ts-expect-error This is a deliberate error just for the test
 		expect(fromUrl(true)).toBe(NO_HOSTNAME);
-		// @ts-ignore
+		// @ts-expect-error This is a deliberate error just for the test
 		expect(fromUrl(1)).toBe(NO_HOSTNAME);
 		/* eslint-enable */
 	});

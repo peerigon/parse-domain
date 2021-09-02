@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+// Jest will report function coverage errors here otherwise
 export {
 	parseDomain,
 	ParseResult,

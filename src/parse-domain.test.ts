@@ -363,8 +363,7 @@ describe(parseDomain.name, () => {
 	});
 
 	test("returns type ParseResultType.Invalid and error information if the input was not domain like", () => {
-		/* eslint-disable @typescript-eslint/ban-ts-ignore, no-null/no-null */
-		// @ts-ignore
+		// @ts-expect-error This is a deliberate error for the test
 		expect(parseDomain(undefined)).toMatchObject({
 			type: ParseResultType.Invalid,
 			errors: expect.arrayContaining([
@@ -375,7 +374,8 @@ describe(parseDomain.name, () => {
 				}),
 			]),
 		});
-		// @ts-ignore
+		// @ts-expect-error This is a deliberate error for the test
+		// eslint-disable-next-line no-null/no-null
 		expect(parseDomain(null)).toMatchObject({
 			type: ParseResultType.Invalid,
 			errors: expect.arrayContaining([
@@ -386,7 +386,7 @@ describe(parseDomain.name, () => {
 				}),
 			]),
 		});
-		// @ts-ignore
+		// @ts-expect-error This is a deliberate error for the test
 		expect(parseDomain(true)).toMatchObject({
 			type: ParseResultType.Invalid,
 			errors: expect.arrayContaining([
@@ -397,7 +397,7 @@ describe(parseDomain.name, () => {
 				}),
 			]),
 		});
-		// @ts-ignore
+		// @ts-expect-error This is a deliberate error for the test
 		expect(parseDomain(1)).toMatchObject({
 			type: ParseResultType.Invalid,
 			errors: expect.arrayContaining([
@@ -408,7 +408,6 @@ describe(parseDomain.name, () => {
 				}),
 			]),
 		});
-		/* eslint-enable */
 	});
 
 	test("returns type ParseResultType.Invalid and error information if the input was not an URL", () => {
