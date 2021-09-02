@@ -1,41 +1,41 @@
-import {toASCII} from "punycode";
+import { toASCII } from "punycode";
 import {
-	PUBLIC_SUFFIX_MARKER_ICANN_START,
-	PUBLIC_SUFFIX_MARKER_ICANN_END,
-	PUBLIC_SUFFIX_MARKER_PRIVATE_START,
-	PUBLIC_SUFFIX_MARKER_PRIVATE_END,
+  PUBLIC_SUFFIX_MARKER_ICANN_START,
+  PUBLIC_SUFFIX_MARKER_ICANN_END,
+  PUBLIC_SUFFIX_MARKER_PRIVATE_START,
+  PUBLIC_SUFFIX_MARKER_PRIVATE_END,
 } from "../config";
-import {createTrieFromList} from "../trie/create-trie";
+import { createTrieFromList } from "../trie/create-trie";
 
 const matchNewLine = /\r?\n/u;
 const matchComment = /^\s*\/\//u;
 const matchWhitespace = /^\s*$/u;
 
 const extractByMarkers = (
-	listContent: string,
-	startMarker: string,
-	endMarker: string,
+  listContent: string,
+  startMarker: string,
+  endMarker: string
 ) => {
-	const start = listContent.indexOf(startMarker);
-	const end = listContent.indexOf(endMarker);
+  const start = listContent.indexOf(startMarker);
+  const end = listContent.indexOf(endMarker);
 
-	if (start === -1) {
-		throw new Error(
-			`Missing start marker ${startMarker} in public suffix list`,
-		);
-	}
-	if (end === -1) {
-		throw new Error(`Missing end marker ${endMarker} in public suffix list`);
-	}
+  if (start === -1) {
+    throw new Error(
+      `Missing start marker ${startMarker} in public suffix list`
+    );
+  }
+  if (end === -1) {
+    throw new Error(`Missing end marker ${endMarker} in public suffix list`);
+  }
 
-	return listContent.slice(start, end);
+  return listContent.slice(start, end);
 };
 
 const containsRule = (line: string) =>
-	matchComment.test(line) === false && matchWhitespace.test(line) === false;
+  matchComment.test(line) === false && matchWhitespace.test(line) === false;
 
 const normalizeRule = (rule: string) =>
-	/*
+  /*
 	Users of parse-domain should only pass parsed hostnames (e.g. via new URL("...").hostname)
 	to parseDomain(). This frees us from the burden of URL parsing.
 	See also https://github.com/peerigon/parse-domain/issues/14
@@ -48,36 +48,36 @@ const normalizeRule = (rule: string) =>
 	However, that's still better than including a punycode library into the runtime code of parse-domain.
 	Gzip is also very effective in removing duplicate characters.
 	*/
-	toASCII(rule).toLowerCase();
+  toASCII(rule).toLowerCase();
 
 const parsePsl = (listContent: string) => {
-	return {
-		icann: extractByMarkers(
-			listContent,
-			PUBLIC_SUFFIX_MARKER_ICANN_START,
-			PUBLIC_SUFFIX_MARKER_ICANN_END,
-		)
-			.split(matchNewLine)
-			.filter(containsRule)
-			.map(normalizeRule),
-		private: extractByMarkers(
-			listContent,
-			PUBLIC_SUFFIX_MARKER_PRIVATE_START,
-			PUBLIC_SUFFIX_MARKER_PRIVATE_END,
-		)
-			.split(matchNewLine)
-			.filter(containsRule)
-			.map(normalizeRule),
-	};
+  return {
+    icann: extractByMarkers(
+      listContent,
+      PUBLIC_SUFFIX_MARKER_ICANN_START,
+      PUBLIC_SUFFIX_MARKER_ICANN_END
+    )
+      .split(matchNewLine)
+      .filter(containsRule)
+      .map(normalizeRule),
+    private: extractByMarkers(
+      listContent,
+      PUBLIC_SUFFIX_MARKER_PRIVATE_START,
+      PUBLIC_SUFFIX_MARKER_PRIVATE_END
+    )
+      .split(matchNewLine)
+      .filter(containsRule)
+      .map(normalizeRule),
+  };
 };
 
 export const buildTries = (psl: string) => {
-	const parsedPsl = parsePsl(psl);
-	const icannTrie = createTrieFromList(parsedPsl.icann);
-	const privateTrie = createTrieFromList(parsedPsl.private);
+  const parsedPsl = parsePsl(psl);
+  const icannTrie = createTrieFromList(parsedPsl.icann);
+  const privateTrie = createTrieFromList(parsedPsl.private);
 
-	return {
-		icannTrie,
-		privateTrie,
-	};
+  return {
+    icannTrie,
+    privateTrie,
+  };
 };
