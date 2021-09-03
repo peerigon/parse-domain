@@ -7,10 +7,6 @@
 [![Monthly downloads on NPM](https://img.shields.io/npm/dm/parse-domain?style=for-the-badge)](https://www.npmjs.com/package/parse-domain)<br>
 [![NPM Bundle size minified](https://img.shields.io/bundlephobia/min/parse-domain?style=for-the-badge)](https://bundlephobia.com/result?p=parse-domain)
 [![NPM Bundle size minified and gzipped](https://img.shields.io/bundlephobia/minzip/parse-domain?style=for-the-badge)](https://bundlephobia.com/result?p=parse-domain)<br>
-[![Dependencies status](https://img.shields.io/david/peerigon/parse-domain?style=for-the-badge)](https://david-dm.org/peerigon/parse-domain)
-[![Known Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/parse-domain?style=for-the-badge)](https://snyk.io/test/github/peerigon/parse-domain)<br>
-![Written in TypeScript](https://img.shields.io/npm/types/parse-domain?style=for-the-badge)
-[![Coverage Status](https://img.shields.io/coveralls/github/peerigon/parse-domain?style=for-the-badge)](https://coveralls.io/github/peerigon/parse-domain?branch=main)
 [![License](https://img.shields.io/npm/l/parse-domain?style=for-the-badge)](https://unlicense.org/)
 
 Since domain name registrars organize their namespaces in different ways, it's not straight-forward to split a hostname into subdomains, the domain and top-level domains. In order to do that **parse-domain** uses a [large list of known top-level domains](https://publicsuffix.org/list/public_suffix_list.dat) from [publicsuffix.org](https://publicsuffix.org/):
