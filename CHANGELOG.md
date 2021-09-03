@@ -1,3 +1,10 @@
+# [4.1.0](https://github.com/peerigon/parse-domain/compare/v4.0.0...v4.1.0) (2021-09-03)
+
+
+### Features
+
+* Switch to MIT license ([05bc1c0](https://github.com/peerigon/parse-domain/commit/05bc1c0dd181331042403540ca7abcffae7ead23))
+
 # [4.0.0](https://github.com/peerigon/parse-domain/compare/v3.0.4...v4.0.0) (2021-09-02)
 
 
