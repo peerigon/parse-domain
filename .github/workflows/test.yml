@@ -3,11 +3,11 @@ name: 🧪 Test
 on:
   push:
     branches:
-      - master
+      - main
       - beta
   pull_request:
     branches:
-      - master
+      - main
       - beta
 
 jobs:

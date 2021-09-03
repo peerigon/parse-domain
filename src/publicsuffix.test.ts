@@ -1,7 +1,7 @@
 import { toASCII } from "punycode";
 import { parseDomain, ParseResult, ParseResultType } from "./main";
 
-describe("Official test suite from https://raw.githubusercontent.com/publicsuffix/list/master/tests/test_psl.txt", () => {
+describe("Official test suite from https://raw.githubusercontent.com/publicsuffix/list/main/tests/test_psl.txt", () => {
   const canonical = (hostname: string) =>
     new URL("http://" + hostname).hostname;
 

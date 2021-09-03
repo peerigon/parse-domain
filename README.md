@@ -10,29 +10,29 @@
 [![Dependencies status](https://img.shields.io/david/peerigon/parse-domain?style=for-the-badge)](https://david-dm.org/peerigon/parse-domain)
 [![Known Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/parse-domain?style=for-the-badge)](https://snyk.io/test/github/peerigon/parse-domain)<br>
 ![Written in TypeScript](https://img.shields.io/npm/types/parse-domain?style=for-the-badge)
-[![Coverage Status](https://img.shields.io/coveralls/github/peerigon/parse-domain?style=for-the-badge)](https://coveralls.io/github/peerigon/parse-domain?branch=master)
+[![Coverage Status](https://img.shields.io/coveralls/github/peerigon/parse-domain?style=for-the-badge)](https://coveralls.io/github/peerigon/parse-domain?branch=main)
 [![License](https://img.shields.io/npm/l/parse-domain?style=for-the-badge)](https://unlicense.org/)
 
 Since domain name registrars organize their namespaces in different ways, it's not straight-forward to split a hostname into subdomains, the domain and top-level domains. In order to do that **parse-domain** uses a [large list of known top-level domains](https://publicsuffix.org/list/public_suffix_list.dat) from [publicsuffix.org](https://publicsuffix.org/):
 
 ```javascript
-import {parseDomain, ParseResultType} from "parse-domain";
+import { parseDomain, ParseResultType } from "parse-domain";
 
 const parseResult = parseDomain(
-	// This should be a string with basic latin characters only.
-	// More information below.
-	"www.some.example.co.uk",
+  // This should be a string with basic latin characters only.
+  // More information below.
+  "www.some.example.co.uk"
 );
 
 // Check if the domain is listed in the public suffix list
 if (parseResult.type === ParseResultType.Listed) {
-	const {subDomains, domain, topLevelDomains} = parseResult;
+  const { subDomains, domain, topLevelDomains } = parseResult;
 
-	console.log(subDomains); // ["www", "some"]
-	console.log(domain); // "example"
-	console.log(topLevelDomains); // ["co", "uk"]
+  console.log(subDomains); // ["www", "some"]
+  console.log(domain); // "example"
+  console.log(topLevelDomains); // ["co", "uk"]
 } else {
-	// Read more about other parseResult types below...
+  // Read more about other parseResult types below...
 }
 ```
 
@@ -67,10 +67,10 @@ npm install parse-domain
 There is the utility function [`fromUrl`](#api-js-fromUrl) which tries to extract the hostname from a (partial) URL and puny-encodes it:
 
 ```javascript
-import {parseDomain, fromUrl} from "parse-domain";
+import { parseDomain, fromUrl } from "parse-domain";
 
-const {subDomains, domain, topLevelDomains} = parseDomain(
-	fromUrl("https://www.münchen.de?query"),
+const { subDomains, domain, topLevelDomains } = parseDomain(
+  fromUrl("https://www.münchen.de?query")
 );
 
 console.log(subDomains); // ["www"]
@@ -78,7 +78,7 @@ console.log(domain); // "xn--mnchen-3ya"
 console.log(topLevelDomains); // ["de"]
 
 // You can use the 'punycode' NPM package to decode the domain again
-import {toUnicode} from "punycode";
+import { toUnicode } from "punycode";
 
 console.log(toUnicode(domain)); // "münchen"
 ```
@@ -103,7 +103,7 @@ When parsing a hostname there are 5 possible results:
 The given input is first validated against [RFC 1034](https://tools.ietf.org/html/rfc1034). If the validation fails, `parseResult.type` will be `ParseResultType.Invalid`:
 
 ```javascript
-import {parseDomain, ParseResultType} from "parse-domain";
+import { parseDomain, ParseResultType } from "parse-domain";
 
 const parseResult = parseDomain("münchen.de");
 
@@ -117,7 +117,7 @@ Check out the [API](#api-ts-ValidationError) if you need more information about 
 If the given input is an IP address, `parseResult.type` will be `ParseResultType.Ip`:
 
 ```javascript
-import {parseDomain, ParseResultType} from "parse-domain";
+import { parseDomain, ParseResultType } from "parse-domain";
 
 const parseResult = parseDomain("192.168.2.1");
 
@@ -140,7 +140,7 @@ There are 5 top-level domains that are not listed in the public suffix list but 
 In these cases, `parseResult.type` will be `ParseResultType.Reserved`:
 
 ```javascript
-import {parseDomain, ParseResultType} from "parse-domain";
+import { parseDomain, ParseResultType } from "parse-domain";
 
 const parseResult = parseDomain("pecorino.local");
 
@@ -153,7 +153,7 @@ console.log(parseResult.labels); // ["pecorino", "local"]
 If the given hostname is valid, but not listed in the downloaded public suffix list, `parseResult.type` will be `ParseResultType.NotListed`:
 
 ```javascript
-import {parseDomain, ParseResultType} from "parse-domain";
+import { parseDomain, ParseResultType } from "parse-domain";
 
 const parseResult = parseDomain("this.is.not-listed");
 
@@ -179,7 +179,7 @@ Some examples for public suffixes:
 If the hostname is listed in the public suffix list, the `parseResult.type` will be `ParseResultType.Listed`:
 
 ```javascript
-import {parseDomain, ParseResultType} from "parse-domain";
+import { parseDomain, ParseResultType } from "parse-domain";
 
 const parseResult = parseDomain("example.co.uk");
 
@@ -190,7 +190,7 @@ console.log(parseResult.labels); // ["example", "co", "uk"]
 Now `parseResult` will also provide a `subDomains`, `domain` and `topLevelDomains` property:
 
 ```javascript
-const {subDomains, domain, topLevelDomains} = parseResult;
+const { subDomains, domain, topLevelDomains } = parseResult;
 
 console.log(subDomains); // []
 console.log(domain); // "example"
@@ -203,21 +203,21 @@ We recommend switching over the `parseResult.type`:
 
 ```javascript
 switch (parseResult.type) {
-	case ParseResultType.Listed: {
-		const {hostname, topLevelDomains} = parseResult;
+  case ParseResultType.Listed: {
+    const { hostname, topLevelDomains } = parseResult;
 
-		console.log(`${hostname} belongs to ${topLevelDomains.join(".")}`);
-		break;
-	}
-	case ParseResultType.Reserved:
-	case ParseResultType.NotListed: {
-		const {hostname} = parseResult;
+    console.log(`${hostname} belongs to ${topLevelDomains.join(".")}`);
+    break;
+  }
+  case ParseResultType.Reserved:
+  case ParseResultType.NotListed: {
+    const { hostname } = parseResult;
 
-		console.log(`${hostname} is a reserved or unknown domain`);
-		break;
-	}
-	default:
-		throw new Error(`${hostname} is an ip address or invalid domain`);
+    console.log(`${hostname} is a reserved or unknown domain`);
+    break;
+  }
+  default:
+    throw new Error(`${hostname} is an ip address or invalid domain`);
 }
 ```
 
@@ -226,8 +226,8 @@ switch (parseResult.type) {
 What's surprising to a lot of people is that the definition of public suffix means that regular user domains can become effective top-level domains:
 
 ```javascript
-const {subDomains, domain, topLevelDomains} = parseDomain(
-	"parse-domain.github.io",
+const { subDomains, domain, topLevelDomains } = parseDomain(
+  "parse-domain.github.io"
 );
 
 console.log(subDomains); // []
@@ -241,7 +241,7 @@ If you want to deviate from the browser's understanding of a top-level domain an
 
 ```javascript
 const parseResult = parseDomain("parse-domain.github.io");
-const {subDomains, domain, topLevelDomains} = parseResult.icann;
+const { subDomains, domain, topLevelDomains } = parseResult.icann;
 
 console.log(subDomains); // ["parse-domain"]
 console.log(domain); // "github"
@@ -251,7 +251,7 @@ console.log(topLevelDomains); // ["io"]
 ### ⚠️ `domain` can also be `undefined`
 
 ```javascript
-const {subDomains, domain, topLevelDomains} = parseDomain("co.uk");
+const { subDomains, domain, topLevelDomains } = parseDomain("co.uk");
 
 console.log(subDomains); // []
 console.log(domain); // undefined
@@ -263,7 +263,7 @@ console.log(topLevelDomains); // ["co", "uk"]
 The empty string `""` represents the [DNS root](https://en.wikipedia.org/wiki/DNS_root_zone) and is considered to be valid. `parseResult.type` will be `ParseResultType.Reserved` in that case:
 
 ```javascript
-const {type, subDomains, domain, topLevelDomains} = parseDomain("");
+const { type, subDomains, domain, topLevelDomains } = parseDomain("");
 
 console.log(type === ParseResultType.Reserved); // true
 console.log(subDomains); // []
@@ -283,7 +283,7 @@ console.log(topLevelDomains); // []
 Takes a hostname (e.g. `"www.example.com"`) and returns a [`ParseResult`](#api-ts-ParseResult). The hostname must only contain basic latin characters, digits, hyphens and dots. International hostnames must be puny-encoded. Does not throw an error, even with invalid input.
 
 ```javascript
-import {parseDomain} from "parse-domain";
+import { parseDomain } from "parse-domain";
 
 const parseResult = parseDomain("www.example.com");
 ```
@@ -318,11 +318,11 @@ An object that holds all possible [ParseResult](#api-ts-ParseResult) `type` valu
 
 ```javascript
 const ParseResultType = {
-	Invalid: "INVALID",
-	Ip: "IP",
-	Reserved: "RESERVED",
-	NotListed: "NOT_LISTED",
-	Listed: "LISTED",
+  Invalid: "INVALID",
+  Ip: "IP",
+  Reserved: "RESERVED",
+  NotListed: "NOT_LISTED",
+  Listed: "LISTED",
 };
 ```
 
@@ -390,11 +390,11 @@ An object that holds all possible [ValidationError](#api-ts-ValidationError) `ty
 
 ```javascript
 const ValidationErrorType = {
-	NoHostname: "NO_HOSTNAME",
-	DomainMaxLength: "DOMAIN_MAX_LENGTH",
-	LabelMinLength: "LABEL_MIN_LENGTH",
-	LabelMaxLength: "LABEL_MAX_LENGTH",
-	LabelInvalidCharacter: "LABEL_INVALID_CHARACTER",
+  NoHostname: "NO_HOSTNAME",
+  DomainMaxLength: "DOMAIN_MAX_LENGTH",
+  LabelMinLength: "LABEL_MIN_LENGTH",
+  LabelMaxLength: "LABEL_MAX_LENGTH",
+  LabelInvalidCharacter: "LABEL_INVALID_CHARACTER",
 };
 ```
 
