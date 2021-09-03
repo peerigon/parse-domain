@@ -51,12 +51,15 @@
   ],
   "sideEffects": false,
   "lint-staged": {
-    "*.{ts,js}": "eslint --cache --fix",
+    "*.{ts,tsx,js,cjs,mjs,jsx}": [
+      "eslint --cache --fix",
+      "prettier --write"
+    ],
     ".github/workflows/*.{yml,yaml}": [
       "pin-github-action --allow-empty",
       "prettier --write"
     ],
-    "*.{ts,js,css,md,yml,yaml}": "prettier --write"
+    "*.{json,css,md,yml,yaml}": "prettier --write"
   },
   "dependencies": {
     "is-ip": "^3.1.0",
