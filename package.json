@@ -43,7 +43,7 @@
     "url": "https://github.com/peerigon/parse-domain.git"
   },
   "author": "peerigon <developers@peerigon.com>",
-  "license": "Unlicense",
+  "license": "MIT",
   "files": [
     "bin",
     "build-cjs",
