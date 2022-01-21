@@ -1,11 +1,11 @@
 {
-	"compilerOptions": {
-		"strict": true,
-		"sourceMap": true,
-		"esModuleInterop": true,
-		"moduleResolution": "node",
-		"resolveJsonModule": true,
-		"forceConsistentCasingInFileNames": true,
-		"declaration": true
-	}
+  "compilerOptions": {
+    "strict": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true
+  }
 }
