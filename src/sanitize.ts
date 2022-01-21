@@ -1,4 +1,4 @@
-import isIp from "is-ip";
+import { version as getIpVersion } from "is-ip";
 import { Label } from "./parse-domain";
 import { NO_HOSTNAME } from "./from-url";
 
@@ -33,7 +33,7 @@ export enum SanitizationResultType {
 export type SanitizationResultValidIp = {
   type: SanitizationResultType.ValidIp;
   ip: string;
-  ipVersion: Exclude<ReturnType<typeof isIp.version>, undefined>;
+  ipVersion: Exclude<ReturnType<typeof getIpVersion>, undefined>;
 };
 
 export type SanitizationResultValidDomain = {
@@ -117,7 +117,7 @@ export const sanitize = (
   // IPv6 addresses are surrounded by square brackets in URLs
   // See https://tools.ietf.org/html/rfc3986#section-3.2.2
   const inputTrimmedAsIp = inputTrimmed.replace(/^\[|]$/g, "");
-  const ipVersion = isIp.version(inputTrimmedAsIp);
+  const ipVersion = getIpVersion(inputTrimmedAsIp);
 
   if (ipVersion !== undefined) {
     return {
