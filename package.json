@@ -12,8 +12,8 @@
     "top-level"
   ],
   "type": "module",
-  "main": "./build/src/main.js",
-  "types": "./build/src/main.d.ts",
+  "main": "./build/main.js",
+  "types": "./build/main.d.ts",
   "scripts": {
     "test": "run-p test:*",
     "test:suite": "node --no-warnings --experimental-vm-modules ./node_modules/jest/bin/jest.js",
