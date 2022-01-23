@@ -147,19 +147,17 @@ export const sanitize = (
     };
   }
 
-  const inputTrimmed = input.trim();
-
-  if (inputTrimmed === "") {
+  if (input === "") {
     return {
       type: SanitizationResultType.ValidDomain,
-      domain: inputTrimmed,
+      domain: input,
       labels: [],
     };
   }
 
   // IPv6 addresses are surrounded by square brackets in URLs
   // See https://tools.ietf.org/html/rfc3986#section-3.2.2
-  const inputTrimmedAsIp = inputTrimmed.replace(/^\[|]$/g, "");
+  const inputTrimmedAsIp = input.replace(/^\[|]$/g, "");
   const ipVersionOfInput = ipVersion(inputTrimmedAsIp);
 
   if (ipVersionOfInput !== undefined) {
@@ -170,15 +168,15 @@ export const sanitize = (
     };
   }
 
-  const lastChar = inputTrimmed.charAt(inputTrimmed.length - 1);
+  const lastChar = input.charAt(input.length - 1);
   const canonicalInput =
-    lastChar === LABEL_SEPARATOR ? inputTrimmed.slice(0, -1) : inputTrimmed;
+    lastChar === LABEL_SEPARATOR ? input.slice(0, -1) : input;
   const octets = new TextEncoder().encode(canonicalInput);
 
   if (octets.length > DOMAIN_LENGTH_MAX) {
     return {
       type: SanitizationResultType.Error,
-      errors: [createDomainMaxLengthError(inputTrimmed, octets.length)],
+      errors: [createDomainMaxLengthError(input, octets.length)],
     };
   }
 
@@ -196,7 +194,7 @@ export const sanitize = (
 
   return {
     type: SanitizationResultType.ValidDomain,
-    domain: inputTrimmed,
+    domain: input,
     labels,
   };
 };

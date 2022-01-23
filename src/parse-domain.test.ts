@@ -583,6 +583,20 @@ describe(parseDomain.name, () => {
     });
   });
 
+  // The hostname should be interpreted as it is.
+  // Auto-trimming the input changes the domain and might not be
+  // desired if any character (such as whitespace) is allowed
+  // (e.g. when using lax validation).
+  // Trimming can always happen on the caller side.
+  test("does not trim the hostname", () => {
+    expect(parseDomain(" com", { validation: Validation.Lax })).toMatchObject({
+      type: ParseResultType.NotListed,
+    });
+    expect(parseDomain("com ", { validation: Validation.Lax })).toMatchObject({
+      type: ParseResultType.NotListed,
+    });
+  });
+
   test("returns the input hostname in the result", () => {
     expect(parseDomain("www.EXAMPLE.com")).toMatchObject({
       hostname: "www.EXAMPLE.com",
