@@ -17,7 +17,7 @@
   "exports": {
     "require": "./build-cjs/src/main.js",
     "node": "./build-cjs/src/main.mjs",
-    "import": "./build-esm/src/main.js"
+    "default": "./build-esm/src/main.js"
   },
   "scripts": {
     "test": "run-p test:*",
