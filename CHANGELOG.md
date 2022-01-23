@@ -1,3 +1,16 @@
+# [7.0.0](https://github.com/peerigon/parse-domain/compare/v6.0.1...v7.0.0) (2022-01-23)
+
+
+### Bug Fixes
+
+* Add support for invalid ipv6 URLs ([b32d16c](https://github.com/peerigon/parse-domain/commit/b32d16cee9c851465d350da2cdabe4bdee846ac9)), closes [#114](https://github.com/peerigon/parse-domain/issues/114)
+* Remove auto-trimming of input ([4ea86a1](https://github.com/peerigon/parse-domain/commit/4ea86a189eb4f02af170836b703d9c73885344b7))
+
+
+### BREAKING CHANGES
+
+* parseDomain won't .trim() the given input. The input is interpreted as it is. If you want to trim the input, you need to call .trim() before passing it to parseDomain. Auto-trimming the input changes the domain and might not be desired if any character (such as whitespace) is allowed (e.g. when using lax validation).
+
 ## [6.0.1](https://github.com/peerigon/parse-domain/compare/v6.0.0...v6.0.1) (2022-01-23)
 
 
