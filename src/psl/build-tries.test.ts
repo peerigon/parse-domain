@@ -1,4 +1,3 @@
-import { toASCII } from "punycode";
 import { buildTries } from "./build-tries";
 import {
   PUBLIC_SUFFIX_MARKER_ICANN_START,
@@ -6,6 +5,7 @@ import {
   PUBLIC_SUFFIX_MARKER_PRIVATE_START,
   PUBLIC_SUFFIX_MARKER_PRIVATE_END,
 } from "../config";
+import { toASCII } from "../punycode";
 
 describe("buildTries()", () => {
   test("normalizes rules (to punycode, to lower case)", () => {
