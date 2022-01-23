@@ -57,6 +57,15 @@ describe(fromUrl.name, () => {
     expect(fromUrl("[1:2:3:4:5:6:7:8]")).toBe("[1:2:3:4:5:6:7:8]");
   });
 
+  // https://github.com/peerigon/parse-domain/issues/114
+  test("it handles URLs with invalid IPv6", () => {
+    expect(fromUrl("http://1:2:3:4:5:6:7:8/path?query")).toBe(
+      "[1:2:3:4:5:6:7:8]"
+    );
+    expect(fromUrl("//1:2:3:4:5:6:7:8")).toBe("[1:2:3:4:5:6:7:8]");
+    expect(fromUrl("1:2:3:4:5:6:7:8")).toBe("[1:2:3:4:5:6:7:8]");
+  });
+
   test("it returns the NO_HOSTNAME symbol for invalid URLs", () => {
     expect(fromUrl(":8080/path?query")).toBe(NO_HOSTNAME);
     expect(fromUrl("/path?query")).toBe(NO_HOSTNAME);

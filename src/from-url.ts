@@ -1,4 +1,5 @@
 const urlPattern = /^[a-z][*+.a-z-]+:\/\//i;
+const invalidIpv6Pattern = /^([a-z][*+.a-z-]+:\/\/)([^[].*:[^/?]*:[^/?]*)(.*)/i;
 
 export const NO_HOSTNAME: unique symbol = Symbol("NO_HOSTNAME");
 
@@ -16,7 +17,7 @@ export const fromUrl = (urlLike: string) => {
   }
 
   // URLs that start with // are protocol relative
-  const url = urlLike.startsWith("//")
+  let url = urlLike.startsWith("//")
     ? `http:${urlLike}`
     : // URLs that start with / do not have a hostname section
     urlLike.startsWith("/")
@@ -24,6 +25,8 @@ export const fromUrl = (urlLike: string) => {
     : urlPattern.test(urlLike)
     ? urlLike
     : `http://${urlLike}`;
+
+  url = url.replace(invalidIpv6Pattern, "$1[$2]$3");
 
   try {
     return new URL(url).hostname;
