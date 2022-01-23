@@ -32,9 +32,9 @@ if (parseResult.type === ParseResultType.Listed) {
 }
 ```
 
-This package has been designed for modern Node and browser environments, supporting both CommonJS and ECMAScript modules. It assumes an ES2015 environment with [`Symbol()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol), [`URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL) and [`TextDecoder()](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) globally available. You need to transpile it down to ES5 (e.g. by using [Babel](https://babeljs.io/)) if you need to support older environments.
+This package has been designed for modern Node and browser environments with ECMAScript modules support. It assumes an ES2015 environment with [`Symbol()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol), [`URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL) and [`TextDecoder()`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) globally available. You need to transpile it down to ES5 (e.g. by using [Babel](https://babeljs.io/)) if you need to support older environments.
 
-The list of top-level domains is stored in a [trie](https://en.wikipedia.org/wiki/Trie) data structure and serialization format to ensure the fastest lookup and the smallest possible library size. The library is side-effect free (this is important for proper [tree-shaking](https://webpack.js.org/guides/tree-shaking/)).
+The list of top-level domains is stored in a [trie](https://en.wikipedia.org/wiki/Trie) data structure and serialization format to ensure the fastest lookup and the smallest possible library size.
 
 <br />
 
