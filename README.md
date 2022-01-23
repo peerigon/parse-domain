@@ -414,17 +414,17 @@ Describes the shape of the parse result that is returned when the given hostname
 
 ```ts
 type ParseResultInvalid = {
-	type: ParseResultType.INVALID;
-	hostname: string | typeof NO_HOSTNAME;
-	errors: Array<ValidationError>;
+  type: ParseResultType.INVALID;
+  hostname: string | typeof NO_HOSTNAME;
+  errors: Array<ValidationError>;
 };
 
 // Example
 
 {
-	type: "INVALID",
-	hostname: ".com",
-	errors: [...]
+  type: "INVALID",
+  hostname: ".com",
+  errors: [...]
 }
 ```
 
@@ -436,17 +436,17 @@ Describes the shape of a validation error as returned by [`parseDomain`](#api-js
 
 ```ts
 type ValidationError = {
-	type: ValidationErrorType;
-	message: string;
-	column: number;
+  type: ValidationErrorType;
+  message: string;
+  column: number;
 };
 
 // Example
 
 {
-	type: "LABEL_MIN_LENGTH",
-	message: `Label "" is too short. Label is 0 octets long but should be at least 1.`,
-	column: 1,
+  type: "LABEL_MIN_LENGTH",
+  message: `Label "" is too short. Label is 0 octets long but should be at least 1.`,
+  column: 1,
 }
 ```
 
@@ -481,17 +481,17 @@ This type describes the shape of the parse result that is returned when the give
 
 ```ts
 type ParseResultIp = {
-	type: ParseResultType.Ip;
-	hostname: string;
-	ipVersion: 4 | 6;
+  type: ParseResultType.Ip;
+  hostname: string;
+  ipVersion: 4 | 6;
 };
 
 // Example
 
 {
-	type: "IP",
-	hostname: "192.168.0.1",
-	ipVersion: 4
+  type: "IP",
+  hostname: "192.168.0.1",
+  ipVersion: 4
 }
 ```
 
@@ -516,17 +516,17 @@ This type describes the shape of the parse result that is returned when the give
 
 ```ts
 type ParseResultReserved = {
-	type: ParseResultType.Reserved;
-	hostname: string;
-	labels: Array<string>;
+  type: ParseResultType.Reserved;
+  hostname: string;
+  labels: Array<string>;
 };
 
 // Example
 
 {
-	type: "RESERVED",
-	hostname: "pecorino.local",
-	labels: ["pecorino", "local"]
+  type: "RESERVED",
+  hostname: "pecorino.local",
+  labels: ["pecorino", "local"]
 }
 ```
 
@@ -540,17 +540,17 @@ Describes the shape of the parse result that is returned when the given hostname
 
 ```ts
 type ParseResultNotListed = {
-	type: ParseResultType.NotListed;
-	hostname: string;
-	labels: Array<string>;
+  type: ParseResultType.NotListed;
+  hostname: string;
+  labels: Array<string>;
 };
 
 // Example
 
 {
-	type: "NOT_LISTED",
-	hostname: "this.is.not-listed",
-	labels: ["this", "is", "not-listed"]
+  type: "NOT_LISTED",
+  hostname: "this.is.not-listed",
+  labels: ["this", "is", "not-listed"]
 }
 ```
 
@@ -562,33 +562,33 @@ Describes the shape of the parse result that is returned when the given hostname
 
 ```ts
 type ParseResultListed = {
-	type: ParseResultType.Listed;
-	hostname: string;
-	labels: Array<string>;
-	subDomains: Array<string>;
-	domain: string | undefined;
-	topLevelDomains: Array<string>;
-	icann: {
-		subDomains: Array<string>;
-		domain: string | undefined;
-		topLevelDomains: Array<string>;
-	};
+  type: ParseResultType.Listed;
+  hostname: string;
+  labels: Array<string>;
+  subDomains: Array<string>;
+  domain: string | undefined;
+  topLevelDomains: Array<string>;
+  icann: {
+    subDomains: Array<string>;
+    domain: string | undefined;
+    topLevelDomains: Array<string>;
+  };
 };
 
 // Example
 
 {
-	type: "LISTED",
-	hostname: "parse-domain.github.io",
-	labels: ["parse-domain", "github", "io"]
-	subDomains: [],
-	domain: "parse-domain",
-	topLevelDomains: ["github", "io"],
-	icann: {
-		subDomains: ["parse-domain"],
-		domain: "github",
-		topLevelDomains: ["io"]
-	}
+  type: "LISTED",
+  hostname: "parse-domain.github.io",
+  labels: ["parse-domain", "github", "io"]
+  subDomains: [],
+  domain: "parse-domain",
+  topLevelDomains: ["github", "io"],
+  icann: {
+    subDomains: ["parse-domain"],
+    domain: "github",
+    topLevelDomains: ["io"]
+  }
 }
 ```
 
