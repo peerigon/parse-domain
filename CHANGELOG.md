@@ -1,3 +1,13 @@
+# [6.0.0](https://github.com/peerigon/parse-domain/compare/v5.0.0...v6.0.0) (2022-01-23)
+
+
+* Migrate package to ECMAScript modules ([42f54e8](https://github.com/peerigon/parse-domain/commit/42f54e8010c077c5375f0c96ab35a12bad35d3f4))
+
+
+### BREAKING CHANGES
+
+* parse-domain will now be released as native ECMAScript module. There's no CommonJS build anymore. If you're still using CommonJS, you need to import it asynchronously using `await import("parse-domain")`. If you're still using Node 12, you may need to update it to the latest 12.x version.
+
 # [5.0.0](https://github.com/peerigon/parse-domain/compare/v4.1.0...v5.0.0) (2022-01-23)
 
 
