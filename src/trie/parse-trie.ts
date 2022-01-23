@@ -1,10 +1,10 @@
-import * as characters from "./characters";
+import * as characters from "./characters.js";
 import {
   createRootNode,
   createOrGetChild,
   TrieNode,
   NODE_TYPE_ROOT,
-} from "./nodes";
+} from "./nodes.js";
 
 export const parseTrie = (serializedTrie: string) => {
   const rootNode = createRootNode();

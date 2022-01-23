@@ -1,5 +1,5 @@
-import { createTrieFromList } from "./create-trie";
-import { expectRoot, expectChild } from "../tests/assertions/nodes";
+import { createTrieFromList } from "./create-trie.js";
+import { expectRoot, expectChild } from "../tests/assertions/nodes.js";
 
 describe("createTrieFromList()", () => {
   test("when called with an empty array it returns just a root node with no children", () => {

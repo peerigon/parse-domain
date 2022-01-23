@@ -1,7 +1,7 @@
 import nock from "nock";
-import { PUBLIC_SUFFIX_URL } from "../config";
-import { fetchPsl } from "./fetch-psl";
-import { readPslFixture } from "../tests/fixtures/fixtures";
+import { PUBLIC_SUFFIX_URL } from "../config.js";
+import { fetchPsl } from "./fetch-psl.js";
+import { readPslFixture } from "../tests/fixtures/fixtures.js";
 
 describe("fetchPsl()", () => {
   const publicSuffixUrl = new URL(PUBLIC_SUFFIX_URL);

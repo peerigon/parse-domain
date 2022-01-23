@@ -1,5 +1,5 @@
-import { TrieRootNode, TrieChildNode } from "./nodes";
-import { DOWN, UP, SAME } from "./characters";
+import { TrieRootNode, TrieChildNode } from "./nodes.js";
+import { DOWN, UP, SAME } from "./characters.js";
 
 export const serializeTrie = (root: TrieRootNode): string => {
   /*

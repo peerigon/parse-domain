@@ -23,8 +23,6 @@ coverage
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
 
 # Dependency directory
 node_modules
@@ -36,7 +34,7 @@ node_modules
 .node_repl_history
 
 # We don't check in compiled files. They are created upon npm publish and npm install.
-build-esm
-build-cjs
+build
+serialized-tries
 
 .eslintcache

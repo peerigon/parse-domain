@@ -4,7 +4,7 @@ import {
   TrieChildNode,
   TrieNode,
   NODE_TYPE_CHILD,
-} from "../../trie/nodes";
+} from "../../trie/nodes.js";
 
 export const expectRoot = ({
   root,

@@ -1,6 +1,6 @@
-import { version as getIpVersion } from "is-ip";
-import { Label } from "./parse-domain";
-import { NO_HOSTNAME } from "./from-url";
+import { ipVersion } from "is-ip";
+import { Label } from "./parse-domain.js";
+import { NO_HOSTNAME } from "./from-url.js";
 
 // See https://en.wikipedia.org/wiki/Domain_name
 // See https://tools.ietf.org/html/rfc1034
@@ -60,7 +60,7 @@ export enum SanitizationResultType {
 export type SanitizationResultValidIp = {
   type: SanitizationResultType.ValidIp;
   ip: string;
-  ipVersion: Exclude<ReturnType<typeof getIpVersion>, undefined>;
+  ipVersion: Exclude<ReturnType<typeof ipVersion>, undefined>;
 };
 
 export type SanitizationResultValidDomain = {
@@ -160,13 +160,13 @@ export const sanitize = (
   // IPv6 addresses are surrounded by square brackets in URLs
   // See https://tools.ietf.org/html/rfc3986#section-3.2.2
   const inputTrimmedAsIp = inputTrimmed.replace(/^\[|]$/g, "");
-  const ipVersion = getIpVersion(inputTrimmedAsIp);
+  const ipVersionOfInput = ipVersion(inputTrimmedAsIp);
 
-  if (ipVersion !== undefined) {
+  if (ipVersionOfInput !== undefined) {
     return {
       type: SanitizationResultType.ValidIp,
       ip: inputTrimmedAsIp,
-      ipVersion,
+      ipVersion: ipVersionOfInput,
     };
   }
 

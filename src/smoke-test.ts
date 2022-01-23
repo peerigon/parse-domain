@@ -1,10 +1,10 @@
 import { deepStrictEqual } from "assert";
-import { parseDomain } from "./main";
+import { fromUrl, parseDomain, ParseResultType } from "./main.js";
 
 export const runSmokeTest = () => {
   deepStrictEqual(parseDomain("www.example.com"), {
     hostname: "www.example.com",
-    type: "LISTED",
+    type: ParseResultType.Listed,
     labels: ["www", "example", "com"],
     subDomains: ["www"],
     domain: "example",
@@ -17,7 +17,7 @@ export const runSmokeTest = () => {
   });
   deepStrictEqual(parseDomain("www.example.co.uk"), {
     hostname: "www.example.co.uk",
-    type: "LISTED",
+    type: ParseResultType.Listed,
     labels: ["www", "example", "co", "uk"],
     subDomains: ["www"],
     domain: "example",
@@ -30,7 +30,7 @@ export const runSmokeTest = () => {
   });
   deepStrictEqual(parseDomain("www.example.cloudfront.net"), {
     hostname: "www.example.cloudfront.net",
-    type: "LISTED",
+    type: ParseResultType.Listed,
     labels: ["www", "example", "cloudfront", "net"],
     subDomains: ["www"],
     domain: "example",
@@ -41,11 +41,9 @@ export const runSmokeTest = () => {
       topLevelDomains: ["net"],
     },
   });
-  // TODO: Use fromUrl once we dropped Node v8 support
-  // deepStrictEqual(parseDomain(fromUrl("www.食狮.公司.cn")), {
-  deepStrictEqual(parseDomain("www.xn--85x722f.xn--55qx5d.cn"), {
+  deepStrictEqual(parseDomain(fromUrl("www.食狮.公司.cn")), {
     hostname: "www.xn--85x722f.xn--55qx5d.cn",
-    type: "LISTED",
+    type: ParseResultType.Listed,
     labels: ["www", "xn--85x722f", "xn--55qx5d", "cn"],
     subDomains: ["www"],
     domain: "xn--85x722f",

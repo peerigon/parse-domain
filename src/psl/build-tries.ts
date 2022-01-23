@@ -3,9 +3,9 @@ import {
   PUBLIC_SUFFIX_MARKER_ICANN_END,
   PUBLIC_SUFFIX_MARKER_PRIVATE_START,
   PUBLIC_SUFFIX_MARKER_PRIVATE_END,
-} from "../config";
-import { toASCII } from "../punycode";
-import { createTrieFromList } from "../trie/create-trie";
+} from "../config.js";
+import { toASCII } from "../punycode.js";
+import { createTrieFromList } from "../trie/create-trie.js";
 
 const matchNewLine = /\r?\n/u;
 const matchComment = /^\s*\/\//u;

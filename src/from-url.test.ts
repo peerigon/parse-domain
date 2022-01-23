@@ -1,4 +1,4 @@
-import { fromUrl, NO_HOSTNAME } from "./from-url";
+import { fromUrl, NO_HOSTNAME } from "./from-url.js";
 
 describe(fromUrl.name, () => {
   test("it returns the hostname only", () => {

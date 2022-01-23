@@ -8,6 +8,10 @@ export {
   ParseResultReserved,
   ParseResultNotListed,
   ParseResultListed,
-} from "./parse-domain";
-export { fromUrl, NO_HOSTNAME } from "./from-url";
-export { Validation, ValidationError, ValidationErrorType } from "./sanitize";
+} from "./parse-domain.js";
+export { fromUrl, NO_HOSTNAME } from "./from-url.js";
+export {
+  Validation,
+  ValidationError,
+  ValidationErrorType,
+} from "./sanitize.js";

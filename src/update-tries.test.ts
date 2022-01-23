@@ -1,7 +1,7 @@
 import nock from "nock";
-import { PUBLIC_SUFFIX_URL } from "./config";
-import { fetchBuildSerializeTries } from "./update-tries";
-import { readPslFixture } from "./tests/fixtures/fixtures";
+import { PUBLIC_SUFFIX_URL } from "./config.js";
+import { fetchBuildSerializeTries } from "./update-tries.js";
+import { readPslFixture } from "./tests/fixtures/fixtures.js";
 
 describe(fetchBuildSerializeTries.name, () => {
   const publicSuffixUrl = new URL(PUBLIC_SUFFIX_URL);

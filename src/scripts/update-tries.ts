@@ -1,14 +1,11 @@
-import { resolve } from "path";
-import fileSystem from "fs";
-import { promisify } from "util";
-import { fetchBuildSerializeTries } from "../update-tries";
-import { PUBLIC_SUFFIX_URL } from "../config";
-import { Await } from "../type-util";
+import * as path from "path";
+import * as url from "url";
+import * as fs from "fs";
+import { fetchBuildSerializeTries } from "../update-tries.js";
+import { PUBLIC_SUFFIX_URL } from "../config.js";
+import { Await } from "../type-util.js";
 
-// TODO: Replace this with fs promises once we removed Node 8
-const fs = {
-  writeFile: promisify(fileSystem.writeFile),
-};
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 const writeTriesToFiles = async ({
   serializedIcannTrie,
@@ -19,13 +16,17 @@ const writeTriesToFiles = async ({
 
   await Promise.all(
     targetDirectories.map(async (targetDirectory) => {
-      const pathToIcannTrie = resolve(__dirname, targetDirectory, "icann.json");
-      const pathToPrivateTrie = resolve(
+      const pathToIcannTrie = path.resolve(
         __dirname,
         targetDirectory,
-        "private.json"
+        "icann.js"
       );
-      const pathToTrieInfoFile = resolve(
+      const pathToPrivateTrie = path.resolve(
+        __dirname,
+        targetDirectory,
+        "private.js"
+      );
+      const pathToTrieInfoFile = path.resolve(
         __dirname,
         targetDirectory,
         "info.json"
@@ -36,9 +37,15 @@ const writeTriesToFiles = async ({
       console.warn(`Writing ${pathToTrieInfoFile}...`);
 
       await Promise.all([
-        fs.writeFile(pathToIcannTrie, JSON.stringify(serializedIcannTrie)),
-        fs.writeFile(pathToPrivateTrie, JSON.stringify(serializedPrivateTrie)),
-        fs.writeFile(
+        fs.promises.writeFile(
+          pathToIcannTrie,
+          `export default ${JSON.stringify(serializedIcannTrie)};`
+        ),
+        fs.promises.writeFile(
+          pathToPrivateTrie,
+          `export default ${JSON.stringify(serializedPrivateTrie)};`
+        ),
+        fs.promises.writeFile(
           pathToTrieInfoFile,
           JSON.stringify({
             updatedAt: new Date(),

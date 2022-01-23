@@ -1,5 +1,5 @@
-import { parseDomain, ParseResult, ParseResultType } from "./main";
-import { toASCII } from "./punycode";
+import { parseDomain, ParseResult, ParseResultType } from "./main.js";
+import { toASCII } from "./punycode.js";
 
 describe("Official test suite from https://raw.githubusercontent.com/publicsuffix/list/main/tests/test_psl.txt", () => {
   const canonical = (hostname: string) =>

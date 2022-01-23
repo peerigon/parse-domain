@@ -1,25 +1,22 @@
 #!/usr/bin/env node
 
-"use strict";
-
-const { EOL } = require("os");
+import { EOL } from "os";
 
 (async () => {
-  process.argv.push(
-    "--",
-    "../../serialized-tries",
-    "../../../build-esm/serialized-tries"
-  );
+  process.argv.push("--", "../../serialized-tries");
 
-  await require("../build-cjs/src/scripts/update-tries.js").done;
+  const updateTries = await import("../build/scripts/update-tries.js");
+
+  await updateTries.done;
 
   process.stderr.write("Running smoke test... ");
 
-  require("../build-cjs/src/smoke-test.js").runSmokeTest();
+  const smokeTest = await import("../build/smoke-test.js");
+
+  smokeTest.runSmokeTest();
 
   process.stdout.write("ok" + EOL);
 })().catch((error) => {
   console.error(`parse-domain update failed: ${error}`);
-  // eslint-disable-next-line no-process-exit, node/no-process-exit
   process.exit(1);
 });

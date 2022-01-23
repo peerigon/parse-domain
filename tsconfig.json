@@ -3,9 +3,11 @@
     "strict": true,
     "sourceMap": true,
     "esModuleInterop": true,
+    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "declaration": true
-  }
+  },
+  "exclude": ["build/**"]
 }

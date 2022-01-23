@@ -1,6 +1,6 @@
-import { fetchPsl } from "./psl/fetch-psl";
-import { buildTries } from "./psl/build-tries";
-import { serializeTrie } from "./trie/serialize-trie";
+import { fetchPsl } from "./psl/fetch-psl.js";
+import { buildTries } from "./psl/build-tries.js";
+import { serializeTrie } from "./trie/serialize-trie.js";
 
 export const fetchBuildSerializeTries = async () => {
   const psl = await fetchPsl();

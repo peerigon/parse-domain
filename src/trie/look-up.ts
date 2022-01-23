@@ -1,6 +1,6 @@
-import * as characters from "./characters";
-import { TrieNode } from "./nodes";
-import { Label } from "../parse-domain";
+import * as characters from "./characters.js";
+import { TrieNode } from "./nodes.js";
+import { Label } from "../parse-domain.js";
 
 export const lookUpTldsInTrie = (labels: Array<Label>, trie: TrieNode) => {
   const labelsToCheck = labels.slice();

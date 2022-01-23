@@ -1,4 +1,4 @@
-import { createRootNode, createOrGetChild, TrieNode } from "./nodes";
+import { createRootNode, createOrGetChild, TrieNode } from "./nodes.js";
 
 export const createTrieFromList = (list: Array<string>) => {
   const root = createRootNode();

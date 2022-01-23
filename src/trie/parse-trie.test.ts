@@ -1,5 +1,5 @@
-import { parseTrie } from "./parse-trie";
-import { expectRoot, expectChild } from "../tests/assertions/nodes";
+import { parseTrie } from "./parse-trie.js";
+import { expectRoot, expectChild } from "../tests/assertions/nodes.js";
 
 describe("parseTrie()", () => {
   test("when called with '' it returns the root node with no children", () => {

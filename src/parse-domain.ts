@@ -1,15 +1,15 @@
-import { icannTrie, privateTrie } from "./serialized-tries";
-import { lookUpTldsInTrie } from "./trie/look-up";
+import { icannTrie, privateTrie } from "./serialized-tries.js";
+import { lookUpTldsInTrie } from "./trie/look-up.js";
 import {
   ValidationError,
   sanitize,
   SanitizationResultType,
   SanitizationResultValidIp,
   Validation,
-} from "./sanitize";
-import { TrieRootNode } from "./trie/nodes";
-import { parseTrie } from "./trie/parse-trie";
-import { NO_HOSTNAME } from "./from-url";
+} from "./sanitize.js";
+import { TrieRootNode } from "./trie/nodes.js";
+import { parseTrie } from "./trie/parse-trie.js";
+import { NO_HOSTNAME } from "./from-url.js";
 
 export const RESERVED_TOP_LEVEL_DOMAINS = [
   "localhost",

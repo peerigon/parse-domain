@@ -1,8 +1,8 @@
-import { serializeTrie } from "./serialize-trie";
-import { buildTries } from "../psl/build-tries";
-import { createRootNode, createOrGetChild } from "./nodes";
-import { readPslFixture } from "../tests/fixtures/fixtures";
-import * as characters from "./characters";
+import { serializeTrie } from "./serialize-trie.js";
+import { buildTries } from "../psl/build-tries.js";
+import { createRootNode, createOrGetChild } from "./nodes.js";
+import { readPslFixture } from "../tests/fixtures/fixtures.js";
+import * as characters from "./characters.js";
 
 const toReadableTrie = (serializedTrie: string) => {
   const pattern = new RegExp(

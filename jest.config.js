@@ -1,13 +1,16 @@
-"use strict";
-
-module.exports = {
+// eslint-disable-next-line import/no-default-export
+export default {
   roots: ["<rootDir>/src"],
   transform: {
     "^.+\\.tsx?$": "ts-jest",
   },
+  extensionsToTreatAsEsm: [".ts"],
+  moduleNameMapper: {
+    "^(\\.{1,2}/.*)\\.js$": "$1",
+  },
   globals: {
     "ts-jest": {
-      diagnostics: false,
+      useESM: true,
     },
   },
   collectCoverage: true,

@@ -1,16 +1,14 @@
-import { resolve } from "path";
-import fileSystem from "fs";
-import { promisify } from "util";
-import { fetchPsl } from "../psl/fetch-psl";
+import * as path from "path";
+import * as url from "url";
+import * as fs from "fs";
+import { fetchPsl } from "../psl/fetch-psl.js";
 
-// TODO: Replace this with fs promises once we removed Node 8
-const fs = {
-  writeFile: promisify(fileSystem.writeFile),
-};
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 export const done = (async () => {
-  const pathToPslFixture = resolve(
+  const pathToPslFixture = path.resolve(
     __dirname,
+    "..",
     "tests",
     "fixtures",
     "public-suffix-list.txt"
@@ -18,5 +16,5 @@ export const done = (async () => {
 
   const psl = await fetchPsl();
 
-  await fs.writeFile(pathToPslFixture, psl);
+  await fs.promises.writeFile(pathToPslFixture, psl);
 })();
