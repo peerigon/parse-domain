@@ -5,6 +5,7 @@ import {
   sanitize,
   SanitizationResultType,
   SanitizationResultValidIp,
+  Validation,
 } from "./sanitize";
 import { TrieRootNode } from "./trie/nodes";
 import { parseTrie } from "./trie/parse-trie";
@@ -137,13 +138,21 @@ const splitLabelsIntoDomains = (
 let parsedIcannTrie: TrieRootNode | undefined;
 let parsedPrivateTrie: TrieRootNode | undefined;
 
+export type ParseDomainOptions = {
+  /**
+   * If no validation is specified, Validation.Strict will be used.
+   **/
+  validation?: Validation;
+};
+
 /**
  * Splits the given hostname in topLevelDomains, a domain and subDomains.
  */
 export const parseDomain = (
-  hostname: string | typeof NO_HOSTNAME
+  hostname: string | typeof NO_HOSTNAME,
+  options?: ParseDomainOptions
 ): ParseResult => {
-  const sanitizationResult = sanitize(hostname);
+  const sanitizationResult = sanitize(hostname, options);
 
   if (sanitizationResult.type === SanitizationResultType.Error) {
     return {

@@ -5,10 +5,36 @@ import { NO_HOSTNAME } from "./from-url";
 // See https://en.wikipedia.org/wiki/Domain_name
 // See https://tools.ietf.org/html/rfc1034
 const LABEL_SEPARATOR = ".";
-const LABEL_ROOT = "";
 const LABEL_LENGTH_MIN = 1;
 const LABEL_LENGTH_MAX = 63;
+/**
+ * 255 octets - 2 octets if you remove the last dot
+ * @see https://devblogs.microsoft.com/oldnewthing/20120412-00/?p=7873
+ */
 const DOMAIN_LENGTH_MAX = 253;
+
+const textEncoder = new TextEncoder();
+
+export enum Validation {
+  /**
+   * Allows any octets as labels
+   * but still restricts the length of labels and the overall domain.
+   *
+   * @see https://www.rfc-editor.org/rfc/rfc2181#section-11
+   **/
+  Lax = "LAX",
+
+  /**
+   * Only allows ASCII letters, digits and hyphens (aka LDH),
+   * forbids hyphens at the beginning or end of a label
+   * and requires top-level domain names not to be all-numeric.
+   *
+   * This is the default if no validation is configured.
+   *
+   * @see https://datatracker.ietf.org/doc/html/rfc3696#section-2
+   */
+  Strict = "STRICT",
+}
 
 export enum ValidationErrorType {
   NoHostname = "NO_HOSTNAME",
@@ -16,6 +42,7 @@ export enum ValidationErrorType {
   LabelMinLength = "LABEL_MIN_LENGTH",
   LabelMaxLength = "LABEL_MAX_LENGTH",
   LabelInvalidCharacter = "LABEL_INVALID_CHARACTER",
+  LastLabelInvalid = "LAST_LABEL_INVALID",
 }
 
 export type ValidationError = {
@@ -60,9 +87,7 @@ const createNoHostnameError = (input: unknown) => {
   };
 };
 
-const createDomainMaxLengthError = (domain: string) => {
-  const length = domain.length;
-
+const createDomainMaxLengthError = (domain: string, length: number) => {
   return {
     type: ValidationErrorType.DomainMaxLength,
     message: `Domain "${domain}" is too long. Domain is ${length} octets long but should not be longer than ${DOMAIN_LENGTH_MAX}.`,
@@ -102,8 +127,17 @@ const createLabelInvalidCharacterError = (
   };
 };
 
+const createLastLabelInvalidError = (label: string, column: number) => {
+  return {
+    type: ValidationErrorType.LabelInvalidCharacter,
+    message: `Last label "${label}" must not be all-numeric.`,
+    column,
+  };
+};
+
 export const sanitize = (
-  input: string | typeof NO_HOSTNAME
+  input: string | typeof NO_HOSTNAME,
+  options: { validation?: Validation } = {}
 ): SanitizationResult => {
   // Extra check for non-TypeScript users
   if (typeof input !== "string") {
@@ -114,6 +148,15 @@ export const sanitize = (
   }
 
   const inputTrimmed = input.trim();
+
+  if (inputTrimmed === "") {
+    return {
+      type: SanitizationResultType.ValidDomain,
+      domain: inputTrimmed,
+      labels: [],
+    };
+  }
+
   // IPv6 addresses are surrounded by square brackets in URLs
   // See https://tools.ietf.org/html/rfc3986#section-3.2.2
   const inputTrimmedAsIp = inputTrimmed.replace(/^\[|]$/g, "");
@@ -127,49 +170,22 @@ export const sanitize = (
     };
   }
 
-  if (inputTrimmed.length > DOMAIN_LENGTH_MAX) {
+  const lastChar = inputTrimmed.charAt(inputTrimmed.length - 1);
+  const canonicalInput =
+    lastChar === LABEL_SEPARATOR ? inputTrimmed.slice(0, -1) : inputTrimmed;
+  const octets = new TextEncoder().encode(canonicalInput);
+
+  if (octets.length > DOMAIN_LENGTH_MAX) {
     return {
       type: SanitizationResultType.Error,
-      errors: [createDomainMaxLengthError(inputTrimmed)],
+      errors: [createDomainMaxLengthError(inputTrimmed, octets.length)],
     };
   }
 
-  const labels = inputTrimmed.split(LABEL_SEPARATOR);
-  const lastLabel = labels[labels.length - 1];
+  const labels = canonicalInput.split(LABEL_SEPARATOR);
 
-  // If the last label is the special root label, ignore it
-  if (lastLabel === LABEL_ROOT) {
-    labels.pop();
-  }
-
-  const labelValidationErrors = [];
-  let column = 1;
-
-  for (const label of labels) {
-    // According to https://tools.ietf.org/html/rfc6761 labels should
-    // only contain ASCII letters, digits and hyphens (LDH).
-    const invalidCharacter = /[^\da-z-]/iu.exec(label);
-
-    if (invalidCharacter) {
-      labelValidationErrors.push(
-        createLabelInvalidCharacterError(
-          label,
-          invalidCharacter[0],
-          invalidCharacter.index + 1
-        )
-      );
-    } else if (
-      // We can use .length here to check for the octet size because
-      // label can only contain ASCII LDH characters at this point.
-      label.length < LABEL_LENGTH_MIN
-    ) {
-      labelValidationErrors.push(createLabelMinLengthError(label, column));
-    } else if (label.length > LABEL_LENGTH_MAX) {
-      labelValidationErrors.push(createLabelMaxLengthError(label, column));
-    }
-
-    column += label.length + LABEL_SEPARATOR.length;
-  }
+  const { validation = Validation.Strict } = options;
+  const labelValidationErrors = validateLabels[validation](labels);
 
   if (labelValidationErrors.length > 0) {
     return {
@@ -183,4 +199,81 @@ export const sanitize = (
     domain: inputTrimmed,
     labels,
   };
+};
+
+const validateLabels = {
+  [Validation.Lax]: (labels: Array<string>) => {
+    const labelValidationErrors = [];
+    let column = 1;
+
+    for (const label of labels) {
+      const octets = textEncoder.encode(label);
+
+      if (octets.length < LABEL_LENGTH_MIN) {
+        labelValidationErrors.push(createLabelMinLengthError(label, column));
+      } else if (octets.length > LABEL_LENGTH_MAX) {
+        labelValidationErrors.push(createLabelMaxLengthError(label, column));
+      }
+      column += label.length + LABEL_SEPARATOR.length;
+    }
+
+    return labelValidationErrors;
+  },
+  [Validation.Strict]: (labels: Array<string>) => {
+    const labelValidationErrors = [];
+    let column = 1;
+    let lastLabel;
+
+    for (const label of labels) {
+      // According to https://tools.ietf.org/html/rfc6761 labels should
+      // only contain ASCII letters, digits and hyphens (LDH).
+      const invalidCharacter = /[^\da-z-]/i.exec(label);
+
+      if (invalidCharacter) {
+        labelValidationErrors.push(
+          createLabelInvalidCharacterError(
+            label,
+            invalidCharacter[0],
+            invalidCharacter.index + 1
+          )
+        );
+      }
+      if (label.startsWith("-")) {
+        labelValidationErrors.push(
+          createLabelInvalidCharacterError(label, "-", column)
+        );
+      } else if (label.endsWith("-")) {
+        labelValidationErrors.push(
+          createLabelInvalidCharacterError(
+            label,
+            "-",
+            column + label.length - 1
+          )
+        );
+      }
+      if (
+        // We can use .length here to check for the octet size because
+        // label can only contain ASCII LDH characters at this point.
+        label.length < LABEL_LENGTH_MIN
+      ) {
+        labelValidationErrors.push(createLabelMinLengthError(label, column));
+      } else if (label.length > LABEL_LENGTH_MAX) {
+        labelValidationErrors.push(createLabelMaxLengthError(label, column));
+      }
+
+      column += label.length + LABEL_SEPARATOR.length;
+      lastLabel = label;
+    }
+
+    if (lastLabel !== undefined && /[a-z-]/iu.test(lastLabel) === false) {
+      labelValidationErrors.push(
+        createLastLabelInvalidError(
+          lastLabel,
+          column - lastLabel.length - LABEL_SEPARATOR.length
+        )
+      );
+    }
+
+    return labelValidationErrors;
+  },
 };

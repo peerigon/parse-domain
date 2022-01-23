@@ -20,7 +20,8 @@
     "import": "./build-esm/src/main.js"
   },
   "scripts": {
-    "test": "jest",
+    "test": "run-p test:*",
+    "test:suite": "jest",
     "posttest": "run-s build posttest:*",
     "posttest:lint": "eslint --cache --ext js,ts *.js src bin",
     "build": "run-s build:*",

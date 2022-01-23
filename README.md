@@ -15,7 +15,7 @@ Since domain name registrars organize their namespaces in different ways, it's n
 import { parseDomain, ParseResultType } from "parse-domain";
 
 const parseResult = parseDomain(
-  // This should be a string with basic latin characters only.
+  // This should be a string with basic latin letters only.
   // More information below.
   "www.some.example.co.uk"
 );
@@ -32,7 +32,7 @@ if (parseResult.type === ParseResultType.Listed) {
 }
 ```
 
-This package has been designed for modern Node and browser environments, supporting both CommonJS and ECMAScript modules. It assumes an ES2015 environment with [`Symbol()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) and [`URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL) globally available. You need to transpile it down to ES5 (e.g. by using [Babel](https://babeljs.io/)) if you need to support older environments.
+This package has been designed for modern Node and browser environments, supporting both CommonJS and ECMAScript modules. It assumes an ES2015 environment with [`Symbol()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol), [`URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL) and [`TextDecoder()](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) globally available. You need to transpile it down to ES5 (e.g. by using [Babel](https://babeljs.io/)) if you need to support older environments.
 
 The list of top-level domains is stored in a [trie](https://en.wikipedia.org/wiki/Trie) data structure and serialization format to ensure the fastest lookup and the smallest possible library size. The library is side-effect free (this is important for proper [tree-shaking](https://webpack.js.org/guides/tree-shaking/)).
 
@@ -96,7 +96,7 @@ When parsing a hostname there are 5 possible results:
 
 ### 👉 Invalid domains
 
-The given input is first validated against [RFC 1034](https://tools.ietf.org/html/rfc1034). If the validation fails, `parseResult.type` will be `ParseResultType.Invalid`:
+The given input is first validated against [RFC 3696](https://datatracker.ietf.org/doc/html/rfc3696#section-2) (the domain labels are limited to basic latin letters, numbers and hyphens). If the validation fails, `parseResult.type` will be `ParseResultType.Invalid`:
 
 ```javascript
 import { parseDomain, ParseResultType } from "parse-domain";
@@ -107,6 +107,20 @@ console.log(parseResult.type === ParseResultType.Invalid); // true
 ```
 
 Check out the [API](#api-ts-ValidationError) if you need more information about the validation error.
+
+If you don't want the characters to be validated (e.g. because you need to allow underscores in hostnames), there's also a more relaxed validation mode (according to [RFC 2181](https://www.rfc-editor.org/rfc/rfc2181#section-11)).
+
+```javascript
+import { parseDomain, ParseResultType, Validation } from "parse-domain";
+
+const parseResult = parseDomain("_jabber._tcp.gmail.com", {
+  validation: Validation.Lax,
+});
+
+console.log(parseResult.type === ParseResultType.Listed); // true
+```
+
+See also [#134](https://github.com/peerigon/parse-domain/issues/134) for the discussion.
 
 ### 👉 IP addresses
 
@@ -273,15 +287,25 @@ console.log(topLevelDomains); // []
 🧬 = TypeScript export
 
 <h3 id="api-js-parseDomain">
-🧩 <code>export parseDomain(hostname: string | typeof <a href="#api-js-NO_HOSTNAME">NO_HOSTNAME</a>): <a href="#api-ts-ParseResult">ParseResult</a></code>
+🧩 <code>export parseDomain(hostname: string | typeof <a href="#api-js-NO_HOSTNAME">NO_HOSTNAME</a>, options?: <a href="#api-ts-ParseDomainOptions">ParseDomainOptions</a>): <a href="#api-ts-ParseResult">ParseResult</a></code>
 </h3>
 
-Takes a hostname (e.g. `"www.example.com"`) and returns a [`ParseResult`](#api-ts-ParseResult). The hostname must only contain basic latin characters, digits, hyphens and dots. International hostnames must be puny-encoded. Does not throw an error, even with invalid input.
+Takes a hostname (e.g. `"www.example.com"`) and returns a [`ParseResult`](#api-ts-ParseResult). The hostname must only contain basic latin letters, digits, hyphens and dots. International hostnames must be puny-encoded. Does not throw an error, even with invalid input.
 
 ```javascript
 import { parseDomain } from "parse-domain";
 
 const parseResult = parseDomain("www.example.com");
+```
+
+Use `Validation.Lax` if you want to allow all characters:
+
+```javascript
+import { parseDomain, Validation } from "parse-domain";
+
+const parseResult = parseDomain("_jabber._tcp.gmail.com", {
+  validation: Validation.Lax,
+});
 ```
 
 <h3 id="api-js-fromUrl">
@@ -295,6 +319,54 @@ Takes a URL-like string and tries to extract the hostname. Requires the global [
 </h3>
 
 `NO_HOSTNAME` is a symbol that is returned by [`fromUrl`](#api-js-fromUrl) when it was not able to extract a hostname from the given string. When passed to [`parseDomain`](#api-js-parseDomain), it will always yield a [`ParseResultInvalid`](#api-ts-ParseResultInvalid).
+
+<h3 id="api-ts-ParseDomainOptions">
+🧬 <code>export type ParseDomainOptions</code>
+</h3>
+
+```ts
+export type ParseDomainOptions = {
+  /**
+   * If no validation is specified, Validation.Strict will be used.
+   **/
+  validation?: Validation;
+};
+```
+
+<h3 id="api-js-Validation">
+🧩 <code>export Validation</code>
+</h3>
+
+An object that holds all possible [Validation](#api-ts-Validation) `validation` values:
+
+```javascript
+export const Validation = {
+  /**
+   * Allows any octets as labels
+   * but still restricts the length of labels and the overall domain.
+   *
+   * @see https://www.rfc-editor.org/rfc/rfc2181#section-11
+   **/
+  Lax: "LAX",
+
+  /**
+   * Only allows ASCII letters, digits and hyphens (aka LDH),
+   * forbids hyphens at the beginning or end of a label
+   * and requires top-level domain names not to be all-numeric.
+   *
+   * This is the default if no validation is configured.
+   *
+   * @see https://datatracker.ietf.org/doc/html/rfc3696#section-2
+   */
+  Strict: "STRICT",
+};
+```
+
+<h3 id="api-ts-Validation">
+🧬 <code>export Validation</code>
+</h3>
+
+This type represents all possible `validation` values.
 
 <h3 id="api-ts-ParseResult">
 🧬 <code>export ParseResult</code>
@@ -391,6 +463,7 @@ const ValidationErrorType = {
   LabelMinLength: "LABEL_MIN_LENGTH",
   LabelMaxLength: "LABEL_MAX_LENGTH",
   LabelInvalidCharacter: "LABEL_INVALID_CHARACTER",
+  LastLabelInvalid: "LAST_LABEL_INVALID",
 };
 ```
 
