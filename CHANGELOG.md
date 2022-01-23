@@ -1,3 +1,10 @@
+## [6.0.1](https://github.com/peerigon/parse-domain/compare/v6.0.0...v6.0.1) (2022-01-23)
+
+
+### Bug Fixes
+
+* Wrong package exports 🤦‍♀️ ([45c5e0c](https://github.com/peerigon/parse-domain/commit/45c5e0ccd8433be722a5365086b85e615bbcef67))
+
 # [6.0.0](https://github.com/peerigon/parse-domain/compare/v5.0.0...v6.0.0) (2022-01-23)
 
 
