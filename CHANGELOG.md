@@ -1,3 +1,21 @@
+# [5.0.0](https://github.com/peerigon/parse-domain/compare/v4.1.0...v5.0.0) (2022-01-23)
+
+
+### Bug Fixes
+
+* Type errors with is-ip module ([8ea728c](https://github.com/peerigon/parse-domain/commit/8ea728c0327f5f057a687122e95996d8bbb0700d))
+
+
+### Features
+
+* Improve validation ([171a8c8](https://github.com/peerigon/parse-domain/commit/171a8c88b99f415653292efd5558e34445ec8721))
+
+
+### BREAKING CHANGES
+
+* Introduces a dependency on the global `TextEncoder` constructor which should be available in all modern engines
+(see https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder). The strict validation mode (which is the default) will also be a little bit more strict since it will now also check for hyphens at the beginning or end of a domain label. It also requires top-level domain names not to be all-numeric.
+
 # [4.1.0](https://github.com/peerigon/parse-domain/compare/v4.0.0...v4.1.0) (2021-09-03)
 
 
