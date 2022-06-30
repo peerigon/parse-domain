@@ -1,5 +1,6 @@
 const urlPattern = /^[a-z][*+.a-z-]+:\/\//i;
-const invalidIpv6Pattern = /^([a-z][*+.a-z-]+:\/\/)([^[].*:[^/?]*:[^/?]*)(.*)/i;
+const invalidIpv6Pattern =
+  /^([a-z][*+.a-z-]+:\/\/)([^[][^/?]*:[^/?]*:[^/?]*)(.*)/i;
 
 export const NO_HOSTNAME: unique symbol = Symbol("NO_HOSTNAME");
 

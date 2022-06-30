@@ -66,6 +66,15 @@ describe(fromUrl.name, () => {
     expect(fromUrl("1:2:3:4:5:6:7:8")).toBe("[1:2:3:4:5:6:7:8]");
   });
 
+  // https://github.com/peerigon/parse-domain/issues/140
+  test("it doesn't get confused with other : characters", () => {
+    expect(
+      fromUrl(
+        "http://www.example.com/search?updated-max=2020-04-16T09:14:00+10:00"
+      )
+    ).toBe("www.example.com");
+  });
+
   test("it returns the NO_HOSTNAME symbol for invalid URLs", () => {
     expect(fromUrl(":8080/path?query")).toBe(NO_HOSTNAME);
     expect(fromUrl("/path?query")).toBe(NO_HOSTNAME);
