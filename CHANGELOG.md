@@ -1,3 +1,10 @@
+## [7.0.1](https://github.com/peerigon/parse-domain/compare/v7.0.0...v7.0.1) (2022-06-30)
+
+
+### Bug Fixes
+
+* Parse error with : when using fromUrl() ([09071e6](https://github.com/peerigon/parse-domain/commit/09071e6202e029b05743d40806a0bfccb2fb44c0)), closes [#140](https://github.com/peerigon/parse-domain/issues/140)
+
 # [7.0.0](https://github.com/peerigon/parse-domain/compare/v6.0.1...v7.0.0) (2022-01-23)
 
 
