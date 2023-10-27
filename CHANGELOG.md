@@ -1,3 +1,15 @@
+# [8.0.0](https://github.com/peerigon/parse-domain/compare/v7.0.1...v8.0.0) (2023-10-27)
+
+
+### chore
+
+* Update node version ([#154](https://github.com/peerigon/parse-domain/issues/154)) ([3a8b92b](https://github.com/peerigon/parse-domain/commit/3a8b92bd63bc3469a5ed953e6177f64a30cba5eb))
+
+
+### BREAKING CHANGES
+
+* Dropped official support for Node 12, 14 and 16. There wasn't any actual breaking change we know of but use at your own risk :)
+
 ## [7.0.1](https://github.com/peerigon/parse-domain/compare/v7.0.0...v7.0.1) (2022-06-30)
 
 
