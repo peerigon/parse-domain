@@ -1,3 +1,10 @@
+## [8.0.1](https://github.com/peerigon/parse-domain/compare/v8.0.0...v8.0.1) (2023-10-27)
+
+
+### Bug Fixes
+
+* Inline sourceContents in source maps ([#156](https://github.com/peerigon/parse-domain/issues/156)) ([2f5a249](https://github.com/peerigon/parse-domain/commit/2f5a249b3115d992f9a746dc5c42de4d5dfd5ddb)), closes [#149](https://github.com/peerigon/parse-domain/issues/149)
+
 # [8.0.0](https://github.com/peerigon/parse-domain/compare/v7.0.1...v8.0.0) (2023-10-27)
 
 
