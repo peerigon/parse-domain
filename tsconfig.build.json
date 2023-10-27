@@ -3,7 +3,10 @@
   "compilerOptions": {
     "outDir": "build",
     "target": "es2015",
-    "module": "esnext"
+    "module": "esnext",
+    "sourceMap": true,
+    "inlineSources": true,
+    "declaration": true
   },
   "include": ["src"],
   "exclude": ["src/**/*.test.ts", "src/tests/**/*.ts"]
