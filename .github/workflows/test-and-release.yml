@@ -14,27 +14,27 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [18.x, 20.x]
 
     steps:
       - name: 🛑 Cancel Previous Runs
         uses: styfle/cancel-workflow-action@a40b8845c0683271d9f53dfcb887a7e181d3918b # pin@0.9.1
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # pin@v2
+        uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # pin@v2
       - name: ⎔ Setup node ${{ matrix.node-version }}
-        uses: actions/setup-node@1f8c6b94b26d0feae1e387ca63ccbdc44d27b561 # pin@v2
+        uses: actions/setup-node@7c12f8017d5436eb855f1ed4399f037a36fbd9e8 # pin@v2
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - name: 🗄 Cache node_modules
         id: cache-node_modules
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # pin@v2
+        uses: actions/cache@8492260343ad570701412c2f464a5877dc76bace # pin@v2
         with:
           path: "**/node_modules"
           key: node_modules-${{ runner.os }}-node-${{ matrix.node-version }}-${{
             hashFiles('**/package-lock.json') }}
       - name: 🗄 Cache .eslintcache
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # pin@v2
+        uses: actions/cache@8492260343ad570701412c2f464a5877dc76bace # pin@v2
         with:
           path: .eslintcache
           key: eslintcache-${{ runner.os }}-node-${{ matrix.node-version }}-${{
@@ -55,7 +55,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: 🚀 Release
         if: "contains(' refs/heads/main refs/heads/beta ', github.ref) &&
-          matrix.node-version == '16.x'"
+          matrix.node-version == '20.x'"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
