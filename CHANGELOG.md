@@ -1,3 +1,10 @@
+## [8.0.2](https://github.com/peerigon/parse-domain/compare/v8.0.1...v8.0.2) (2024-03-04)
+
+
+### Bug Fixes
+
+* Add `ParseResultIp` to `main.js` exports ([#157](https://github.com/peerigon/parse-domain/issues/157)) ([b5b0177](https://github.com/peerigon/parse-domain/commit/b5b01778a2dbea4507bf5fff347a282b1531a59b))
+
 ## [8.0.1](https://github.com/peerigon/parse-domain/compare/v8.0.0...v8.0.1) (2023-10-27)
 
 
