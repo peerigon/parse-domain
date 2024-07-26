@@ -14,31 +14,31 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
+        node-version: [18.x, 22.x]
+
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.node-version }}
+      cancel-in-progress: true
 
     steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@a40b8845c0683271d9f53dfcb887a7e181d3918b # pin@0.9.1
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # pin@v2
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # pin@main
       - name: ⎔ Setup node ${{ matrix.node-version }}
-        uses: actions/setup-node@7c12f8017d5436eb855f1ed4399f037a36fbd9e8 # pin@v2
+        uses: actions/setup-node@26961cf329f22f6837d5f54c3efd76b480300ace # pin@main
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - name: 🗄 Cache node_modules
         id: cache-node_modules
-        uses: actions/cache@8492260343ad570701412c2f464a5877dc76bace # pin@v2
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # pin@main
         with:
           path: "**/node_modules"
-          key: node_modules-${{ runner.os }}-node-${{ matrix.node-version }}-${{
-            hashFiles('**/package-lock.json') }}
+          key: node_modules-${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
       - name: 🗄 Cache .eslintcache
-        uses: actions/cache@8492260343ad570701412c2f464a5877dc76bace # pin@v2
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # pin@main
         with:
           path: .eslintcache
-          key: eslintcache-${{ runner.os }}-node-${{ matrix.node-version }}-${{
-            hashFiles('**/package-lock.json') }}
+          key: eslintcache-${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
       - name: 📥 Install dependencies
         if: steps.cache-node_modules.outputs.cache-hit != 'true'
         run: |
@@ -50,15 +50,13 @@ jobs:
         env:
           CI: true
       - name: ⬆️ Upload coverage report
-        uses: coverallsapp/github-action@9ba913c152ae4be1327bfb9085dc806cedb44057 # pin@1.1.3
+        uses: coverallsapp/github-action@643bc377ffa44ace6394b2b5d0d3950076de9f63 # pin@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: 🚀 Release
-        if: "contains(' refs/heads/main refs/heads/beta ', github.ref) &&
-          matrix.node-version == '20.x'"
+        if: "contains(' refs/heads/main refs/heads/beta ', github.ref) && matrix.node-version == '22.x'"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npm install @semantic-release/changelog @semantic-release/git --ignore-scripts --no-save
-          npx semantic-release
+          npm run release
