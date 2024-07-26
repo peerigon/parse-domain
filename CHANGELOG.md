@@ -1,3 +1,10 @@
+# [8.1.0](https://github.com/peerigon/parse-domain/compare/v8.0.2...v8.1.0) (2024-07-26)
+
+
+### Features
+
+* Use Node's built-in fetch ([#164](https://github.com/peerigon/parse-domain/issues/164)) ([7333a7d](https://github.com/peerigon/parse-domain/commit/7333a7d54737ff9e21bce495a8d94f25732bc269))
+
 ## [8.0.2](https://github.com/peerigon/parse-domain/compare/v8.0.1...v8.0.2) (2024-03-04)
 
 ### Bug Fixes
