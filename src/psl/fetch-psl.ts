@@ -7,7 +7,7 @@ export const fetchPsl = async () => {
 
   console.log(
     pslContent.length,
-    pslContent.slice(0, 200),
+    pslContent.slice(-300),
     FETCH_PSL_EXPECTED_MIN_LENGTH,
   );
 
