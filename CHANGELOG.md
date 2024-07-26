@@ -1,3 +1,10 @@
+## [8.2.1](https://github.com/peerigon/parse-domain/compare/v8.2.0...v8.2.1) (2024-07-26)
+
+
+### Bug Fixes
+
+* CI deployment ([5f7be9a](https://github.com/peerigon/parse-domain/commit/5f7be9a39411456719d0de03969ce2c5cbe704a1))
+
 # [8.2.0](https://github.com/peerigon/parse-domain/compare/v8.1.0...v8.2.0) (2024-07-26)
 
 
