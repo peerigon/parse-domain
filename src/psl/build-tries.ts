@@ -14,14 +14,14 @@ const matchWhitespace = /^\s*$/u;
 const extractByMarkers = (
   listContent: string,
   startMarker: string,
-  endMarker: string
+  endMarker: string,
 ) => {
   const start = listContent.indexOf(startMarker);
   const end = listContent.indexOf(endMarker);
 
   if (start === -1) {
     throw new Error(
-      `Missing start marker ${startMarker} in public suffix list`
+      `Missing start marker ${startMarker} in public suffix list`,
     );
   }
   if (end === -1) {
@@ -39,7 +39,7 @@ const parsePsl = (listContent: string) => {
     icann: extractByMarkers(
       listContent,
       PUBLIC_SUFFIX_MARKER_ICANN_START,
-      PUBLIC_SUFFIX_MARKER_ICANN_END
+      PUBLIC_SUFFIX_MARKER_ICANN_END,
     )
       .split(matchNewLine)
       .filter(containsRule)
@@ -47,7 +47,7 @@ const parsePsl = (listContent: string) => {
     private: extractByMarkers(
       listContent,
       PUBLIC_SUFFIX_MARKER_PRIVATE_START,
-      PUBLIC_SUFFIX_MARKER_PRIVATE_END
+      PUBLIC_SUFFIX_MARKER_PRIVATE_END,
     )
       .split(matchNewLine)
       .filter(containsRule)

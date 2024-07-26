@@ -1,6 +1,6 @@
 {
   "extends": [
-    "peerigon/presets/prettier-typescript.js",
+    "peerigon/presets/typescript",
     // See https://github.com/peerigon/eslint-config-peerigon#peerigonstylesno-default-export
     "peerigon/styles/no-default-export",
     "peerigon/styles/no-null"

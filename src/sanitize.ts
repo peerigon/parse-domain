@@ -118,7 +118,7 @@ const createLabelMaxLengthError = (label: string, column: number) => {
 const createLabelInvalidCharacterError = (
   label: string,
   invalidCharacter: string,
-  column: number
+  column: number,
 ) => {
   return {
     type: ValidationErrorType.LabelInvalidCharacter,
@@ -137,7 +137,7 @@ const createLastLabelInvalidError = (label: string, column: number) => {
 
 export const sanitize = (
   input: string | typeof NO_HOSTNAME,
-  options: { validation?: Validation } = {}
+  options: { validation?: Validation } = {},
 ): SanitizationResult => {
   // Extra check for non-TypeScript users
   if (typeof input !== "string") {
@@ -232,21 +232,21 @@ const validateLabels = {
           createLabelInvalidCharacterError(
             label,
             invalidCharacter[0],
-            invalidCharacter.index + 1
-          )
+            invalidCharacter.index + 1,
+          ),
         );
       }
       if (label.startsWith("-")) {
         labelValidationErrors.push(
-          createLabelInvalidCharacterError(label, "-", column)
+          createLabelInvalidCharacterError(label, "-", column),
         );
       } else if (label.endsWith("-")) {
         labelValidationErrors.push(
           createLabelInvalidCharacterError(
             label,
             "-",
-            column + label.length - 1
-          )
+            column + label.length - 1,
+          ),
         );
       }
       if (
@@ -267,8 +267,8 @@ const validateLabels = {
       labelValidationErrors.push(
         createLastLabelInvalidError(
           lastLabel,
-          column - lastLabel.length - LABEL_SEPARATOR.length
-        )
+          column - lastLabel.length - LABEL_SEPARATOR.length,
+        ),
       );
     }
 

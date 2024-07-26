@@ -1,203 +1,172 @@
 ## [8.0.2](https://github.com/peerigon/parse-domain/compare/v8.0.1...v8.0.2) (2024-03-04)
 
-
 ### Bug Fixes
 
-* Add `ParseResultIp` to `main.js` exports ([#157](https://github.com/peerigon/parse-domain/issues/157)) ([b5b0177](https://github.com/peerigon/parse-domain/commit/b5b01778a2dbea4507bf5fff347a282b1531a59b))
+- Add `ParseResultIp` to `main.js` exports ([#157](https://github.com/peerigon/parse-domain/issues/157)) ([b5b0177](https://github.com/peerigon/parse-domain/commit/b5b01778a2dbea4507bf5fff347a282b1531a59b))
 
 ## [8.0.1](https://github.com/peerigon/parse-domain/compare/v8.0.0...v8.0.1) (2023-10-27)
 
-
 ### Bug Fixes
 
-* Inline sourceContents in source maps ([#156](https://github.com/peerigon/parse-domain/issues/156)) ([2f5a249](https://github.com/peerigon/parse-domain/commit/2f5a249b3115d992f9a746dc5c42de4d5dfd5ddb)), closes [#149](https://github.com/peerigon/parse-domain/issues/149)
+- Inline sourceContents in source maps ([#156](https://github.com/peerigon/parse-domain/issues/156)) ([2f5a249](https://github.com/peerigon/parse-domain/commit/2f5a249b3115d992f9a746dc5c42de4d5dfd5ddb)), closes [#149](https://github.com/peerigon/parse-domain/issues/149)
 
 # [8.0.0](https://github.com/peerigon/parse-domain/compare/v7.0.1...v8.0.0) (2023-10-27)
 
-
 ### chore
 
-* Update node version ([#154](https://github.com/peerigon/parse-domain/issues/154)) ([3a8b92b](https://github.com/peerigon/parse-domain/commit/3a8b92bd63bc3469a5ed953e6177f64a30cba5eb))
-
+- Update node version ([#154](https://github.com/peerigon/parse-domain/issues/154)) ([3a8b92b](https://github.com/peerigon/parse-domain/commit/3a8b92bd63bc3469a5ed953e6177f64a30cba5eb))
 
 ### BREAKING CHANGES
 
-* Dropped official support for Node 12, 14 and 16. There wasn't any actual breaking change we know of but use at your own risk :)
+- Dropped official support for Node 12, 14 and 16. There wasn't any actual breaking change we know of but use at your own risk :)
 
 ## [7.0.1](https://github.com/peerigon/parse-domain/compare/v7.0.0...v7.0.1) (2022-06-30)
 
-
 ### Bug Fixes
 
-* Parse error with : when using fromUrl() ([09071e6](https://github.com/peerigon/parse-domain/commit/09071e6202e029b05743d40806a0bfccb2fb44c0)), closes [#140](https://github.com/peerigon/parse-domain/issues/140)
+- Parse error with : when using fromUrl() ([09071e6](https://github.com/peerigon/parse-domain/commit/09071e6202e029b05743d40806a0bfccb2fb44c0)), closes [#140](https://github.com/peerigon/parse-domain/issues/140)
 
 # [7.0.0](https://github.com/peerigon/parse-domain/compare/v6.0.1...v7.0.0) (2022-01-23)
 
-
 ### Bug Fixes
 
-* Add support for invalid ipv6 URLs ([b32d16c](https://github.com/peerigon/parse-domain/commit/b32d16cee9c851465d350da2cdabe4bdee846ac9)), closes [#114](https://github.com/peerigon/parse-domain/issues/114)
-* Remove auto-trimming of input ([4ea86a1](https://github.com/peerigon/parse-domain/commit/4ea86a189eb4f02af170836b703d9c73885344b7))
-
+- Add support for invalid ipv6 URLs ([b32d16c](https://github.com/peerigon/parse-domain/commit/b32d16cee9c851465d350da2cdabe4bdee846ac9)), closes [#114](https://github.com/peerigon/parse-domain/issues/114)
+- Remove auto-trimming of input ([4ea86a1](https://github.com/peerigon/parse-domain/commit/4ea86a189eb4f02af170836b703d9c73885344b7))
 
 ### BREAKING CHANGES
 
-* parseDomain won't .trim() the given input. The input is interpreted as it is. If you want to trim the input, you need to call .trim() before passing it to parseDomain. Auto-trimming the input changes the domain and might not be desired if any character (such as whitespace) is allowed (e.g. when using lax validation).
+- parseDomain won't .trim() the given input. The input is interpreted as it is. If you want to trim the input, you need to call .trim() before passing it to parseDomain. Auto-trimming the input changes the domain and might not be desired if any character (such as whitespace) is allowed (e.g. when using lax validation).
 
 ## [6.0.1](https://github.com/peerigon/parse-domain/compare/v6.0.0...v6.0.1) (2022-01-23)
 
-
 ### Bug Fixes
 
-* Wrong package exports 🤦‍♀️ ([45c5e0c](https://github.com/peerigon/parse-domain/commit/45c5e0ccd8433be722a5365086b85e615bbcef67))
+- Wrong package exports 🤦‍♀️ ([45c5e0c](https://github.com/peerigon/parse-domain/commit/45c5e0ccd8433be722a5365086b85e615bbcef67))
 
 # [6.0.0](https://github.com/peerigon/parse-domain/compare/v5.0.0...v6.0.0) (2022-01-23)
 
-
-* Migrate package to ECMAScript modules ([42f54e8](https://github.com/peerigon/parse-domain/commit/42f54e8010c077c5375f0c96ab35a12bad35d3f4))
-
+- Migrate package to ECMAScript modules ([42f54e8](https://github.com/peerigon/parse-domain/commit/42f54e8010c077c5375f0c96ab35a12bad35d3f4))
 
 ### BREAKING CHANGES
 
-* parse-domain will now be released as native ECMAScript module. There's no CommonJS build anymore. If you're still using CommonJS, you need to import it asynchronously using `await import("parse-domain")`. If you're still using Node 12, you may need to update it to the latest 12.x version.
+- parse-domain will now be released as native ECMAScript module. There's no CommonJS build anymore. If you're still using CommonJS, you need to import it asynchronously using `await import("parse-domain")`. If you're still using Node 12, you may need to update it to the latest 12.x version.
 
 # [5.0.0](https://github.com/peerigon/parse-domain/compare/v4.1.0...v5.0.0) (2022-01-23)
 
-
 ### Bug Fixes
 
-* Type errors with is-ip module ([8ea728c](https://github.com/peerigon/parse-domain/commit/8ea728c0327f5f057a687122e95996d8bbb0700d))
-
+- Type errors with is-ip module ([8ea728c](https://github.com/peerigon/parse-domain/commit/8ea728c0327f5f057a687122e95996d8bbb0700d))
 
 ### Features
 
-* Improve validation ([171a8c8](https://github.com/peerigon/parse-domain/commit/171a8c88b99f415653292efd5558e34445ec8721))
-
+- Improve validation ([171a8c8](https://github.com/peerigon/parse-domain/commit/171a8c88b99f415653292efd5558e34445ec8721))
 
 ### BREAKING CHANGES
 
-* Introduces a dependency on the global `TextEncoder` constructor which should be available in all modern engines
-(see https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder). The strict validation mode (which is the default) will also be a little bit more strict since it will now also check for hyphens at the beginning or end of a domain label. It also requires top-level domain names not to be all-numeric.
+- Introduces a dependency on the global `TextEncoder` constructor which should be available in all modern engines
+  (see https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder). The strict validation mode (which is the default) will also be a little bit more strict since it will now also check for hyphens at the beginning or end of a domain label. It also requires top-level domain names not to be all-numeric.
 
 # [4.1.0](https://github.com/peerigon/parse-domain/compare/v4.0.0...v4.1.0) (2021-09-03)
 
-
 ### Features
 
-* Switch to MIT license ([05bc1c0](https://github.com/peerigon/parse-domain/commit/05bc1c0dd181331042403540ca7abcffae7ead23))
+- Switch to MIT license ([05bc1c0](https://github.com/peerigon/parse-domain/commit/05bc1c0dd181331042403540ca7abcffae7ead23))
 
 # [4.0.0](https://github.com/peerigon/parse-domain/compare/v3.0.4...v4.0.0) (2021-09-02)
 
-
 ### chore
 
-* Change supported Node versions ([202ff9f](https://github.com/peerigon/parse-domain/commit/202ff9fd19d2509f930fdd55129d08a5327d0d5e))
-
+- Change supported Node versions ([202ff9f](https://github.com/peerigon/parse-domain/commit/202ff9fd19d2509f930fdd55129d08a5327d0d5e))
 
 ### BREAKING CHANGES
 
-* Node versions below 12 are not officially supported anymore.
+- Node versions below 12 are not officially supported anymore.
 
 ## [3.0.4](https://github.com/peerigon/parse-domain/compare/v3.0.3...v3.0.4) (2021-09-02)
 
-
 ### Bug Fixes
 
-* Improve scheme support in `fromUrl` ([4c10202](https://github.com/peerigon/parse-domain/commit/4c1020283279d3a6871d37dfdcda697ef78a81d2)), closes [#section-3](https://github.com/peerigon/parse-domain/issues/section-3) [#130](https://github.com/peerigon/parse-domain/issues/130)
+- Improve scheme support in `fromUrl` ([4c10202](https://github.com/peerigon/parse-domain/commit/4c1020283279d3a6871d37dfdcda697ef78a81d2)), closes [#section-3](https://github.com/peerigon/parse-domain/issues/section-3) [#130](https://github.com/peerigon/parse-domain/issues/130)
 
 ## [3.0.3](https://github.com/peerigon/parse-domain/compare/v3.0.2...v3.0.3) (2020-10-20)
 
-
 ### Bug Fixes
 
-* Add check for global URL constructor in fromUrl() ([#119](https://github.com/peerigon/parse-domain/issues/119)) ([4e32480](https://github.com/peerigon/parse-domain/commit/4e3248096a50fc6f5cb35935f6f44bee72efd150))
+- Add check for global URL constructor in fromUrl() ([#119](https://github.com/peerigon/parse-domain/issues/119)) ([4e32480](https://github.com/peerigon/parse-domain/commit/4e3248096a50fc6f5cb35935f6f44bee72efd150))
 
 ## [3.0.2](https://github.com/peerigon/parse-domain/compare/v3.0.1...v3.0.2) (2020-05-06)
 
-
 ### Bug Fixes
 
-* Add types to package.json ([#110](https://github.com/peerigon/parse-domain/issues/110)) ([849ff1a](https://github.com/peerigon/parse-domain/commit/849ff1a932f034e57d51ba70534127d6a8109337))
+- Add types to package.json ([#110](https://github.com/peerigon/parse-domain/issues/110)) ([849ff1a](https://github.com/peerigon/parse-domain/commit/849ff1a932f034e57d51ba70534127d6a8109337))
 
 ## [3.0.1](https://github.com/peerigon/parse-domain/compare/v3.0.0...v3.0.1) (2020-04-24)
 
-
 ### Bug Fixes
 
-* npx parse-domain-update broken ([#105](https://github.com/peerigon/parse-domain/issues/105)) ([9070030](https://github.com/peerigon/parse-domain/commit/907003044760b1ca9713ec7d0e48e9bd208daa9d))
+- npx parse-domain-update broken ([#105](https://github.com/peerigon/parse-domain/issues/105)) ([9070030](https://github.com/peerigon/parse-domain/commit/907003044760b1ca9713ec7d0e48e9bd208daa9d))
 
 # [3.0.0](https://github.com/peerigon/parse-domain/compare/v2.3.4...v3.0.0) (2020-04-23)
 
-
 ### Features
 
-* Complete rewrite in TypeScript and several bug fixes and improvements ([9f38492](https://github.com/peerigon/parse-domain/commit/9f384921015ab962975ae1d3833507dd7ec0cc52))
-
+- Complete rewrite in TypeScript and several bug fixes and improvements ([9f38492](https://github.com/peerigon/parse-domain/commit/9f384921015ab962975ae1d3833507dd7ec0cc52))
 
 ### BREAKING CHANGES
 
-* This release is a complete rewrite in TypeScript. It fixes some long outstanding bugs and comes with improvements we were planning for quite some time. The major changes are: 1. parseDomain does not accept whole URLs anymore. Only the hostname section of a URL is allowed now. 2. We removed the options object. Custom TLDs are returned as "valid but not listed". The parse result contains both the result with private TLDs and without private TLDs. 3. Dropped Node 6 support. We recommend reading the README since the public API as changed quite a lot.
+- This release is a complete rewrite in TypeScript. It fixes some long outstanding bugs and comes with improvements we were planning for quite some time. The major changes are: 1. parseDomain does not accept whole URLs anymore. Only the hostname section of a URL is allowed now. 2. We removed the options object. Custom TLDs are returned as "valid but not listed". The parse result contains both the result with private TLDs and without private TLDs. 3. Dropped Node 6 support. We recommend reading the README since the public API as changed quite a lot.
 
 # [3.0.0-beta.10](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.9...v3.0.0-beta.10) (2020-04-23)
 
-
 ### Features
 
-* Trigger beta release for next major version ([5443240](https://github.com/peerigon/parse-domain/commit/5443240d009b21284d707d6d22a1656970f8a699))
+- Trigger beta release for next major version ([5443240](https://github.com/peerigon/parse-domain/commit/5443240d009b21284d707d6d22a1656970f8a699))
 
 # [3.0.0-beta.9](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.8...v3.0.0-beta.9) (2020-04-20)
 
-
 ### Bug Fixes
 
-* Cache in release job ([60557b2](https://github.com/peerigon/parse-domain/commit/60557b2a5e1a02669e4649c38dfc7148adc37b60))
+- Cache in release job ([60557b2](https://github.com/peerigon/parse-domain/commit/60557b2a5e1a02669e4649c38dfc7148adc37b60))
 
 # [3.0.0-beta.8](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.7...v3.0.0-beta.8) (2020-04-20)
 
-
 ### Bug Fixes
 
-* Cache in GitHub actions ([28761fc](https://github.com/peerigon/parse-domain/commit/28761fc42b05c474a3c0677743270c1354bfbf59))
+- Cache in GitHub actions ([28761fc](https://github.com/peerigon/parse-domain/commit/28761fc42b05c474a3c0677743270c1354bfbf59))
 
 # [3.0.0-beta.7](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.6...v3.0.0-beta.7) (2020-04-20)
 
-
 ### Bug Fixes
 
-* GitHub actions ([40fe150](https://github.com/peerigon/parse-domain/commit/40fe150695ae32a61dd7f2695ce787e806b42284))
-
+- GitHub actions ([40fe150](https://github.com/peerigon/parse-domain/commit/40fe150695ae32a61dd7f2695ce787e806b42284))
 
 ### Features
 
-* Improve GitHub actions ([be142b7](https://github.com/peerigon/parse-domain/commit/be142b79467dc6de873d5bd88f298273af099ce5))
+- Improve GitHub actions ([be142b7](https://github.com/peerigon/parse-domain/commit/be142b79467dc6de873d5bd88f298273af099ce5))
 
 # [3.0.0-beta.6](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.5...v3.0.0-beta.6) (2020-04-20)
 
-
 ### Bug Fixes
 
-* smoke-test on Node v8 ([0a2b60a](https://github.com/peerigon/parse-domain/commit/0a2b60aa118d66355224e06de79852778dbfe3f4))
+- smoke-test on Node v8 ([0a2b60a](https://github.com/peerigon/parse-domain/commit/0a2b60aa118d66355224e06de79852778dbfe3f4))
 
 # [3.0.0-beta.5](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.4...v3.0.0-beta.5) (2020-04-20)
 
-
 ### Features
 
-* Extract smoke test ([f9e996b](https://github.com/peerigon/parse-domain/commit/f9e996bf062727d156c8b1740f1529ee20f45714))
+- Extract smoke test ([f9e996b](https://github.com/peerigon/parse-domain/commit/f9e996bf062727d156c8b1740f1529ee20f45714))
 
 # [3.0.0-beta.4](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.3...v3.0.0-beta.4) (2020-04-19)
 
-
 ### Bug Fixes
 
-* ESM and CJS exports for Node 13 ([33eb612](https://github.com/peerigon/parse-domain/commit/33eb6120660c43c03607db22d05269cf7135103a))
+- ESM and CJS exports for Node 13 ([33eb612](https://github.com/peerigon/parse-domain/commit/33eb6120660c43c03607db22d05269cf7135103a))
 
 # [3.0.0-beta.3](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.2...v3.0.0-beta.3) (2020-04-19)
 
-
 ### Features
 
-* Trigger beta release for next major version ([ee785de](https://github.com/peerigon/parse-domain/commit/ee785de33d91a76377af54991d913a8063f8bd81))
+- Trigger beta release for next major version ([ee785de](https://github.com/peerigon/parse-domain/commit/ee785de33d91a76377af54991d913a8063f8bd81))
 
 # [3.0.0-beta.2](https://github.com/peerigon/parse-domain/compare/v3.0.0-beta.1...v3.0.0-beta.2) (2020-03-15)
 

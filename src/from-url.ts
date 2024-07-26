@@ -8,7 +8,7 @@ export const fromUrl = (urlLike: string) => {
   /* istanbul ignore next */
   if (typeof URL !== "function") {
     throw new Error(
-      "Looks like the new URL() constructor is not globally available in your environment. Please make sure to use a polyfill."
+      "Looks like the new URL() constructor is not globally available in your environment. Please make sure to use a polyfill.",
     );
   }
 
@@ -21,11 +21,11 @@ export const fromUrl = (urlLike: string) => {
   let url = urlLike.startsWith("//")
     ? `http:${urlLike}`
     : // URLs that start with / do not have a hostname section
-    urlLike.startsWith("/")
-    ? urlLike
-    : urlPattern.test(urlLike)
-    ? urlLike
-    : `http://${urlLike}`;
+      urlLike.startsWith("/")
+      ? urlLike
+      : urlPattern.test(urlLike)
+        ? urlLike
+        : `http://${urlLike}`;
 
   url = url.replace(invalidIpv6Pattern, "$1[$2]$3");
 

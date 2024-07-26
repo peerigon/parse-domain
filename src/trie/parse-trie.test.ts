@@ -116,7 +116,7 @@ describe("parseTrie()", () => {
 
   test("when called with '<' it throws an error with a helpful error message", () => {
     expect(() => parseTrie("<")).toThrowErrorMatchingInlineSnapshot(
-      `"Error in serialized trie at position 0: Cannot go up, current parent node is already root"`
+      `"Error in serialized trie at position 0: Cannot go up, current parent node is already root"`,
     );
   });
 });

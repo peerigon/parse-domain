@@ -9,7 +9,7 @@ export const fetchPsl = async () => {
   // Sanity check
   ok(
     pslContent.length >= FETCH_PSL_EXPECTED_MIN_LENGTH,
-    "Public suffix list is shorter than expected"
+    "Public suffix list is shorter than expected",
   );
 
   return pslContent;
