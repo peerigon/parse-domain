@@ -16,7 +16,7 @@
   "types": "./build/main.d.ts",
   "scripts": {
     "test": "run-p test:*",
-    "test:suite": "vitest",
+    "test:suite": "vitest run --coverage",
     "test:lint": "eslint --max-warnings 0 --cache --ext js,ts --ignore-path .gitignore .",
     "test:format": "prettier --check .",
     "test:types": "tsc --noEmit",
@@ -65,6 +65,7 @@
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@types/node": "^20.14.12",
+    "@vitest/coverage-v8": "^2.0.4",
     "eslint": "^8.57.0",
     "eslint-config-peerigon": "^39.1.0",
     "eslint-plugin-no-null": "^1.0.2",
