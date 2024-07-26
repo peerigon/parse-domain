@@ -20,6 +20,10 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.node-version }}
       cancel-in-progress: true
 
+    permissions:
+      contents: read
+      id-token: write
+
     steps:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # pin@main
