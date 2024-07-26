@@ -21,7 +21,12 @@ jobs:
       cancel-in-progress: true
 
     permissions:
-      contents: read
+      # Necessary for semantic-release
+      contents: write
+      issues: write
+      pull-requests: write
+      # Necessary for npm publish --provenance
+      # See https://docs.npmjs.com/generating-provenance-statements#example-github-actions-workflow
       id-token: write
 
     steps:
