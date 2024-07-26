@@ -119,14 +119,14 @@ export type ParseResult =
 
 const getAtIndex = <Item>(
   array: Array<Item>,
-  index: number
+  index: number,
 ): Item | undefined => {
   return index >= 0 && index < array.length ? array[index] : undefined;
 };
 
 const splitLabelsIntoDomains = (
   labels: Array<Label>,
-  index: number
+  index: number,
 ): ParseResultListedDomains => {
   return {
     subDomains: labels.slice(0, Math.max(0, index)),
@@ -150,7 +150,7 @@ export type ParseDomainOptions = {
  */
 export const parseDomain = (
   hostname: string | typeof NO_HOSTNAME,
-  options?: ParseDomainOptions
+  options?: ParseDomainOptions,
 ): ParseResult => {
   const sanitizationResult = sanitize(hostname, options);
 

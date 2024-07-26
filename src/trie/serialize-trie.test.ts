@@ -7,7 +7,7 @@ import * as characters from "./characters.js";
 const toReadableTrie = (serializedTrie: string) => {
   const pattern = new RegExp(
     `([\\${Object.values(characters).join("\\")}])`,
-    "g"
+    "g",
   );
 
   return serializedTrie.replace(pattern, "\n$1");

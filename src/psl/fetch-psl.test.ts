@@ -31,7 +31,7 @@ describe("fetchPsl()", () => {
     const listPromise = fetchPsl();
 
     await expect(listPromise).rejects.toThrowErrorMatchingInlineSnapshot(
-      `"Public suffix list is shorter than expected"`
+      `"Public suffix list is shorter than expected"`,
     );
   });
 });

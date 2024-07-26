@@ -9,10 +9,10 @@ describe("Official test suite from https://raw.githubusercontent.com/publicsuffi
     hostname: string,
     // Unused because our parse result is more detailed than theirs
     publicSuffix: string | null,
-    expectedParseResult: Partial<ParseResult>
+    expectedParseResult: Partial<ParseResult>,
   ) => {
     test(`${hostname} should be parsed to ${JSON.stringify(
-      expectedParseResult
+      expectedParseResult,
     )}`, () => {
       const canonicalHostname = canonical(hostname);
       const result = parseDomain(canonicalHostname);
@@ -463,7 +463,7 @@ describe("Official test suite from https://raw.githubusercontent.com/publicsuffi
       subDomains: ["www"],
       domain: toASCII("食狮"),
       topLevelDomains: [toASCII("公司"), "cn"],
-    }
+    },
   );
   checkPublicSuffix("shishi.xn--55qx5d.cn", "shishi.xn--55qx5d.cn", {
     type: ParseResultType.Listed,

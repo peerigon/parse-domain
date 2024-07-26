@@ -40,7 +40,7 @@ export const parseTrie = (serializedTrie: string) => {
       case characters.UP: {
         if (parentNode.type === NODE_TYPE_ROOT) {
           throw new Error(
-            `Error in serialized trie at position ${i}: Cannot go up, current parent node is already root`
+            `Error in serialized trie at position ${i}: Cannot go up, current parent node is already root`,
           );
         }
         addDomain();

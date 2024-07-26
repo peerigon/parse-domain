@@ -31,7 +31,7 @@ describe("buildTries()", () => {
     const listContent = [""].join("\n");
 
     expect(() => buildTries(listContent)).toThrowError(
-      `Missing start marker ${PUBLIC_SUFFIX_MARKER_ICANN_START} in public suffix list`
+      `Missing start marker ${PUBLIC_SUFFIX_MARKER_ICANN_START} in public suffix list`,
     );
   });
 
@@ -39,7 +39,7 @@ describe("buildTries()", () => {
     const listContent = [PUBLIC_SUFFIX_MARKER_ICANN_START].join("\n");
 
     expect(() => buildTries(listContent)).toThrowError(
-      `Missing end marker ${PUBLIC_SUFFIX_MARKER_ICANN_END} in public suffix list`
+      `Missing end marker ${PUBLIC_SUFFIX_MARKER_ICANN_END} in public suffix list`,
     );
   });
 
@@ -50,7 +50,7 @@ describe("buildTries()", () => {
     ].join("\n");
 
     expect(() => buildTries(listContent)).toThrowError(
-      `Missing start marker ${PUBLIC_SUFFIX_MARKER_PRIVATE_START} in public suffix list`
+      `Missing start marker ${PUBLIC_SUFFIX_MARKER_PRIVATE_START} in public suffix list`,
     );
   });
 
@@ -62,7 +62,7 @@ describe("buildTries()", () => {
     ].join("\n");
 
     expect(() => buildTries(listContent)).toThrowError(
-      `Missing end marker ${PUBLIC_SUFFIX_MARKER_PRIVATE_END} in public suffix list`
+      `Missing end marker ${PUBLIC_SUFFIX_MARKER_PRIVATE_END} in public suffix list`,
     );
   });
 });

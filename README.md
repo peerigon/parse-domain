@@ -17,7 +17,7 @@ import { parseDomain, ParseResultType } from "parse-domain";
 const parseResult = parseDomain(
   // This should be a string with basic latin letters only.
   // More information below.
-  "www.some.example.co.uk"
+  "www.some.example.co.uk",
 );
 
 // Check if the domain is listed in the public suffix list
@@ -66,7 +66,7 @@ There is the utility function [`fromUrl`](#api-js-fromUrl) which tries to extrac
 import { parseDomain, fromUrl } from "parse-domain";
 
 const { subDomains, domain, topLevelDomains } = parseDomain(
-  fromUrl("https://www.münchen.de?query")
+  fromUrl("https://www.münchen.de?query"),
 );
 
 console.log(subDomains); // ["www"]
@@ -237,7 +237,7 @@ What's surprising to a lot of people is that the definition of public suffix mea
 
 ```javascript
 const { subDomains, domain, topLevelDomains } = parseDomain(
-  "parse-domain.github.io"
+  "parse-domain.github.io",
 );
 
 console.log(subDomains); // []

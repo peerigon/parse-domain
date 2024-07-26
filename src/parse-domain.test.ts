@@ -294,7 +294,7 @@ describe(parseDomain.name, () => {
         ]),
       });
       expect(
-        parseDomain(`www.${labelToLong}.example.com`, { validation })
+        parseDomain(`www.${labelToLong}.example.com`, { validation }),
       ).toMatchObject({
         type: ParseResultType.Invalid,
         errors: expect.arrayContaining([

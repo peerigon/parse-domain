@@ -19,17 +19,17 @@ const writeTriesToFiles = async ({
       const pathToIcannTrie = path.resolve(
         __dirname,
         targetDirectory,
-        "icann.js"
+        "icann.js",
       );
       const pathToPrivateTrie = path.resolve(
         __dirname,
         targetDirectory,
-        "private.js"
+        "private.js",
       );
       const pathToTrieInfoFile = path.resolve(
         __dirname,
         targetDirectory,
-        "info.json"
+        "info.json",
       );
 
       console.warn(`Writing ${pathToIcannTrie}...`);
@@ -39,20 +39,20 @@ const writeTriesToFiles = async ({
       await Promise.all([
         fs.promises.writeFile(
           pathToIcannTrie,
-          `export default ${JSON.stringify(serializedIcannTrie)};`
+          `export default ${JSON.stringify(serializedIcannTrie)};`,
         ),
         fs.promises.writeFile(
           pathToPrivateTrie,
-          `export default ${JSON.stringify(serializedPrivateTrie)};`
+          `export default ${JSON.stringify(serializedPrivateTrie)};`,
         ),
         fs.promises.writeFile(
           pathToTrieInfoFile,
           JSON.stringify({
             updatedAt: new Date(),
-          })
+          }),
         ),
       ]);
-    })
+    }),
   );
 };
 

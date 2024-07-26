@@ -11,7 +11,7 @@ export const done = (async () => {
     "..",
     "tests",
     "fixtures",
-    "public-suffix-list.txt"
+    "public-suffix-list.txt",
   );
 
   const psl = await fetchPsl();
