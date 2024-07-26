@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`serializeTrie() matches the snapshot when given the parsed test fixture 1`] = `
+exports[`serializeTrie() > matches the snapshot when given the parsed test fixture 1`] = `
 "ac
 >com
 ,edu
@@ -6932,7 +6932,7 @@ exports[`serializeTrie() matches the snapshot when given the parsed test fixture
 ,zuerich"
 `;
 
-exports[`serializeTrie() matches the snapshot when given the parsed test fixture 2`] = `
+exports[`serializeTrie() > matches the snapshot when given the parsed test fixture 2`] = `
 "dev
 >12chars
 ,panel

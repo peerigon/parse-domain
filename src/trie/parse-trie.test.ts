@@ -1,5 +1,6 @@
+import { describe, expect, test } from "vitest";
+import { expectChild, expectRoot } from "../tests/assertions/nodes.js";
 import { parseTrie } from "./parse-trie.js";
-import { expectRoot, expectChild } from "../tests/assertions/nodes.js";
 
 describe("parseTrie()", () => {
   test("when called with '' it returns the root node with no children", () => {
@@ -116,7 +117,7 @@ describe("parseTrie()", () => {
 
   test("when called with '<' it throws an error with a helpful error message", () => {
     expect(() => parseTrie("<")).toThrowErrorMatchingInlineSnapshot(
-      `"Error in serialized trie at position 0: Cannot go up, current parent node is already root"`,
+      `[Error: Error in serialized trie at position 0: Cannot go up, current parent node is already root]`,
     );
   });
 });

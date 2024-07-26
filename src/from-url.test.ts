@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import { fromUrl, NO_HOSTNAME } from "./from-url.js";
 
 describe(fromUrl.name, () => {

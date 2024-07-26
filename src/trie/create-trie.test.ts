@@ -1,5 +1,6 @@
+import { describe, test } from "vitest";
+import { expectChild, expectRoot } from "../tests/assertions/nodes.js";
 import { createTrieFromList } from "./create-trie.js";
-import { expectRoot, expectChild } from "../tests/assertions/nodes.js";
 
 describe("createTrieFromList()", () => {
   test("when called with an empty array it returns just a root node with no children", () => {

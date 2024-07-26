@@ -1,6 +1,7 @@
+import { describe, expect, test } from "vitest";
+import { fromUrl } from "./from-url.js";
 import { parseDomain, ParseResultType } from "./parse-domain.js";
 import { Validation, ValidationErrorType } from "./sanitize.js";
-import { fromUrl } from "./from-url.js";
 
 const ipV6Samples = [
   "::",

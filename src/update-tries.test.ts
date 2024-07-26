@@ -1,7 +1,8 @@
 import nock from "nock";
+import { beforeAll, describe, expect, test } from "vitest";
 import { PUBLIC_SUFFIX_URL } from "./config.js";
-import { fetchBuildSerializeTries } from "./update-tries.js";
 import { readPslFixture } from "./tests/fixtures/fixtures.js";
+import { fetchBuildSerializeTries } from "./update-tries.js";
 
 describe(fetchBuildSerializeTries.name, () => {
   const publicSuffixUrl = new URL(PUBLIC_SUFFIX_URL);
