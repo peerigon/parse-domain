@@ -5,7 +5,7 @@ export default defineConfig({
   test: {
     root: "./src",
     coverage: {
-      reporter: ["json", "html"],
+      reporter: ["lcov", "html"],
       reportsDirectory: "../coverage",
       exclude: ["scripts/**", "tests/**"],
     },
