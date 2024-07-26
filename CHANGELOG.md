@@ -1,3 +1,10 @@
+# [8.2.0](https://github.com/peerigon/parse-domain/compare/v8.1.0...v8.2.0) (2024-07-26)
+
+
+### Features
+
+* Update PSL ([4cbf24d](https://github.com/peerigon/parse-domain/commit/4cbf24d1f58ee5eac42a027f5139aa347495c03d))
+
 # [8.1.0](https://github.com/peerigon/parse-domain/compare/v8.0.2...v8.1.0) (2024-07-26)
 
 
