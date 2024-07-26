@@ -2,10 +2,12 @@
   "compilerOptions": {
     "strict": true,
     "esModuleInterop": true,
+    "target": "es2015",
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
   },
   "exclude": ["build/**"]
 }

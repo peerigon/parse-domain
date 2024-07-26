@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeAll, beforeEach } from "vitest";
 import nock from "nock";
 import { PUBLIC_SUFFIX_URL } from "../config.js";
 import { fetchPsl } from "./fetch-psl.js";
@@ -31,7 +32,7 @@ describe("fetchPsl()", () => {
     const listPromise = fetchPsl();
 
     await expect(listPromise).rejects.toThrowErrorMatchingInlineSnapshot(
-      `"Public suffix list is shorter than expected"`,
+      `[AssertionError: Public suffix list is shorter than expected]`,
     );
   });
 });

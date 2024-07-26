@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import { parseDomain, ParseResult, ParseResultType } from "./main.js";
 import { toASCII } from "./punycode.js";
 
@@ -9,7 +10,7 @@ describe("Official test suite from https://raw.githubusercontent.com/publicsuffi
     hostname: string,
     // Unused because our parse result is more detailed than theirs
     publicSuffix: string | null,
-    expectedParseResult: Partial<ParseResult>,
+    expectedParseResult: Partial</**/ ParseResult>,
   ) => {
     test(`${hostname} should be parsed to ${JSON.stringify(
       expectedParseResult,

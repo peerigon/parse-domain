@@ -1,3 +1,4 @@
+import { describe, test, expect } from "vitest";
 import { buildTries } from "./build-tries.js";
 import {
   PUBLIC_SUFFIX_MARKER_ICANN_START,
