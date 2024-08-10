@@ -1,3 +1,10 @@
+## [8.2.2](https://github.com/peerigon/parse-domain/compare/v8.2.1...v8.2.2) (2024-08-10)
+
+
+### Bug Fixes
+
+* Lower Expected Min Length ([#170](https://github.com/peerigon/parse-domain/issues/170)) ([0f62b8e](https://github.com/peerigon/parse-domain/commit/0f62b8e42267ca811d3b72c9957ce100d9836a3f))
+
 ## [8.2.1](https://github.com/peerigon/parse-domain/compare/v8.2.0...v8.2.1) (2024-07-26)
 
 
