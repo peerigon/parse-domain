@@ -1,8 +1,34 @@
 {
+  "search.exclude": {
+    "node_modules": true,
+    "dist": true,
+    ".git": true,
+    ".eslintcache": true
+  },
+  "files.exclude": {
+    "**/.DS_Store": true
+  },
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "$(capture).*",
+    ".env": ".env.*",
+    ".env.*": ".env.${capture}.local",
+    "package.json": "bun.lockb, package-lock.json, pnpm-lock.yaml, yarn.lock, .npmrc",
+    "tsconfig.json": "tsconfig.*.json, tsconfig.tsbuildinfo",
+    "tsconfig.tsbuildinfo": "tsconfig.*.tsbuildinfo"
+  },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "javascript.preferences.importModuleSpecifierEnding": "js",
+  "javascript.preferences.importModuleSpecifier": "shortest",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
 }
