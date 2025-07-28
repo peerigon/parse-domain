@@ -6,18 +6,15 @@ on:
       - main
       - beta
   pull_request: {}
+  workflow_dispatch: {}
 
 jobs:
   test-and-release:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
-
-    strategy:
-      matrix:
-        node-version: [18.x, 22.x]
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
 
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.node-version }}
+      group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
 
     permissions:
@@ -28,45 +25,57 @@ jobs:
       # Necessary for npm publish --provenance
       # See https://docs.npmjs.com/generating-provenance-statements#example-github-actions-workflow
       id-token: write
+      packages: write
 
     steps:
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # pin@main
-      - name: ⎔ Setup node ${{ matrix.node-version }}
-        uses: actions/setup-node@26961cf329f22f6837d5f54c3efd76b480300ace # pin@main
+      - name: 📥 Checkout repository
+        uses: actions/checkout@8edcb1bdb4e267140fa742c62e395cd74f332709 # main
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@65beceff8e91358525397bdce9103d999507ab03 # main
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version-file: ".nvmrc"
           cache: "npm"
+
       - name: 🗄 Cache node_modules
         id: cache-node_modules
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # pin@main
+        uses: actions/cache@640a1c2554105b57832a23eea0b4672fc7a790d5 # main
         with:
           path: "**/node_modules"
-          key: node_modules-${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+          key: node_modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+
       - name: 🗄 Cache .eslintcache
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # pin@main
+        uses: actions/cache@640a1c2554105b57832a23eea0b4672fc7a790d5 # main
         with:
           path: .eslintcache
-          key: eslintcache-${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-      - name: 📥 Install dependencies
+          key: eslintcache-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: 🔍 Install dependencies
         if: steps.cache-node_modules.outputs.cache-hit != 'true'
         run: |
-          npm ci --ignore-scripts
-      - name: 🧪 Test
+          npm ci --ignore-scripts --prefer-offline --no-audit
+
+      - name: 🧪 Run tests
         run: |
           npm run prepare:build
           npm test
         env:
           CI: true
+
       - name: ⬆️ Upload coverage report
-        uses: coverallsapp/github-action@643bc377ffa44ace6394b2b5d0d3950076de9f63 # pin@main
-        if: "matrix.node-version == '22.x'"
+        uses: coverallsapp/github-action@e7f4f977bd3dba07a6fda03be3053f1658992446 # main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: 🚀 Release
-        if: "contains(' refs/heads/main refs/heads/beta ', github.ref) && matrix.node-version == '22.x'"
+
+      - name: 🚀 Release preview
+        if: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/beta' }}
+        run: |
+          npx pkg-pr-new publish
+
+      - name: 🚀 Release on npm and jsr
+        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta' }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npm run release
