@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 import { EOL } from "os";
 
 (async () => {

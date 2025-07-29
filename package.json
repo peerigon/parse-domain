@@ -11,9 +11,24 @@
     "sanitize",
     "top-level"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/peerigon/parse-domain.git"
+  },
+  "license": "MIT",
+  "author": "peerigon <developers@peerigon.com>",
+  "sideEffects": false,
   "type": "module",
   "main": "./build/main.js",
   "types": "./build/main.d.ts",
+  "bin": {
+    "parse-domain-update": "./bin/update.js"
+  },
+  "files": [
+    "bin",
+    "build",
+    "serialized-tries"
+  ],
   "scripts": {
     "test": "run-p test:*",
     "test:suite": "vitest run --coverage",
@@ -32,21 +47,6 @@
     "node": "node --no-warnings --loader ts-node/esm/transpile-only",
     "release": "semantic-release"
   },
-  "bin": {
-    "parse-domain-update": "./bin/update.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/peerigon/parse-domain.git"
-  },
-  "author": "peerigon <developers@peerigon.com>",
-  "license": "MIT",
-  "files": [
-    "bin",
-    "build",
-    "serialized-tries"
-  ],
-  "sideEffects": false,
   "lint-staged": {
     "*.{ts,tsx,js,cjs,mjs,jsx}": [
       "eslint --cache --fix",

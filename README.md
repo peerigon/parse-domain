@@ -63,7 +63,8 @@ npm install parse-domain
 There is the utility function [`fromUrl`](#api-js-fromUrl) which tries to extract the hostname from a (partial) URL and puny-encodes it:
 
 ```javascript
-import { parseDomain, fromUrl } from "parse-domain";
+import { toUnicode } from "punycode";
+import { fromUrl, parseDomain } from "parse-domain";
 
 const { subDomains, domain, topLevelDomains } = parseDomain(
   fromUrl("https://www.münchen.de?query"),
@@ -74,8 +75,6 @@ console.log(domain); // "xn--mnchen-3ya"
 console.log(topLevelDomains); // ["de"]
 
 // You can use the 'punycode' NPM package to decode the domain again
-import { toUnicode } from "punycode";
-
 console.log(toUnicode(domain)); // "münchen"
 ```
 
@@ -326,9 +325,7 @@ Takes a URL-like string and tries to extract the hostname. Requires the global [
 
 ```ts
 export type ParseDomainOptions = {
-  /**
-   * If no validation is specified, Validation.Strict will be used.
-   **/
+  /** If no validation is specified, Validation.Strict will be used. */
   validation?: Validation;
 };
 ```
@@ -342,17 +339,17 @@ An object that holds all possible [Validation](#api-ts-Validation) `validation` 
 ```javascript
 export const Validation = {
   /**
-   * Allows any octets as labels
-   * but still restricts the length of labels and the overall domain.
+   * Allows any octets as labels but still restricts the length of labels and
+   * the overall domain.
    *
    * @see https://www.rfc-editor.org/rfc/rfc2181#section-11
-   **/
+   */
   Lax: "LAX",
 
   /**
-   * Only allows ASCII letters, digits and hyphens (aka LDH),
-   * forbids hyphens at the beginning or end of a label
-   * and requires top-level domain names not to be all-numeric.
+   * Only allows ASCII letters, digits and hyphens (aka LDH), forbids hyphens at
+   * the beginning or end of a label and requires top-level domain names not to
+   * be all-numeric.
    *
    * This is the default if no validation is configured.
    *

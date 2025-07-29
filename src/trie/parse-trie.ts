@@ -1,9 +1,9 @@
 import * as characters from "./characters.js";
 import {
-  createRootNode,
   createOrGetChild,
-  TrieNode,
+  createRootNode,
   NODE_TYPE_ROOT,
+  TrieNode,
 } from "./nodes.js";
 
 export const parseTrie = (serializedTrie: string) => {
