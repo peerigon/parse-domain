@@ -1,0 +1,11 @@
+{
+  "name": "@peerigon/parse-domain",
+  "version": "0.0.0-semantically-released",
+  "description": "Splits a hostname into subdomains, domain and (effective) top-level domains",
+  "license": "MIT",
+  "exports": "./build/main.js",
+  "publish": {
+    "include": ["build", "serialized-tries", "bin", "README.md", "LICENSE"]
+  },
+  "$schema": "https://jsr.io/schema/config-file.v1.json"
+}
