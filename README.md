@@ -63,7 +63,8 @@ npm install parse-domain
 There is the utility function [`fromUrl`](#api-js-fromUrl) which tries to extract the hostname from a (partial) URL and puny-encodes it:
 
 ```javascript
-import { parseDomain, fromUrl } from "parse-domain";
+import { toUnicode } from "punycode";
+import { fromUrl, parseDomain } from "parse-domain";
 
 const { subDomains, domain, topLevelDomains } = parseDomain(
   fromUrl("https://www.münchen.de?query"),
@@ -74,8 +75,6 @@ console.log(domain); // "xn--mnchen-3ya"
 console.log(topLevelDomains); // ["de"]
 
 // You can use the 'punycode' NPM package to decode the domain again
-import { toUnicode } from "punycode";
-
 console.log(toUnicode(domain)); // "münchen"
 ```
 
@@ -326,9 +325,7 @@ Takes a URL-like string and tries to extract the hostname. Requires the global [
 
 ```ts
 export type ParseDomainOptions = {
-  /**
-   * If no validation is specified, Validation.Strict will be used.
-   **/
+  /** If no validation is specified, Validation.Strict will be used. */
   validation?: Validation;
 };
 ```
@@ -342,17 +339,17 @@ An object that holds all possible [Validation](#api-ts-Validation) `validation` 
 ```javascript
 export const Validation = {
   /**
-   * Allows any octets as labels
-   * but still restricts the length of labels and the overall domain.
+   * Allows any octets as labels but still restricts the length of labels and
+   * the overall domain.
    *
    * @see https://www.rfc-editor.org/rfc/rfc2181#section-11
-   **/
+   */
   Lax: "LAX",
 
   /**
-   * Only allows ASCII letters, digits and hyphens (aka LDH),
-   * forbids hyphens at the beginning or end of a label
-   * and requires top-level domain names not to be all-numeric.
+   * Only allows ASCII letters, digits and hyphens (aka LDH), forbids hyphens at
+   * the beginning or end of a label and requires top-level domain names not to
+   * be all-numeric.
    *
    * This is the default if no validation is configured.
    *
@@ -418,14 +415,6 @@ type ParseResultInvalid = {
   hostname: string | typeof NO_HOSTNAME;
   errors: Array<ValidationError>;
 };
-
-// Example
-
-{
-  type: "INVALID",
-  hostname: ".com",
-  errors: [...]
-}
 ```
 
 <h3 id="api-ts-ValidationError">
@@ -440,14 +429,6 @@ type ValidationError = {
   message: string;
   column: number;
 };
-
-// Example
-
-{
-  type: "LABEL_MIN_LENGTH",
-  message: `Label "" is too short. Label is 0 octets long but should be at least 1.`,
-  column: 1,
-}
 ```
 
 <h3 id="api-js-ValidationErrorType">
@@ -485,14 +466,6 @@ type ParseResultIp = {
   hostname: string;
   ipVersion: 4 | 6;
 };
-
-// Example
-
-{
-  type: "IP",
-  hostname: "192.168.0.1",
-  ipVersion: 4
-}
 ```
 
 According to [RFC 3986](https://tools.ietf.org/html/rfc3986#section-3.2.2), IPv6 addresses need to be surrounded by `[` and `]` in URLs. [`parseDomain`](#api-js-parseDomain) accepts both IPv6 address with and without square brackets:
@@ -520,14 +493,6 @@ type ParseResultReserved = {
   hostname: string;
   labels: Array<string>;
 };
-
-// Example
-
-{
-  type: "RESERVED",
-  hostname: "pecorino.local",
-  labels: ["pecorino", "local"]
-}
 ```
 
 ⚠️ Reserved IPs, such as `127.0.0.1`, will not be reported as reserved, but as <a href="#-export-parseresultip">`ParseResultIp`</a>. See [#117](https://github.com/peerigon/parse-domain/issues/117).
@@ -544,14 +509,6 @@ type ParseResultNotListed = {
   hostname: string;
   labels: Array<string>;
 };
-
-// Example
-
-{
-  type: "NOT_LISTED",
-  hostname: "this.is.not-listed",
-  labels: ["this", "is", "not-listed"]
-}
 ```
 
 <h3 id="api-ts-ParseResultListed">
@@ -574,22 +531,6 @@ type ParseResultListed = {
     topLevelDomains: Array<string>;
   };
 };
-
-// Example
-
-{
-  type: "LISTED",
-  hostname: "parse-domain.github.io",
-  labels: ["parse-domain", "github", "io"]
-  subDomains: [],
-  domain: "parse-domain",
-  topLevelDomains: ["github", "io"],
-  icann: {
-    subDomains: ["parse-domain"],
-    domain: "github",
-    topLevelDomains: ["io"]
-  }
-}
 ```
 
 ## License

@@ -1,9 +1,9 @@
+import * as fs from "fs";
 import * as path from "path";
 import * as url from "url";
-import * as fs from "fs";
-import { fetchBuildSerializeTries } from "../update-tries.js";
 import { PUBLIC_SUFFIX_URL } from "../config.js";
 import { Await } from "../type-util.js";
+import { fetchBuildSerializeTries } from "../update-tries.js";
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 

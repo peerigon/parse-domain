@@ -1,10 +1,10 @@
 import { expect } from "vitest";
 import {
-  TrieRootNode,
+  NODE_TYPE_CHILD,
   NODE_TYPE_ROOT,
   TrieChildNode,
   TrieNode,
-  NODE_TYPE_CHILD,
+  TrieRootNode,
 } from "../../trie/nodes.js";
 
 export const expectRoot = ({

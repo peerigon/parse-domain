@@ -1,6 +1,6 @@
 import { ipVersion } from "is-ip";
-import { Label } from "./parse-domain.js";
 import { NO_HOSTNAME } from "./from-url.js";
+import { Label } from "./parse-domain.js";
 
 // See https://en.wikipedia.org/wiki/Domain_name
 // See https://tools.ietf.org/html/rfc1034
@@ -9,6 +9,7 @@ const LABEL_LENGTH_MIN = 1;
 const LABEL_LENGTH_MAX = 63;
 /**
  * 255 octets - 2 octets if you remove the last dot
+ *
  * @see https://devblogs.microsoft.com/oldnewthing/20120412-00/?p=7873
  */
 const DOMAIN_LENGTH_MAX = 253;
@@ -17,17 +18,17 @@ const textEncoder = new TextEncoder();
 
 export enum Validation {
   /**
-   * Allows any octets as labels
-   * but still restricts the length of labels and the overall domain.
+   * Allows any octets as labels but still restricts the length of labels and
+   * the overall domain.
    *
    * @see https://www.rfc-editor.org/rfc/rfc2181#section-11
-   **/
+   */
   Lax = "LAX",
 
   /**
-   * Only allows ASCII letters, digits and hyphens (aka LDH),
-   * forbids hyphens at the beginning or end of a label
-   * and requires top-level domain names not to be all-numeric.
+   * Only allows ASCII letters, digits and hyphens (aka LDH), forbids hyphens at
+   * the beginning or end of a label and requires top-level domain names not to
+   * be all-numeric.
    *
    * This is the default if no validation is configured.
    *

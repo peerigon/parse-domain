@@ -1,8 +1,8 @@
 import {
-  PUBLIC_SUFFIX_MARKER_ICANN_START,
   PUBLIC_SUFFIX_MARKER_ICANN_END,
-  PUBLIC_SUFFIX_MARKER_PRIVATE_START,
+  PUBLIC_SUFFIX_MARKER_ICANN_START,
   PUBLIC_SUFFIX_MARKER_PRIVATE_END,
+  PUBLIC_SUFFIX_MARKER_PRIVATE_START,
 } from "../config.js";
 import { toASCII } from "../punycode.js";
 import { createTrieFromList } from "../trie/create-trie.js";
