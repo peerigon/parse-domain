@@ -4,7 +4,7 @@ const invalidIpv6Pattern =
 
 export const NO_HOSTNAME: unique symbol = Symbol("NO_HOSTNAME");
 
-export const fromUrl = (urlLike: string) => {
+export const fromUrl = (urlLike: string): string | typeof NO_HOSTNAME => {
   /* istanbul ignore next */
   if (typeof URL !== "function") {
     throw new Error(
