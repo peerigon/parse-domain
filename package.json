@@ -64,7 +64,7 @@
   "devDependencies": {
     "@peerigon/configs": "^7.0.0",
     "@types/node": "^20.14.12",
-    "@vitest/coverage-v8": "^2.0.4",
+    "@vitest/coverage-v8": "^3.2.4",
     "eslint": "^8.57.0",
     "eslint-config-peerigon": "^39.1.0",
     "eslint-plugin-no-null": "^1.0.2",
@@ -79,7 +79,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
     "updtr": "^4.1.0",
-    "vitest": "^2.0.4"
+    "vitest": "^3.2.4"
   },
   "publishConfig": {
     "access": "public",
