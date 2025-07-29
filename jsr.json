@@ -3,9 +3,14 @@
   "version": "0.0.0-semantically-released",
   "description": "Splits a hostname into subdomains, domain and (effective) top-level domains",
   "license": "MIT",
-  "exports": "./build/main.js",
+  "exports": "./src/main.ts",
   "publish": {
-    "include": ["build", "serialized-tries", "bin", "README.md", "LICENSE"]
+    "include": ["src", "serialized-tries", "bin", "README.md", "LICENSE"],
+    "exclude": [
+      "src/**/*.test.ts",
+      "src/**/*.test.ts.snap",
+      "src/tests/**/*.ts"
+    ]
   },
   "$schema": "https://jsr.io/schema/config-file.v1.json"
 }
