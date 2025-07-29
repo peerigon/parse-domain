@@ -62,8 +62,7 @@
     "is-ip": "^5.0.1"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
+    "@peerigon/configs": "^7.0.0",
     "@types/node": "^20.14.12",
     "@vitest/coverage-v8": "^2.0.4",
     "eslint": "^8.57.0",
@@ -83,6 +82,7 @@
     "vitest": "^2.0.4"
   },
   "publishConfig": {
+    "access": "public",
     "provenance": true
   }
 }
