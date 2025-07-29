@@ -415,14 +415,6 @@ type ParseResultInvalid = {
   hostname: string | typeof NO_HOSTNAME;
   errors: Array<ValidationError>;
 };
-
-// Example
-
-{
-  type: "INVALID",
-  hostname: ".com",
-  errors: [...]
-}
 ```
 
 <h3 id="api-ts-ValidationError">
@@ -437,14 +429,6 @@ type ValidationError = {
   message: string;
   column: number;
 };
-
-// Example
-
-{
-  type: "LABEL_MIN_LENGTH",
-  message: `Label "" is too short. Label is 0 octets long but should be at least 1.`,
-  column: 1,
-}
 ```
 
 <h3 id="api-js-ValidationErrorType">
@@ -482,14 +466,6 @@ type ParseResultIp = {
   hostname: string;
   ipVersion: 4 | 6;
 };
-
-// Example
-
-{
-  type: "IP",
-  hostname: "192.168.0.1",
-  ipVersion: 4
-}
 ```
 
 According to [RFC 3986](https://tools.ietf.org/html/rfc3986#section-3.2.2), IPv6 addresses need to be surrounded by `[` and `]` in URLs. [`parseDomain`](#api-js-parseDomain) accepts both IPv6 address with and without square brackets:
@@ -517,14 +493,6 @@ type ParseResultReserved = {
   hostname: string;
   labels: Array<string>;
 };
-
-// Example
-
-{
-  type: "RESERVED",
-  hostname: "pecorino.local",
-  labels: ["pecorino", "local"]
-}
 ```
 
 ⚠️ Reserved IPs, such as `127.0.0.1`, will not be reported as reserved, but as <a href="#-export-parseresultip">`ParseResultIp`</a>. See [#117](https://github.com/peerigon/parse-domain/issues/117).
@@ -541,14 +509,6 @@ type ParseResultNotListed = {
   hostname: string;
   labels: Array<string>;
 };
-
-// Example
-
-{
-  type: "NOT_LISTED",
-  hostname: "this.is.not-listed",
-  labels: ["this", "is", "not-listed"]
-}
 ```
 
 <h3 id="api-ts-ParseResultListed">
@@ -571,22 +531,6 @@ type ParseResultListed = {
     topLevelDomains: Array<string>;
   };
 };
-
-// Example
-
-{
-  type: "LISTED",
-  hostname: "parse-domain.github.io",
-  labels: ["parse-domain", "github", "io"]
-  subDomains: [],
-  domain: "parse-domain",
-  topLevelDomains: ["github", "io"],
-  icann: {
-    subDomains: ["parse-domain"],
-    domain: "github",
-    topLevelDomains: ["io"]
-  }
-}
 ```
 
 ## License
