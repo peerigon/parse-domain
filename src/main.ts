@@ -1,9 +1,8 @@
 /* istanbul ignore file */
 // Jest will report function coverage errors here otherwise
-export {
-  parseDomain,
+export { parseDomain, ParseResultType } from "./parse-domain.js";
+export type {
   ParseResult,
-  ParseResultType,
   ParseResultInvalid,
   ParseResultReserved,
   ParseResultNotListed,
@@ -11,8 +10,5 @@ export {
   ParseResultIp,
 } from "./parse-domain.js";
 export { fromUrl, NO_HOSTNAME } from "./from-url.js";
-export {
-  Validation,
-  ValidationError,
-  ValidationErrorType,
-} from "./sanitize.js";
+export { Validation, ValidationErrorType } from "./sanitize.js";
+export type { ValidationError } from "./sanitize.js";

@@ -1,6 +1,6 @@
 import { ipVersion } from "is-ip";
 import { NO_HOSTNAME } from "./from-url.js";
-import { Label } from "./parse-domain.js";
+import type { Label } from "./parse-domain.js";
 
 // See https://en.wikipedia.org/wiki/Domain_name
 // See https://tools.ietf.org/html/rfc1034
@@ -158,7 +158,7 @@ export const sanitize = (
 
   // IPv6 addresses are surrounded by square brackets in URLs
   // See https://tools.ietf.org/html/rfc3986#section-3.2.2
-  const inputTrimmedAsIp = input.replace(/^\[|]$/g, "");
+  const inputTrimmedAsIp = input.replaceAll(/^\[|]$/g, "");
   const ipVersionOfInput = ipVersion(inputTrimmedAsIp);
 
   if (ipVersionOfInput !== undefined) {
@@ -169,7 +169,9 @@ export const sanitize = (
     };
   }
 
-  const lastChar = input.charAt(input.length - 1);
+  // We do not want to break compatibility with older engines unnecessarily.
+  // eslint-disable-next-line unicorn/prefer-at
+  const lastChar = input[input.length - 1]!;
   const canonicalInput =
     lastChar === LABEL_SEPARATOR ? input.slice(0, -1) : input;
   const octets = new TextEncoder().encode(canonicalInput);
@@ -221,7 +223,7 @@ const validateLabels = {
   [Validation.Strict]: (labels: Array<string>) => {
     const labelValidationErrors = [];
     let column = 1;
-    let lastLabel;
+    let lastLabel: string | undefined;
 
     for (const label of labels) {
       // According to https://tools.ietf.org/html/rfc6761 labels should

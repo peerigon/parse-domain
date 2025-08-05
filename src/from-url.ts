@@ -7,7 +7,7 @@ export const NO_HOSTNAME: unique symbol = Symbol("NO_HOSTNAME");
 export const fromUrl = (urlLike: string): string | typeof NO_HOSTNAME => {
   /* istanbul ignore next */
   if (typeof URL !== "function") {
-    throw new Error(
+    throw new TypeError(
       "Looks like the new URL() constructor is not globally available in your environment. Please make sure to use a polyfill.",
     );
   }

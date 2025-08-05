@@ -7,6 +7,11 @@ export default [
   ...noNull,
   ...noDefaultExport,
   {
-    ignores: ["build/**", "serialized-tries/**"],
+    ignores: [
+      "build/**",
+      "serialized-tries/**",
+      "prettier.config.js",
+      "vitest.config.ts",
+    ],
   },
 ];

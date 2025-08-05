@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { parseDomain, ParseResult, ParseResultType } from "./main.js";
+import { parseDomain, ParseResultType, type ParseResult } from "./main.js";
 import { toASCII } from "./punycode.js";
 
 describe("Official test suite from https://raw.githubusercontent.com/publicsuffix/list/main/tests/test_psl.txt", () => {
@@ -22,7 +22,7 @@ describe("Official test suite from https://raw.githubusercontent.com/publicsuffi
     });
   };
 
-  /* eslint-disable no-null/no-null */
+  /* eslint-disable unicorn/no-null */
   // Any copyright is dedicated to the Public Domain.
   // https://creativecommons.org/publicdomain/zero/1.0/
 
@@ -502,5 +502,5 @@ describe("Official test suite from https://raw.githubusercontent.com/publicsuffi
     domain: undefined,
     topLevelDomains: [toASCII("中国")],
   });
-  /* eslint-enable no-null/no-null */
+  /* eslint-enable unicorn/no-null */
 });

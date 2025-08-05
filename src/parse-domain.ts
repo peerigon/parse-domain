@@ -1,14 +1,14 @@
 import { NO_HOSTNAME } from "./from-url.js";
 import {
   SanitizationResultType,
-  SanitizationResultValidIp,
   sanitize,
   Validation,
-  ValidationError,
+  type SanitizationResultValidIp,
+  type ValidationError,
 } from "./sanitize.js";
 import { icannTrie, privateTrie } from "./serialized-tries.js";
 import { lookUpTldsInTrie } from "./trie/look-up.js";
-import { TrieRootNode } from "./trie/nodes.js";
+import type { TrieRootNode } from "./trie/nodes.js";
 import { parseTrie } from "./trie/parse-trie.js";
 
 export const RESERVED_TOP_LEVEL_DOMAINS = [
@@ -172,9 +172,12 @@ export const parseDomain = (
 
   const { labels, domain } = sanitizationResult;
 
+  // We do not want to break compatibility with older engines unnecessarily.
+  // eslint-disable-next-line unicorn/prefer-at
+  const lastLabel = labels[labels.length - 1];
   if (
     hostname === "" ||
-    RESERVED_TOP_LEVEL_DOMAINS.includes(labels[labels.length - 1])
+    (lastLabel !== undefined && RESERVED_TOP_LEVEL_DOMAINS.includes(lastLabel))
   ) {
     return {
       type: ParseResultType.Reserved,

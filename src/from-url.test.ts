@@ -94,7 +94,7 @@ describe(fromUrl.name, () => {
     // @ts-expect-error This is a deliberate error just for the test
     expect(fromUrl(undefined)).toBe(NO_HOSTNAME);
     // @ts-expect-error This is a deliberate error just for the test
-    // eslint-disable-next-line no-null/no-null
+    // eslint-disable-next-line unicorn/no-null
     expect(fromUrl(null)).toBe(NO_HOSTNAME);
     // @ts-expect-error This is a deliberate error just for the test
     expect(fromUrl(true)).toBe(NO_HOSTNAME);

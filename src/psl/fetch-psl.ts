@@ -1,4 +1,4 @@
-import { ok } from "assert";
+import { ok } from "node:assert";
 import { FETCH_PSL_EXPECTED_MIN_LENGTH, PUBLIC_SUFFIX_URL } from "../config.js";
 
 export const fetchPsl = async () => {

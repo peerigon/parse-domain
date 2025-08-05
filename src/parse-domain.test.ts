@@ -281,7 +281,7 @@ describe(parseDomain.name, () => {
   });
 
   test("returns type ParseResultType.Invalid and error information for a hostname with a label that is too long (both validation modes)", () => {
-    const labelToLong = new Array(64).fill("x").join("");
+    const labelToLong = Array.from({ length: 64 }).fill("x").join("");
 
     [Validation.Lax, Validation.Strict].forEach((validation) => {
       expect(parseDomain(labelToLong, { validation })).toMatchObject({
@@ -306,16 +306,20 @@ describe(parseDomain.name, () => {
       });
     });
     // Should work with 63 octets
-    expect(parseDomain(new Array(63).fill("x").join(""))).toMatchObject({
+    expect(
+      parseDomain(Array.from({ length: 63 }).fill("x").join("")),
+    ).toMatchObject({
       type: ParseResultType.NotListed,
     });
   });
 
   test("returns type ParseResultType.Invalid and error information for a hostname that is too long", () => {
-    const domain = new Array(254).fill("x").join("");
+    const domain = Array.from({ length: 254 }).fill("x").join("");
 
     // A single long label
-    expect(parseDomain(new Array(254).fill("x").join(""))).toMatchObject({
+    expect(
+      parseDomain(Array.from({ length: 254 }).fill("x").join("")),
+    ).toMatchObject({
       type: ParseResultType.Invalid,
       errors: expect.arrayContaining([
         expect.objectContaining({
@@ -327,7 +331,9 @@ describe(parseDomain.name, () => {
     });
 
     // Multiple labels
-    expect(parseDomain(new Array(128).fill("x").join("."))).toMatchObject({
+    expect(
+      parseDomain(Array.from({ length: 128 }).fill("x").join(".")),
+    ).toMatchObject({
       type: ParseResultType.Invalid,
       errors: expect.arrayContaining([
         expect.objectContaining({
@@ -337,7 +343,9 @@ describe(parseDomain.name, () => {
     });
 
     // Should work with 253 octets
-    expect(parseDomain(new Array(127).fill("x").join("."))).toMatchObject({
+    expect(
+      parseDomain(Array.from({ length: 127 }).fill("x").join(".")),
+    ).toMatchObject({
       type: ParseResultType.NotListed,
     });
   });
@@ -345,7 +353,7 @@ describe(parseDomain.name, () => {
   test("interprets the hostname as octets", () => {
     // The "ä" character is 2 octets long which is why we only need
     // 127 of them to exceed the limit
-    const domain = new Array(127).fill("ä").join("");
+    const domain = Array.from({ length: 127 }).fill("ä").join("");
 
     expect(parseDomain(domain)).toMatchObject({
       type: ParseResultType.Invalid,
@@ -409,7 +417,7 @@ describe(parseDomain.name, () => {
   test("accepts any character as labels with Validation.Lax", () => {
     // Trying out 2^10 characters
     getCharCodesUntil(2 ** 10)
-      .map((octet) => String.fromCharCode(octet))
+      .map((octet) => String.fromCodePoint(octet))
       .filter((hostname) => hostname !== ".")
       .forEach((hostname) => {
         const result = parseDomain(hostname, { validation: Validation.Lax });
@@ -503,7 +511,7 @@ describe(parseDomain.name, () => {
       ]),
     });
     // @ts-expect-error This is a deliberate error for the test
-    // eslint-disable-next-line no-null/no-null
+    // eslint-disable-next-line unicorn/no-null
     expect(parseDomain(null)).toMatchObject({
       type: ParseResultType.Invalid,
       errors: expect.arrayContaining([

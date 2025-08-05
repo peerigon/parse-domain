@@ -1,11 +1,8 @@
-import * as fs from "fs";
-import * as path from "path";
-import * as url from "url";
+import * as fs from "node:fs";
+import * as path from "node:path";
 import { PUBLIC_SUFFIX_URL } from "../config.js";
-import { Await } from "../type-util.js";
+import type { Await } from "../type-util.js";
 import { fetchBuildSerializeTries } from "../update-tries.js";
-
-const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 const writeTriesToFiles = async ({
   serializedIcannTrie,
@@ -17,17 +14,17 @@ const writeTriesToFiles = async ({
   await Promise.all(
     targetDirectories.map(async (targetDirectory) => {
       const pathToIcannTrie = path.resolve(
-        __dirname,
+        import.meta.dirname,
         targetDirectory,
         "icann.js",
       );
       const pathToPrivateTrie = path.resolve(
-        __dirname,
+        import.meta.dirname,
         targetDirectory,
         "private.js",
       );
       const pathToTrieInfoFile = path.resolve(
-        __dirname,
+        import.meta.dirname,
         targetDirectory,
         "info.json",
       );
@@ -56,8 +53,6 @@ const writeTriesToFiles = async ({
   );
 };
 
-export const done = (async () => {
-  console.warn(`Fetching public suffix list from ${PUBLIC_SUFFIX_URL}...`);
+console.warn(`Fetching public suffix list from ${PUBLIC_SUFFIX_URL}...`);
 
-  await writeTriesToFiles(await fetchBuildSerializeTries());
-})();
+await writeTriesToFiles(await fetchBuildSerializeTries());

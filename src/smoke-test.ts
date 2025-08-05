@@ -1,4 +1,4 @@
-import { deepStrictEqual } from "assert";
+import { deepStrictEqual } from "node:assert";
 import { fromUrl, parseDomain, ParseResultType } from "./main.js";
 
 export const runSmokeTest = () => {
