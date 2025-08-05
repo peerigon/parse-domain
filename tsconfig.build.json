@@ -1,12 +1,5 @@
 {
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "outDir": "build",
-    "module": "esnext",
-    "sourceMap": true,
-    "inlineSources": true,
-    "declaration": true
-  },
+  "extends": ["./tsconfig.json", "@peerigon/configs/typescript/lib"],
   "include": ["src"],
-  "exclude": ["src/**/*.test.ts", "src/tests/**/*.ts"]
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/tests/**/*"]
 }
