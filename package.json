@@ -32,7 +32,7 @@
   "scripts": {
     "test": "run-p test:*",
     "test:suite": "vitest run --coverage",
-    "test:lint": "eslint --max-warnings 0 --cache --ext js,ts --ignore-path .gitignore .",
+    "test:lint": "eslint --max-warnings 0 --cache .",
     "test:format": "prettier --check .",
     "test:types": "tsc --noEmit",
     "build": "run-s build:*",
@@ -65,9 +65,7 @@
     "@peerigon/configs": "^7.0.0",
     "@types/node": "^20.14.12",
     "@vitest/coverage-v8": "^3.2.4",
-    "eslint": "^8.57.0",
-    "eslint-config-peerigon": "^39.1.0",
-    "eslint-plugin-no-null": "^1.0.2",
+    "eslint": "^9.21.0",
     "husky": "^9.1.2",
     "lint-staged": "^15.2.7",
     "nock": "^14.0.0-beta.9",
@@ -77,7 +75,7 @@
     "rimraf": "^6.0.1",
     "semantic-release": "^24.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.4",
+    "typescript": "^5.8.2",
     "updtr": "^4.1.0",
     "vitest": "^3.2.4"
   },
