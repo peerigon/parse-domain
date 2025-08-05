@@ -1,21 +1,14 @@
 #!/usr/bin/env node
-import { EOL } from "os";
+import { EOL } from "node:os";
 
-(async () => {
-  process.argv.push("--", "../../serialized-tries");
+process.argv.push("--", "../../serialized-tries");
 
-  const updateTries = await import("../build/scripts/update-tries.js");
+await import("../dist/scripts/update-tries.js");
 
-  await updateTries.done;
+process.stderr.write("Running smoke test... ");
 
-  process.stderr.write("Running smoke test... ");
+const { runSmokeTest } = await import("../dist/smoke-test.js");
 
-  const smokeTest = await import("../build/smoke-test.js");
+runSmokeTest();
 
-  smokeTest.runSmokeTest();
-
-  process.stdout.write("ok" + EOL);
-})().catch((error) => {
-  console.error(`parse-domain update failed: ${error}`);
-  process.exit(1);
-});
+process.stdout.write("ok" + EOL);

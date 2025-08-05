@@ -1,13 +1,7 @@
 {
+  "extends": "@peerigon/configs/typescript",
   "compilerOptions": {
-    "strict": true,
-    "esModuleInterop": true,
-    "target": "es2015",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
-  },
-  "exclude": ["build/**"]
+    "lib": ["es2024", "dom"],
+    "erasableSyntaxOnly": false
+  }
 }

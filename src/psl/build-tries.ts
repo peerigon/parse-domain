@@ -42,16 +42,16 @@ const parsePsl = (listContent: string) => {
       PUBLIC_SUFFIX_MARKER_ICANN_END,
     )
       .split(matchNewLine)
-      .filter(containsRule)
-      .map(toASCII),
+      .filter((line) => containsRule(line))
+      .map((line) => toASCII(line)),
     private: extractByMarkers(
       listContent,
       PUBLIC_SUFFIX_MARKER_PRIVATE_START,
       PUBLIC_SUFFIX_MARKER_PRIVATE_END,
     )
       .split(matchNewLine)
-      .filter(containsRule)
-      .map(toASCII),
+      .filter((line) => containsRule(line))
+      .map((line) => toASCII(line)),
   };
 };
 

@@ -1,13 +1,13 @@
-import { Label } from "../parse-domain.js";
+import type { Label } from "../parse-domain.js";
 import * as characters from "./characters.js";
-import { TrieNode } from "./nodes.js";
+import type { TrieNode } from "./nodes.js";
 
 export const lookUpTldsInTrie = (labels: Array<Label>, trie: TrieNode) => {
-  const labelsToCheck = labels.slice();
+  const labelsToCheck = [...labels];
   const tlds: Array<Label> = [];
   let node = trie;
 
-  while (labelsToCheck.length !== 0) {
+  while (labelsToCheck.length > 0) {
     const label = labelsToCheck.pop()!;
     const labelLowerCase = label.toLowerCase();
 

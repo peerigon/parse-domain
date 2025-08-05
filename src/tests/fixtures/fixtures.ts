@@ -1,10 +1,11 @@
-import * as fs from "fs";
-import * as path from "path";
-import * as url from "url";
+import * as fs from "node:fs";
+import * as path from "node:path";
 import { fetchPsl } from "../../psl/fetch-psl.js";
 
-const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
-const pathToPslFixture = path.resolve(__dirname, "public-suffix-list.txt");
+const pathToPslFixture = path.resolve(
+  import.meta.dirname,
+  "public-suffix-list.txt",
+);
 
 export const updatePslFixture = async () => {
   const psl = await fetchPsl();

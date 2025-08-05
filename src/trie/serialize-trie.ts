@@ -1,5 +1,5 @@
 import { DOWN, SAME, UP } from "./characters.js";
-import { TrieChildNode, TrieRootNode } from "./nodes.js";
+import type { TrieChildNode, TrieRootNode } from "./nodes.js";
 
 export const serializeTrie = (root: TrieRootNode): string => {
   /*
@@ -20,7 +20,7 @@ export const serializeTrie = (root: TrieRootNode): string => {
 	*/
   type QueueItem = TrieChildNode | typeof UP;
   let serialized = "";
-  const queue: Array<QueueItem> = Array.from(root.children.values());
+  const queue: Array<QueueItem> = [...root.children.values()];
   let current: QueueItem | undefined;
 
   while ((current = queue.shift()) !== undefined) {
@@ -37,7 +37,7 @@ export const serializeTrie = (root: TrieRootNode): string => {
     }
     serialized += DOWN;
 
-    const newItems: Array<QueueItem> = Array.from(current.children.values());
+    const newItems: Array<QueueItem> = [...current.children.values()];
 
     if (queue.length > 0) {
       newItems.push(UP);

@@ -3,7 +3,7 @@ import {
   createOrGetChild,
   createRootNode,
   NODE_TYPE_ROOT,
-  TrieNode,
+  type TrieNode,
 } from "./nodes.js";
 
 export const parseTrie = (serializedTrie: string) => {
