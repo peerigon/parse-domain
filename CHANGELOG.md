@@ -1,30 +1,26 @@
 ## [8.2.2](https://github.com/peerigon/parse-domain/compare/v8.2.1...v8.2.2) (2024-08-10)
 
-
 ### Bug Fixes
 
-* Lower Expected Min Length ([#170](https://github.com/peerigon/parse-domain/issues/170)) ([0f62b8e](https://github.com/peerigon/parse-domain/commit/0f62b8e42267ca811d3b72c9957ce100d9836a3f))
+- Lower Expected Min Length ([#170](https://github.com/peerigon/parse-domain/issues/170)) ([0f62b8e](https://github.com/peerigon/parse-domain/commit/0f62b8e42267ca811d3b72c9957ce100d9836a3f))
 
 ## [8.2.1](https://github.com/peerigon/parse-domain/compare/v8.2.0...v8.2.1) (2024-07-26)
 
-
 ### Bug Fixes
 
-* CI deployment ([5f7be9a](https://github.com/peerigon/parse-domain/commit/5f7be9a39411456719d0de03969ce2c5cbe704a1))
+- CI deployment ([5f7be9a](https://github.com/peerigon/parse-domain/commit/5f7be9a39411456719d0de03969ce2c5cbe704a1))
 
 # [8.2.0](https://github.com/peerigon/parse-domain/compare/v8.1.0...v8.2.0) (2024-07-26)
 
-
 ### Features
 
-* Update PSL ([4cbf24d](https://github.com/peerigon/parse-domain/commit/4cbf24d1f58ee5eac42a027f5139aa347495c03d))
+- Update PSL ([4cbf24d](https://github.com/peerigon/parse-domain/commit/4cbf24d1f58ee5eac42a027f5139aa347495c03d))
 
 # [8.1.0](https://github.com/peerigon/parse-domain/compare/v8.0.2...v8.1.0) (2024-07-26)
 
-
 ### Features
 
-* Use Node's built-in fetch ([#164](https://github.com/peerigon/parse-domain/issues/164)) ([7333a7d](https://github.com/peerigon/parse-domain/commit/7333a7d54737ff9e21bce495a8d94f25732bc269))
+- Use Node's built-in fetch ([#164](https://github.com/peerigon/parse-domain/issues/164)) ([7333a7d](https://github.com/peerigon/parse-domain/commit/7333a7d54737ff9e21bce495a8d94f25732bc269))
 
 ## [8.0.2](https://github.com/peerigon/parse-domain/compare/v8.0.1...v8.0.2) (2024-03-04)
 
