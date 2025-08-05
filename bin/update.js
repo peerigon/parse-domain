@@ -3,14 +3,12 @@ import { EOL } from "node:os";
 
 process.argv.push("--", "../../serialized-tries");
 
-const updateTries = await import("../build/scripts/update-tries.js");
-
-await updateTries.done;
+await import("../dist/scripts/update-tries.js");
 
 process.stderr.write("Running smoke test... ");
 
-const smokeTest = await import("../build/smoke-test.js");
+const { runSmokeTest } = await import("../dist/smoke-test.js");
 
-smokeTest.runSmokeTest();
+runSmokeTest();
 
 process.stdout.write("ok" + EOL);

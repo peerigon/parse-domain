@@ -19,14 +19,14 @@
   "author": "peerigon <developers@peerigon.com>",
   "sideEffects": false,
   "type": "module",
-  "main": "./build/main.js",
-  "types": "./build/main.d.ts",
+  "main": "./dist/main.js",
+  "types": "./dist/main.d.ts",
   "bin": {
     "parse-domain-update": "./bin/update.js"
   },
   "files": [
     "bin",
-    "build",
+    "dist",
     "serialized-tries"
   ],
   "scripts": {
@@ -36,7 +36,7 @@
     "test:format": "prettier --check .",
     "test:types": "tsc --noEmit",
     "build": "run-s build:*",
-    "build:cleanup": "rimraf build",
+    "build:cleanup": "rimraf dist",
     "build:tsc": "tsc -p ./tsconfig.build.json",
     "build:update": "./bin/update.js",
     "prepare": "run-p prepare:*",

@@ -34,7 +34,7 @@ node_modules
 .node_repl_history
 
 # We don't check in compiled files. They are created upon npm publish and npm install.
-build
+dist
 serialized-tries
 
 .eslintcache
