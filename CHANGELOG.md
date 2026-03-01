@@ -1,3 +1,9 @@
+# [8.3.0](https://github.com/peerigon/parse-domain/compare/v8.2.2...v8.3.0) (2026-03-01)
+
+### Features
+
+- **deps:** Update dependencies ([4dfb15c](https://github.com/peerigon/parse-domain/commit/4dfb15c3fba99c377f911376ebc061672c948d47))
+
 ## [8.2.2](https://github.com/peerigon/parse-domain/compare/v8.2.1...v8.2.2) (2024-08-10)
 
 ### Bug Fixes
