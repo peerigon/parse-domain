@@ -48,6 +48,25 @@ This project uses npm scripts for all development tasks:
 
 If user is asking you to pull in updates from the upstream repository, you can do so by following these steps:
 
+### Step 0: Ensure Upstream Is Fetch-Only
+
+**Never push to `upstream`** — it points to `peerigon/template`, a shared repository. A downstream project's commits must never land there. Before running any upstream commands, make sure the push URL is disabled:
+
+```bash
+git remote -v
+# If `upstream` shows a real push URL, disable it:
+git remote set-url --push upstream DISABLED
+```
+
+With this set, any accidental `git push upstream …` fails immediately instead of silently publishing downstream code to the public template.
+
+If `upstream` is not yet configured at all, add it this way:
+
+```bash
+git remote add upstream https://github.com/peerigon/template.git
+git remote set-url --push upstream DISABLED
+```
+
 ### Step 1: Merge Template Updates
 
 ```bash
