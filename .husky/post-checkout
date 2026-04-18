@@ -7,3 +7,5 @@ if ! git remote | grep -q "^upstream$"; then
     git remote add upstream https://github.com/peerigon/template.git
     echo "Upstream remote added successfully!"
 fi
+
+git remote set-url --push upstream DISABLED
