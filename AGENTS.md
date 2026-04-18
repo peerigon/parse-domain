@@ -44,13 +44,25 @@ This project uses npm scripts for all development tasks:
 - Uses ES module syntax throughout (`.ts` extensions in imports)
 - **Environment variables**: Use `src/env.ts`; destructure at top-level module scope so missing vars fail immediately.
 
+## Upstream remote (forks and template merges)
+
+Configure the `upstream` remote so it can **only be fetched**, never pushed to. That applies whenever this repo is used as a base: **after forking** to start a new project, or **after adding** `https://github.com/peerigon/template.git` as `upstream` in an existing clone. Without this, `git push upstream` could send a downstream project’s commits to the public template.
+
+**One-time setup** (run as soon as `upstream` exists or right after `git remote add upstream …`):
+
+```bash
+git remote set-url --push upstream DISABLED
+```
+
+Verify with `git remote -v`: `upstream` should show a normal fetch URL and `DISABLED` (or empty) for push.
+
 ## Pulling Updates from Upstream
 
-If user is asking you to pull in updates from the upstream repository, you can do so by following these steps:
+If the user is asking you to pull in updates from the upstream repository, follow the steps below.
 
 ### Step 0: Ensure Upstream Is Fetch-Only
 
-**Never push to `upstream`** — it points to `peerigon/template`, a shared repository. A downstream project's commits must never land there. Before running any upstream commands, make sure the push URL is disabled:
+**Never push to `upstream`** — it points to `peerigon/template`, a public repository. Before any `push`, confirm that the push URL to `upstream` is disabled:
 
 ```bash
 git remote -v
@@ -58,9 +70,7 @@ git remote -v
 git remote set-url --push upstream DISABLED
 ```
 
-With this set, any accidental `git push upstream …` fails immediately instead of silently publishing downstream code to the public template.
-
-If `upstream` is not yet configured at all, add it this way:
+If `upstream` is not configured yet, add it and disable push in one flow:
 
 ```bash
 git remote add upstream https://github.com/peerigon/template.git
