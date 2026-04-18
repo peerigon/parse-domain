@@ -170,6 +170,10 @@ Decide on treatment of `src/` directory:
 
 </details>
 
+## GitHub rulesets (blueprints)
+
+The JSON files under [`.github/rulesets/`](./.github/rulesets/) are **blueprints** for GitHub rulesets. GitHub does not apply them from the repository; import or recreate them in your repo’s (or organization’s) ruleset settings. See [`.github/rulesets/README.md`](./.github/rulesets/README.md) for details.
+
 ## How to pull in updates from the upstream repository
 
 Ask your AI coding assistant:
