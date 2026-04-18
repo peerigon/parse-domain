@@ -16,7 +16,7 @@ Prompt your AI coding assistant to customize the template project files:
 
 <details>
 
-````markdown
+```markdown
 # Customize Template Project Files
 
 ## Information Gathering
@@ -64,7 +64,7 @@ Update the following fields:
 - Update "Project Structure" section if the actual project structure differs
 - Update "Code Organization" section with project-specific patterns
 - Keep the development commands and MCP tool instructions as-is
-- Keep the "Upstream remote" and "Pulling Updates from Upstream" sections as-is (they prevent accidental pushes to the public template)
+- Keep the "Upstream configuration" and "Pulling Updates from Upstream" sections as-is (they prevent accidental pushes to the public template)
 
 ### 5. Example Source Files
 
@@ -74,23 +74,12 @@ The `src/` directory contains example files (`add.ts`, `add.test.ts`, `main.ts`)
 - Note to user: these can be deleted once actual project code is implemented
 - They serve as examples of the testing and code organization patterns
 
-## Git remotes (do this before other Git work)
-
-If the repo has an `upstream` remote for `peerigon/template`, ensure pushes to it are disabled so only `git fetch`/`git merge` from upstream are possible:
-
-```bash
-git remote set-url --push upstream DISABLED
-```
-````
-
-If `upstream` is missing, run `git remote add upstream https://github.com/peerigon/template.git`, then `git remote set-url --push upstream DISABLED`. Confirm with `git remote -v`.
-
 ## Additional Considerations
 
 - Check if `package-lock.json` should be regenerated after package.json changes
+- Confirm `git remote -v` shows `upstream` with push URL `DISABLED`, otherwise run `git remote set-url --push upstream DISABLED`
 - Verify all tests still pass after changes: `npm test`
-
-`````
+```
 
 </details>
 
@@ -130,7 +119,8 @@ git remote add upstream https://github.com/peerigon/template.git
 git remote set-url --push upstream DISABLED
 git fetch upstream
 git merge --allow-unrelated-histories --strategy-option theirs --no-commit upstream/main
-`````
+```
+````
 
 This will:
 
@@ -176,7 +166,7 @@ Decide on treatment of `src/` directory:
 2. Run `npm test` to verify all changes work
 3. Review `git status` and `git diff --staged` for any unexpected changes
 4. Clean up any unwanted template artifacts
-5. Confirm `git remote -v` shows `upstream` with push URL `DISABLED` (if you skipped it in Phase 2, run `git remote set-url --push upstream DISABLED`)
+5. Confirm `git remote -v` shows `upstream` with push URL `DISABLED`
 
 ## Phase 6: Staging
 

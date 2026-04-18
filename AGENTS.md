@@ -44,11 +44,9 @@ This project uses npm scripts for all development tasks:
 - Uses ES module syntax throughout (`.ts` extensions in imports)
 - **Environment variables**: Use `src/env.ts`; destructure at top-level module scope so missing vars fail immediately.
 
-## Upstream remote (forks and template merges)
+## Upstream configuration
 
-Configure the `upstream` remote so it can **only be fetched**, never pushed to. That applies whenever this repo is used as a base: **after forking** to start a new project, or **after adding** `https://github.com/peerigon/template.git` as `upstream` in an existing clone. Without this, `git push upstream` could send a downstream project’s commits to the public template.
-
-**One-time setup** (run as soon as `upstream` exists or right after `git remote add upstream …`):
+Configure the `upstream` remote so it can **only be fetched**, never pushed to:
 
 ```bash
 git remote set-url --push upstream DISABLED
@@ -59,23 +57,6 @@ Verify with `git remote -v`: `upstream` should show a normal fetch URL and `DISA
 ## Pulling Updates from Upstream
 
 If the user is asking you to pull in updates from the upstream repository, follow the steps below.
-
-### Step 0: Ensure Upstream Is Fetch-Only
-
-**Never push to `upstream`** — it points to `peerigon/template`, a public repository. Before any `push`, confirm that the push URL to `upstream` is disabled:
-
-```bash
-git remote -v
-# If `upstream` shows a real push URL, disable it:
-git remote set-url --push upstream DISABLED
-```
-
-If `upstream` is not configured yet, add it and disable push in one flow:
-
-```bash
-git remote add upstream https://github.com/peerigon/template.git
-git remote set-url --push upstream DISABLED
-```
 
 ### Step 1: Merge Template Updates
 
