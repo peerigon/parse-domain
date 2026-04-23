@@ -18,7 +18,7 @@ permissions: {}
 
 jobs:
   lint-github-actions:
-    name: 🌈 zizmor
+    name: 🔍 Lint GitHub Actions
     runs-on: ubuntu-latest
     permissions:
       contents: read
