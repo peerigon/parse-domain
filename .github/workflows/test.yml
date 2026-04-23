@@ -8,6 +8,10 @@ on:
   pull_request: {}
   workflow_dispatch: {}
 
+permissions:
+  actions: write
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
