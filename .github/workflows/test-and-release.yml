@@ -11,13 +11,10 @@ on:
 permissions: {}
 
 jobs:
-  test:
-    name: 🧪 Test
+  test-and-release:
+    name: 🧪 Test and 🚀 Release
     runs-on: ubuntu-latest
     if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
-    permissions:
-      actions: write
-      contents: read
 
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
@@ -25,6 +22,7 @@ jobs:
 
     permissions:
       # Necessary for semantic-release
+      actions: write
       contents: read
       issues: write
       pull-requests: write
@@ -35,9 +33,9 @@ jobs:
 
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # main
+        uses: actions/checkout@900f2210b1d28bbbd0bd22d17926b9e224e8f231 # main
         with:
-          persist-credentials: false
+          persist-credentials: true
 
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@670825a89dc0abd596e7a3abd0f5e3f6e5faf37c # main
