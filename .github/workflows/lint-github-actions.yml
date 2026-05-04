@@ -1,0 +1,35 @@
+name: 🔍 Lint GitHub Actions
+
+on:
+  push:
+    branches:
+      - main
+      - beta
+    paths:
+      - ".github/workflows/**/*.yml"
+      - ".github/workflows/**/*.yaml"
+  pull_request:
+    paths:
+      - ".github/workflows/**/*.yml"
+      - ".github/workflows/**/*.yaml"
+  workflow_dispatch: {}
+
+permissions: {}
+
+jobs:
+  lint-github-actions:
+    name: 🔍 Lint GitHub Actions
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # main
+        with:
+          persist-credentials: false
+
+      - name: 🌈 Run zizmor
+        uses: zizmorcore/zizmor-action@b1d7e1fb5de872772f31590499237e7cce841e8e # v0.5.3
+        with:
+          advanced-security: false

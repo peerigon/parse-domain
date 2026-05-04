@@ -8,10 +8,16 @@ on:
   pull_request: {}
   workflow_dispatch: {}
 
+permissions: {}
+
 jobs:
-  test-and-release:
+  test:
+    name: 🧪 Test
     runs-on: ubuntu-latest
     if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    permissions:
+      actions: write
+      contents: read
 
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
@@ -30,22 +36,24 @@ jobs:
     steps:
       - name: 📥 Checkout repository
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # main
+        with:
+          persist-credentials: false
 
       - name: 🟢 Setup Node.js
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # main
+        uses: actions/setup-node@670825a89dc0abd596e7a3abd0f5e3f6e5faf37c # main
         with:
           node-version-file: ".tool-versions"
           cache: "npm"
 
       - name: 🗄 Cache node_modules
         id: cache-node_modules
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # main
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # main
         with:
           path: "**/node_modules"
           key: node_modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: 🗄 Cache .eslintcache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # main
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # main
         with:
           path: .eslintcache
           key: eslintcache-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
