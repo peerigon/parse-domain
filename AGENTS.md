@@ -27,7 +27,7 @@ This project uses npm scripts for all development tasks:
 - **Type check**: `npm run test:types` - TypeScript compiler check
 - **Format check**: `npm run test:format` - Prettier format validation
 
-**Important**: Use the typescript-lsp MCP to get diagnostics and type information
+**Important**: Use the typescript-lsp MCP (`getDiagnostics`, `getTypeAtPosition`, `getDefinition`, etc.) for type information
 **Important**: Use the vitest-server MCP to run individual tests.
 **Important**: Use the eslint MCP to check for linting errors.
 
