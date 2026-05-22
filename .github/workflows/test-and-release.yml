@@ -21,9 +21,10 @@ jobs:
       cancel-in-progress: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/beta' }}
 
     permissions:
-      # Necessary for semantic-release
+      # Required for concurrency cancel-in-progress on PR branches
       actions: write
-      contents: read
+      # semantic-release: push version commits/tags and create GitHub releases
+      contents: write
       issues: write
       pull-requests: write
       # Necessary for npm publish --provenance
