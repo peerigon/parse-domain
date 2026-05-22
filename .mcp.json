@@ -1,22 +1,15 @@
 {
   "mcpServers": {
     "vitest-server": {
-      "command": "npx",
-      "args": ["-y", "@djankies/vitest-mcp"]
+      "command": "node_modules/.bin/vitest-mcp"
     },
     "typescript-lsp": {
       "type": "stdio",
-      "command": "npx",
-      "args": [
-        "tritlo/lsp-mcp",
-        "typescript",
-        "./node_modules/.bin/typescript-language-server",
-        "--stdio"
-      ]
+      "command": "node_modules/.bin/ts-lsp-mcp",
+      "args": ["serve", "--stdio"]
     },
     "eslint": {
-      "command": "npx",
-      "args": ["@eslint/mcp"]
+      "command": "node_modules/.bin/mcp"
     }
   }
 }
