@@ -34,6 +34,6 @@
     "secretlint": "^13.0.2",
     "ts-lsp-mcp": "0.1.3",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.6"
+    "vitest": "^4.1.7"
   }
 }
