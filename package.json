@@ -28,7 +28,7 @@
     "eslint": "^9.39.2",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.5",
-    "npm-run-all2": "^8.0.4",
+    "npm-run-all2": "^9.0.1",
     "pin-github-action": "^3.4.0",
     "prettier": "^3.8.3",
     "secretlint": "^13.0.2",
