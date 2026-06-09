@@ -131,3 +131,6 @@ dist
 
 # MacOS Finder
 .DS_Store
+
+# Generated trie data (built by build:update and build:tsc)
+serialized-tries/
