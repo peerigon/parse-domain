@@ -3,7 +3,7 @@
 
 # Check if template remote exists
 if ! git remote | grep -q "^template$"; then
-    git remote add template https://github.com/peerigon/template.git
+    git remote add template https://github.com/peerigon/template-public-package.git
 fi
 
 git remote set-url --push template DISABLED

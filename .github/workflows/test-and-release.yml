@@ -8,17 +8,22 @@ on:
   pull_request: {}
   workflow_dispatch: {}
 
+permissions: {}
+
 jobs:
   test-and-release:
+    name: 🧪 Test and 🚀 Release
     runs-on: ubuntu-latest
     if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
 
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: true
+      cancel-in-progress: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/beta' }}
 
     permissions:
-      # Necessary for semantic-release
+      # Required for concurrency cancel-in-progress on PR branches
+      actions: write
+      # semantic-release: push version commits/tags and create GitHub releases
       contents: write
       issues: write
       pull-requests: write
@@ -29,23 +34,25 @@ jobs:
 
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@8edcb1bdb4e267140fa742c62e395cd74f332709 # main
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # main
+        with:
+          persist-credentials: true
 
       - name: 🟢 Setup Node.js
-        uses: actions/setup-node@65beceff8e91358525397bdce9103d999507ab03 # main
+        uses: actions/setup-node@0355742c943ddb13ca8a6b700f824231caa91e75 # main
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: ".tool-versions"
           cache: "npm"
 
       - name: 🗄 Cache node_modules
         id: cache-node_modules
-        uses: actions/cache@640a1c2554105b57832a23eea0b4672fc7a790d5 # main
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # main
         with:
           path: "**/node_modules"
           key: node_modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: 🗄 Cache .eslintcache
-        uses: actions/cache@640a1c2554105b57832a23eea0b4672fc7a790d5 # main
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # main
         with:
           path: .eslintcache
           key: eslintcache-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
@@ -55,27 +62,34 @@ jobs:
         run: |
           npm ci --ignore-scripts --prefer-offline --no-audit
 
-      - name: 🧪 Run tests
+      - name: 🏗 Build
         run: |
           npm run prepare:build
-          npm test
+
+      - name: 🧪 Run tests
         env:
           CI: true
+        run: |
+          npm test
 
       - name: ⬆️ Upload coverage report
-        uses: coverallsapp/github-action@e7f4f977bd3dba07a6fda03be3053f1658992446 # main
+        uses: coverallsapp/github-action@0a51d2e0b5417d06e4ecceb534aec87defc53926 # main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🚀 Release preview
         if: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/beta' }}
+        # Call to npm publish --dry-run is currently necessary, see https://github.com/stackblitz-labs/pkg.pr.new/issues/320
         run: |
+          npm publish --dry-run --tag test-release
           npx pkg-pr-new publish
 
       - name: 🚀 Release on npm and jsr
         if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta' }}
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # Fetch the last 30 commits to ensure we have a complete CHANGELOG.md
+        # See https://github.com/peerigon/template-public-package/issues/2
         run: |
+          git fetch --depth=30
           npm run release

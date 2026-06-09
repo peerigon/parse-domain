@@ -11,6 +11,10 @@
     "sanitize",
     "top-level"
   ],
+  "homepage": "https://github.com/peerigon/parse-domain#readme",
+  "bugs": {
+    "url": "https://github.com/peerigon/parse-domain/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/peerigon/parse-domain.git"
@@ -19,6 +23,9 @@
   "author": "peerigon <developers@peerigon.com>",
   "sideEffects": false,
   "type": "module",
+  "exports": {
+    ".": "./dist/main.js"
+  },
   "main": "./dist/main.js",
   "types": "./dist/main.d.ts",
   "bin": {
@@ -27,7 +34,9 @@
   "files": [
     "bin",
     "dist",
-    "serialized-tries"
+    "serialized-tries",
+    "CHANGELOG.md",
+    "README.md"
   ],
   "scripts": {
     "test": "run-p test:*",
@@ -35,6 +44,8 @@
     "test:lint": "eslint --max-warnings 0 --cache .",
     "test:format": "prettier --check .",
     "test:types": "tsc --noEmit",
+    "test:jsr": "jsr publish --dry-run --allow-dirty",
+    "vitest": "vitest",
     "build": "run-s build:*",
     "build:cleanup": "rimraf dist",
     "build:tsc": "tsc -p ./tsconfig.build.json",
@@ -45,8 +56,7 @@
     "update:psl-fixture": "npm run node -- ./src/scripts/update-psl-fixture.ts",
     "update:dependencies": "updtr",
     "node": "node --no-warnings --loader ts-node/esm/transpile-only",
-    "release": "semantic-release",
-    "vitest": "vitest"
+    "release": "semantic-release"
   },
   "dependencies": {
     "is-ip": "^5.0.1"
@@ -60,14 +70,15 @@
     "@vitest/coverage-v8": "^4.1.7",
     "eslint": "^9.39.2",
     "husky": "^9.1.7",
+    "jsr": "^0.14.3",
     "lint-staged": "^17.0.5",
     "nock": "^14.0.10",
     "npm-run-all2": "^9.0.1",
     "pin-github-action": "^3.4.0",
     "prettier": "^3.8.3",
-    "rimraf": "^6.1.0",
+    "rimraf": "^6.0.1",
     "secretlint": "^13.0.2",
-    "semantic-release": "^25.0.1",
+    "semantic-release": "^25.0.3",
     "ts-lsp-mcp": "0.1.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
