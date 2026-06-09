@@ -29,10 +29,9 @@
   "main": "./dist/main.js",
   "types": "./dist/main.d.ts",
   "bin": {
-    "parse-domain-update": "./bin/update.js"
+    "parse-domain-update": "./dist/bin/update.js"
   },
   "files": [
-    "bin",
     "dist",
     "serialized-tries",
     "CHANGELOG.md",
@@ -49,7 +48,7 @@
     "build": "run-s build:*",
     "build:cleanup": "rimraf dist",
     "build:tsc": "tsc -p ./tsconfig.build.json",
-    "build:update": "./bin/update.js",
+    "build:update": "node ./dist/bin/update.js",
     "prepare": "run-p prepare:*",
     "prepare:husky": "husky",
     "prepare:build": "npm run build",

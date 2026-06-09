@@ -3,15 +3,5 @@
   "compilerOptions": {
     "lib": ["es2024", "dom"],
     "erasableSyntaxOnly": false
-  },
-  "exclude": [
-    "bin",
-    "dist",
-    "coverage",
-    "node_modules",
-    "build",
-    ".next",
-    ".nuxt",
-    ".vercel"
-  ]
+  }
 }

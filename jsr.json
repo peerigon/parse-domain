@@ -5,7 +5,7 @@
   "license": "MIT",
   "exports": "./src/main.ts",
   "publish": {
-    "include": ["src", "serialized-tries", "bin", "README.md", "LICENSE"],
+    "include": ["src", "serialized-tries", "README.md", "LICENSE"],
     "exclude": [
       "!serialized-tries/*.js",
       "!serialized-tries/*.json",
