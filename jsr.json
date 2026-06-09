@@ -7,6 +7,8 @@
   "publish": {
     "include": ["src", "serialized-tries", "bin", "README.md", "LICENSE"],
     "exclude": [
+      "!serialized-tries/*.js",
+      "!serialized-tries/*.json",
       "src/**/*.test.ts",
       "src/**/*.test.ts.snap",
       "src/tests/**/*.ts"
