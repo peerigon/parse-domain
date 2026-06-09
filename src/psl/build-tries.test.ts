@@ -28,41 +28,41 @@ describe("buildTries()", () => {
     expect(privateTrie.children.has(toASCII(exampleDomain2))).toBe(true);
   });
 
-  test("throws when the ICANN start marker is missing ", () => {
+  test("throws when the ICANN start marker is missing", () => {
     const listContent = [""].join("\n");
 
-    expect(() => buildTries(listContent)).toThrowError(
+    expect(() => buildTries(listContent)).toThrow(
       `Missing start marker ${PUBLIC_SUFFIX_MARKER_ICANN_START} in public suffix list`,
     );
   });
 
-  test("throws when the ICANN end marker is missing ", () => {
+  test("throws when the ICANN end marker is missing", () => {
     const listContent = [PUBLIC_SUFFIX_MARKER_ICANN_START].join("\n");
 
-    expect(() => buildTries(listContent)).toThrowError(
+    expect(() => buildTries(listContent)).toThrow(
       `Missing end marker ${PUBLIC_SUFFIX_MARKER_ICANN_END} in public suffix list`,
     );
   });
 
-  test("throws when the PRIVATE start marker is missing ", () => {
+  test("throws when the PRIVATE start marker is missing", () => {
     const listContent = [
       PUBLIC_SUFFIX_MARKER_ICANN_START,
       PUBLIC_SUFFIX_MARKER_ICANN_END,
     ].join("\n");
 
-    expect(() => buildTries(listContent)).toThrowError(
+    expect(() => buildTries(listContent)).toThrow(
       `Missing start marker ${PUBLIC_SUFFIX_MARKER_PRIVATE_START} in public suffix list`,
     );
   });
 
-  test("throws when the PRIVATE end marker is missing ", () => {
+  test("throws when the PRIVATE end marker is missing", () => {
     const listContent = [
       PUBLIC_SUFFIX_MARKER_ICANN_START,
       PUBLIC_SUFFIX_MARKER_ICANN_END,
       PUBLIC_SUFFIX_MARKER_PRIVATE_START,
     ].join("\n");
 
-    expect(() => buildTries(listContent)).toThrowError(
+    expect(() => buildTries(listContent)).toThrow(
       `Missing end marker ${PUBLIC_SUFFIX_MARKER_PRIVATE_END} in public suffix list`,
     );
   });

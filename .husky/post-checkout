@@ -1,0 +1,10 @@
+#!/bin/bash
+# .git/hooks/post-checkout
+
+# Check if template remote exists
+if ! git remote | grep -q "^template$"; then
+    git remote add template https://github.com/peerigon/template.git
+fi
+
+git remote set-url --push template DISABLED
+git config checkout.defaultRemote origin

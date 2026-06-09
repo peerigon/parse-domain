@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(grep:*)",
+      "Bash(npm run test:*)",
+      "Bash(npm test)",
+      "Bash(npx tsc:*)",
+      "Bash(npx prettier:*)",
+      "Bash(npx eslint:*)",
+      "mcp__eslint__lint-files",
+      "mcp__typescript-lsp__getTypeAtPosition",
+      "mcp__typescript-lsp__getDefinition",
+      "mcp__typescript-lsp__getReferences",
+      "mcp__typescript-lsp__getHover",
+      "mcp__typescript-lsp__getCompletions",
+      "mcp__typescript-lsp__getDiagnostics",
+      "mcp__typescript-lsp__traceType",
+      "mcp__typescript-lsp__runTypeTests",
+      "mcp__typescript-lsp__checkInlineCode",
+      "mcp__vitest-server__set_project_root",
+      "mcp__vitest-server__list_tests",
+      "mcp__vitest-server__run_tests",
+      "mcp__vitest-server__analyze_coverage"
+    ],
+    "deny": []
+  },
+  "enabledMcpjsonServers": ["vitest-server", "typescript-lsp", "eslint"]
+}

@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "vitest-server": {
+      "command": "node_modules/.bin/vitest-mcp"
+    },
+    "typescript-lsp": {
+      "type": "stdio",
+      "command": "node_modules/.bin/ts-lsp-mcp",
+      "args": ["serve", "--stdio"]
+    },
+    "eslint": {
+      "command": "node_modules/.bin/mcp"
+    }
+  }
+}
