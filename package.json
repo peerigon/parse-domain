@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "@djankies/vitest-mcp": "0.5.1",
-    "@eslint/mcp": "0.3.5",
+    "@eslint/mcp": "0.3.6",
     "@peerigon/configs": "^15.4.0",
     "@secretlint/secretlint-rule-preset-recommend": "^13.0.2",
     "@types/node": "^25.8.0",
