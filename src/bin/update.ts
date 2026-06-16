@@ -2,7 +2,6 @@
 import * as fs from "node:fs";
 import { EOL } from "node:os";
 import * as path from "node:path";
-import { runSmokeTest } from "../smoke-test.js";
 import { fetchBuildSerializeTries } from "../update-tries.js";
 
 const serializedTriesDir = path.resolve(
@@ -12,6 +11,8 @@ const serializedTriesDir = path.resolve(
 
 const { serializedIcannTrie, serializedPrivateTrie } =
   await fetchBuildSerializeTries();
+
+await fs.promises.mkdir(serializedTriesDir, { recursive: true });
 
 await Promise.all([
   fs.promises.writeFile(
@@ -29,5 +30,6 @@ await Promise.all([
 ]);
 
 process.stderr.write("Running smoke test... ");
+const { runSmokeTest } = await import("../smoke-test.js");
 runSmokeTest();
 process.stdout.write("ok" + EOL);
