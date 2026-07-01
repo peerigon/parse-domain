@@ -67,7 +67,7 @@
     "@secretlint/secretlint-rule-preset-recommend": "^13.0.2",
     "@types/node": "^26.0.1",
     "@vitest/coverage-v8": "^4.1.9",
-    "eslint": "^9.39.2",
+    "eslint": "^10.5.0",
     "husky": "^9.1.7",
     "jsr": "^0.14.3",
     "lint-staged": "^17.0.8",
