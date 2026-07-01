@@ -21,11 +21,9 @@ export const fromUrl = (urlLike: string): string | typeof NO_HOSTNAME => {
   let url = urlLike.startsWith("//")
     ? `http:${urlLike}`
     : // URLs that start with / do not have a hostname section
-      urlLike.startsWith("/")
+      urlLike.startsWith("/") || urlPattern.test(urlLike)
       ? urlLike
-      : urlPattern.test(urlLike)
-        ? urlLike
-        : `http://${urlLike}`;
+      : `http://${urlLike}`;
 
   url = url.replace(invalidIpv6Pattern, "$1[$2]$3");
 

@@ -35,12 +35,12 @@ describe(fromUrl.name, () => {
   });
 
   test("it returns a puny-encoded hostname", () => {
-    expect(fromUrl("http://münchen.de")).toBe("xn--mnchen-3ya.de");
+    expect(fromUrl("https://münchen.de")).toBe("xn--mnchen-3ya.de");
     expect(fromUrl("münchen.de")).toBe("xn--mnchen-3ya.de");
   });
 
   test("it handles already puny-encoded hostnames well", () => {
-    expect(fromUrl("http://xn--mnchen-3ya.de")).toBe("xn--mnchen-3ya.de");
+    expect(fromUrl("https://xn--mnchen-3ya.de")).toBe("xn--mnchen-3ya.de");
     expect(fromUrl("xn--mnchen-3ya.de")).toBe("xn--mnchen-3ya.de");
   });
 
@@ -71,7 +71,7 @@ describe(fromUrl.name, () => {
   test("it doesn't get confused with other : characters", () => {
     expect(
       fromUrl(
-        "http://www.example.com/search?updated-max=2020-04-16T09:14:00+10:00",
+        "https://www.example.com/search?updated-max=2020-04-16T09:14:00+10:00",
       ),
     ).toBe("www.example.com");
   });

@@ -34,33 +34,42 @@ jobs:
 
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # main
+        uses: actions/checkout@4f1f4aec02e41874fa0262ea8ff5172d7978ad1e # main
         with:
           persist-credentials: true
 
       - name: 🟢 Setup Node.js
-        uses: actions/setup-node@0355742c943ddb13ca8a6b700f824231caa91e75 # main
+        uses: actions/setup-node@6a61c0375d66246de94630495909f12cf8dac84d # main
         with:
-          node-version-file: ".tool-versions"
-          cache: "npm"
+          node-version-file: "package.json"
 
       - name: 🗄 Cache node_modules
         id: cache-node_modules
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # main
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # main
         with:
           path: "**/node_modules"
           key: node_modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: 🗄 Cache .eslintcache
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # main
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # main
         with:
-          path: .eslintcache
-          key: eslintcache-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          path: "**/.eslintcache"
+          # Unique key per commit so the cache is refreshed when code changes,
+          # while restore-keys reuses the most recent previous cache as a base.
+          key: eslintcache-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-${{ github.sha }}
+          restore-keys: |
+            eslintcache-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-
+            eslintcache-${{ runner.os }}-
 
       - name: 🔍 Install dependencies
         if: steps.cache-node_modules.outputs.cache-hit != 'true'
         run: |
-          npm ci --ignore-scripts --prefer-offline --no-audit
+          npm ci --ignore-scripts --prefer-offline --no-audit --strict-peer-deps
+
+      # `.npmrc` sets `ignore-scripts=true`. In case there is
+      # a build script, it must now get executed explicitly.
+      - name: 📦 Build
+        run: npm run build --if-present
 
       - name: 🏗 Build
         run: |

@@ -40,8 +40,8 @@
   "scripts": {
     "test": "run-p test:*",
     "test:suite": "vitest run --coverage",
-    "test:lint": "eslint --max-warnings 0 --cache .",
     "test:format": "prettier --check .",
+    "test:lint": "eslint --max-warnings 0 --cache .",
     "test:types": "tsc --noEmit",
     "test:jsr": "jsr publish --dry-run --allow-dirty",
     "vitest": "vitest",
@@ -62,27 +62,34 @@
   },
   "devDependencies": {
     "@djankies/vitest-mcp": "0.5.1",
-    "@eslint/mcp": "0.3.5",
-    "@peerigon/configs": "^15.4.0",
+    "@eslint/mcp": "0.3.7",
+    "@peerigon/configs": "^18.1.2",
     "@secretlint/secretlint-rule-preset-recommend": "^13.0.2",
-    "@types/node": "^25.8.0",
-    "@vitest/coverage-v8": "^4.1.7",
+    "@types/node": "^26.0.1",
+    "@vitest/coverage-v8": "^4.1.9",
     "eslint": "^9.39.2",
     "husky": "^9.1.7",
     "jsr": "^0.14.3",
-    "lint-staged": "^17.0.5",
+    "lint-staged": "^17.0.8",
     "nock": "^14.0.10",
-    "npm-run-all2": "^9.0.1",
+    "npm-run-all2": "^9.0.2",
     "pin-github-action": "^3.4.0",
-    "prettier": "^3.8.3",
+    "prettier": "^3.9.0",
     "rimraf": "^6.0.1",
     "secretlint": "^13.0.2",
     "semantic-release": "^25.0.3",
     "ts-lsp-mcp": "0.1.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "updtr": "^4.1.0",
-    "vitest": "^4.1.7"
+    "vitest": "^4.1.9"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "24.16.0",
+      "onFail": "error"
+    }
   },
   "publishConfig": {
     "access": "public",

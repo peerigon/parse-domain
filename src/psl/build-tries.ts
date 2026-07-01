@@ -7,7 +7,7 @@ import {
 import { toASCII } from "../punycode.js";
 import { createTrieFromList } from "../trie/create-trie.js";
 
-const matchNewLine = /\r?\n/u;
+const matchNewline = /\r?\n/u;
 const matchComment = /^\s*\/\//u;
 const matchWhitespace = /^\s*$/u;
 
@@ -41,7 +41,7 @@ const parsePsl = (listContent: string) => {
       PUBLIC_SUFFIX_MARKER_ICANN_START,
       PUBLIC_SUFFIX_MARKER_ICANN_END,
     )
-      .split(matchNewLine)
+      .split(matchNewline)
       .filter((line) => containsRule(line))
       .map((line) => toASCII(line)),
     private: extractByMarkers(
@@ -49,7 +49,7 @@ const parsePsl = (listContent: string) => {
       PUBLIC_SUFFIX_MARKER_PRIVATE_START,
       PUBLIC_SUFFIX_MARKER_PRIVATE_END,
     )
-      .split(matchNewLine)
+      .split(matchNewline)
       .filter((line) => containsRule(line))
       .map((line) => toASCII(line)),
   };

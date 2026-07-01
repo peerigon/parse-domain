@@ -281,7 +281,7 @@ describe(parseDomain.name, () => {
   });
 
   test("returns type ParseResultType.Invalid and error information for a hostname with a label that is too long (both validation modes)", () => {
-    const labelToLong = Array.from({ length: 64 }).fill("x").join("");
+    const labelToLong = Array.from({ length: 64 }, () => "x").join("");
 
     [Validation.Lax, Validation.Strict].forEach((validation) => {
       expect(parseDomain(labelToLong, { validation })).toMatchObject({
@@ -307,18 +307,18 @@ describe(parseDomain.name, () => {
     });
     // Should work with 63 octets
     expect(
-      parseDomain(Array.from({ length: 63 }).fill("x").join("")),
+      parseDomain(Array.from({ length: 63 }, () => "x").join("")),
     ).toMatchObject({
       type: ParseResultType.NotListed,
     });
   });
 
   test("returns type ParseResultType.Invalid and error information for a hostname that is too long", () => {
-    const domain = Array.from({ length: 254 }).fill("x").join("");
+    const domain = Array.from({ length: 254 }, () => "x").join("");
 
     // A single long label
     expect(
-      parseDomain(Array.from({ length: 254 }).fill("x").join("")),
+      parseDomain(Array.from({ length: 254 }, () => "x").join("")),
     ).toMatchObject({
       type: ParseResultType.Invalid,
       errors: expect.arrayContaining([
@@ -332,7 +332,7 @@ describe(parseDomain.name, () => {
 
     // Multiple labels
     expect(
-      parseDomain(Array.from({ length: 128 }).fill("x").join(".")),
+      parseDomain(Array.from({ length: 128 }, () => "x").join(".")),
     ).toMatchObject({
       type: ParseResultType.Invalid,
       errors: expect.arrayContaining([
@@ -344,7 +344,7 @@ describe(parseDomain.name, () => {
 
     // Should work with 253 octets
     expect(
-      parseDomain(Array.from({ length: 127 }).fill("x").join(".")),
+      parseDomain(Array.from({ length: 127 }, () => "x").join(".")),
     ).toMatchObject({
       type: ParseResultType.NotListed,
     });
@@ -353,7 +353,7 @@ describe(parseDomain.name, () => {
   test("interprets the hostname as octets", () => {
     // The "ä" character is 2 octets long which is why we only need
     // 127 of them to exceed the limit
-    const domain = Array.from({ length: 127 }).fill("ä").join("");
+    const domain = Array.from({ length: 127 }, () => "ä").join("");
 
     expect(parseDomain(domain)).toMatchObject({
       type: ParseResultType.Invalid,
