@@ -44,6 +44,10 @@ This project uses npm scripts for all development tasks:
 - Uses ES module syntax throughout (`.ts` extensions in imports)
 - **Environment variables**: Use `src/env.ts`; destructure at top-level module scope so missing vars fail immediately.
 
+## Commit Messages
+
+Use [Conventional Commits](https://www.conventionalcommits.org/) for all commit messages (e.g. `feat: ...`, `fix: ...`, `chore: ...`).
+
 ## Template as a git remote
 
 Configure the `template` remote so it can **only be fetched**, never pushed to:
