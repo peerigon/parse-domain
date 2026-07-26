@@ -1,5 +1,8 @@
 {
   "extends": ["./tsconfig.json", "@peerigon/configs/typescript/lib"],
+  "compilerOptions": {
+    "types": ["node"]
+  },
   "include": ["src"],
   "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/tests/**/*"]
 }
