@@ -9,7 +9,7 @@
   "scripts": {
     "prepare": "husky",
     "test": "run-p test:*",
-    "test:format": "prettier --check .",
+    "test:format": "oxfmt --check .",
     "test:lint": "eslint --max-warnings 0 --cache .",
     "test:types": "tsc",
     "test:unit": "vitest --run",
@@ -21,7 +21,7 @@
   "devDependencies": {
     "@djankies/vitest-mcp": "0.5.1",
     "@eslint/mcp": "0.3.7",
-    "@peerigon/configs": "^18.1.2",
+    "@peerigon/configs": "^21.2.0",
     "@secretlint/secretlint-rule-preset-recommend": "^13.0.2",
     "@types/node": "^26.0.1",
     "@vitest/coverage-v8": "^4.1.9",
@@ -29,8 +29,8 @@
     "husky": "^9.1.7",
     "lint-staged": "^17.0.8",
     "npm-run-all2": "^9.0.2",
+    "oxfmt": "^0.59.0",
     "pin-github-action": "^3.4.0",
-    "prettier": "^3.9.0",
     "secretlint": "^13.0.2",
     "ts-lsp-mcp": "0.1.3",
     "typescript": "^6.0.3",
