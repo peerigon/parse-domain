@@ -1,5 +1,6 @@
 import { loadEnv } from "vite";
 import { defineConfig } from "vitest/config";
+
 import { env } from "./src/env.ts";
 
 const { CI } = env;

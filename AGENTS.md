@@ -25,7 +25,7 @@ This project uses npm scripts for all development tasks:
 - **Watch tests**: `npm run vitest` - Run Vitest in watch mode
 - **Lint**: `npm run test:lint` - ESLint with zero warnings allowed
 - **Type check**: `npm run test:types` - TypeScript compiler check
-- **Format check**: `npm run test:format` - Prettier format validation
+- **Format check**: `npm run test:format` - Oxfmt format validation
 
 **Important**: Use the typescript-lsp MCP (`getDiagnostics`, `getTypeAtPosition`, `getDefinition`, etc.) for type information
 **Important**: Use the vitest-server MCP to run individual tests.
@@ -35,7 +35,7 @@ This project uses npm scripts for all development tasks:
 
 - **Source**: `src/` - All source code and tests
 - **Tests**: Co-located with source files using `.test.ts` suffix
-- **Configuration**: Uses `@peerigon/configs` for shared TypeScript, ESLint, and Prettier configs
+- **Configuration**: Uses `@peerigon/configs` for shared TypeScript, ESLint, and Oxfmt configs
 
 ## Code Organization
 
@@ -43,6 +43,10 @@ This project uses npm scripts for all development tasks:
 - Each function has comprehensive unit tests using Vitest
 - Uses ES module syntax throughout (`.ts` extensions in imports)
 - **Environment variables**: Use `src/env.ts`; destructure at top-level module scope so missing vars fail immediately.
+
+## Commit Messages
+
+Use [Conventional Commits](https://www.conventionalcommits.org/) for all commit messages (e.g. `feat: ...`, `fix: ...`, `chore: ...`).
 
 ## Template as a git remote
 
