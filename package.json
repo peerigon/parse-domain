@@ -27,7 +27,7 @@
     "@vitest/coverage-v8": "^4.1.9",
     "eslint": "^9.39.2",
     "husky": "^9.1.7",
-    "lint-staged": "^17.0.8",
+    "lint-staged": "^17.1.1",
     "npm-run-all2": "^9.0.2",
     "oxfmt": "^0.59.0",
     "pin-github-action": "^3.4.0",
