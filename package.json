@@ -84,6 +84,9 @@
     "updtr": "^4.1.0",
     "vitest": "^4.1.9"
   },
+  "overrides": {
+    "oxlint-tsgolint": "^0.24.0"
+  },
   "devEngines": {
     "runtime": {
       "name": "node",
