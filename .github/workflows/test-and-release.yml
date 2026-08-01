@@ -39,7 +39,7 @@ jobs:
           persist-credentials: true
 
       - name: 🟢 Setup Node.js
-        uses: actions/setup-node@6a61c0375d66246de94630495909f12cf8dac84d # main
+        uses: actions/setup-node@e51e5fe84fc33b4c73ebe40526b2694712b5b858 # main
         with:
           node-version-file: "package.json"
 
