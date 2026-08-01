@@ -64,7 +64,7 @@ jobs:
       - name: 🔍 Install dependencies
         if: steps.cache-node_modules.outputs.cache-hit != 'true'
         run: |
-          npm ci --ignore-scripts --prefer-offline --no-audit --strict-peer-deps
+          npm ci --ignore-scripts --prefer-offline --no-audit --legacy-peer-deps
 
       # `.npmrc` sets `ignore-scripts=true`. In case there is
       # a build script, it must now get executed explicitly.
