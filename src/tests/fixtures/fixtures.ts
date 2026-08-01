@@ -1,18 +1,16 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
+
 import { fetchPsl } from "../../psl/fetch-psl.js";
 
-const pathToPslFixture = path.resolve(
-  import.meta.dirname,
-  "public-suffix-list.txt",
-);
+const pathToPslFixture = path.resolve(import.meta.dirname, "public-suffix-list.txt");
 
-export const updatePslFixture = async () => {
+export const updatePslFixture = async (): Promise<void> => {
   const psl = await fetchPsl();
 
   await fs.promises.writeFile(pathToPslFixture, psl);
 };
 
-export const readPslFixture = async () => {
+export const readPslFixture = async (): Promise<string> => {
   return fs.promises.readFile(pathToPslFixture, "utf8");
 };

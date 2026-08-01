@@ -1,4 +1,5 @@
 import { ipVersion } from "is-ip";
+
 import { NO_HOSTNAME } from "./from-url.js";
 import type { Label } from "./parse-domain.js";
 
@@ -18,17 +19,15 @@ const textEncoder = new TextEncoder();
 
 export enum Validation {
   /**
-   * Allows any octets as labels but still restricts the length of labels and
-   * the overall domain.
+   * Allows any octets as labels but still restricts the length of labels and the overall domain.
    *
    * @see https://www.rfc-editor.org/rfc/rfc2181#section-11
    */
   Lax = "LAX",
 
   /**
-   * Only allows ASCII letters, digits and hyphens (aka LDH), forbids hyphens at
-   * the beginning or end of a label and requires top-level domain names not to
-   * be all-numeric.
+   * Only allows ASCII letters, digits and hyphens (aka LDH), forbids hyphens at the beginning or
+   * end of a label and requires top-level domain names not to be all-numeric.
    *
    * This is the default if no validation is configured.
    *
@@ -172,8 +171,7 @@ export const sanitize = (
   // We do not want to break compatibility with older engines unnecessarily.
   // eslint-disable-next-line unicorn/prefer-at
   const lastChar = input[input.length - 1]!;
-  const canonicalInput =
-    lastChar === LABEL_SEPARATOR ? input.slice(0, -1) : input;
+  const canonicalInput = lastChar === LABEL_SEPARATOR ? input.slice(0, -1) : input;
   const octets = new TextEncoder().encode(canonicalInput);
 
   if (octets.length > DOMAIN_LENGTH_MAX) {
@@ -232,24 +230,14 @@ const validateLabels = {
 
       if (invalidCharacter) {
         labelValidationErrors.push(
-          createLabelInvalidCharacterError(
-            label,
-            invalidCharacter[0],
-            invalidCharacter.index + 1,
-          ),
+          createLabelInvalidCharacterError(label, invalidCharacter[0], invalidCharacter.index + 1),
         );
       }
       if (label.startsWith("-")) {
-        labelValidationErrors.push(
-          createLabelInvalidCharacterError(label, "-", column),
-        );
+        labelValidationErrors.push(createLabelInvalidCharacterError(label, "-", column));
       } else if (label.endsWith("-")) {
         labelValidationErrors.push(
-          createLabelInvalidCharacterError(
-            label,
-            "-",
-            column + label.length - 1,
-          ),
+          createLabelInvalidCharacterError(label, "-", column + label.length - 1),
         );
       }
       if (
@@ -268,10 +256,7 @@ const validateLabels = {
 
     if (lastLabel !== undefined && /[a-z-]/iu.test(lastLabel) === false) {
       labelValidationErrors.push(
-        createLastLabelInvalidError(
-          lastLabel,
-          column - lastLabel.length - LABEL_SEPARATOR.length,
-        ),
+        createLastLabelInvalidError(lastLabel, column - lastLabel.length - LABEL_SEPARATOR.length),
       );
     }
 

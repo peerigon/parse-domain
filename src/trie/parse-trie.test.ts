@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vitest";
+
 import { expectChild, expectRoot } from "../tests/assertions/nodes.js";
 import { parseTrie } from "./parse-trie.js";
 

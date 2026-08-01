@@ -2,15 +2,12 @@
 import * as fs from "node:fs";
 import { EOL } from "node:os";
 import * as path from "node:path";
+
 import { fetchBuildSerializeTries } from "../update-tries.js";
 
-const serializedTriesDir = path.resolve(
-  import.meta.dirname,
-  "../../serialized-tries",
-);
+const serializedTriesDir = path.resolve(import.meta.dirname, "../../serialized-tries");
 
-const { serializedIcannTrie, serializedPrivateTrie } =
-  await fetchBuildSerializeTries();
+const { serializedIcannTrie, serializedPrivateTrie } = await fetchBuildSerializeTries();
 
 await fs.promises.mkdir(serializedTriesDir, { recursive: true });
 

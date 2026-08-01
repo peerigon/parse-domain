@@ -1,7 +1,8 @@
 import { deepStrictEqual } from "node:assert";
+
 import { fromUrl, parseDomain, ParseResultType } from "./main.js";
 
-export const runSmokeTest = () => {
+export const runSmokeTest = (): void => {
   deepStrictEqual(parseDomain("www.example.com"), {
     hostname: "www.example.com",
     type: ParseResultType.Listed,

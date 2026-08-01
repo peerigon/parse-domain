@@ -1,10 +1,10 @@
 import { describe, expect, test } from "vitest";
+
 import { parseDomain, ParseResultType, type ParseResult } from "./main.js";
 import { toASCII } from "./punycode.js";
 
 describe("Official test suite from https://raw.githubusercontent.com/publicsuffix/list/main/tests/test_psl.txt", () => {
-  const canonical = (hostname: string) =>
-    new URL("http://" + hostname).hostname;
+  const canonical = (hostname: string) => new URL("http://" + hostname).hostname;
 
   const checkPublicSuffix = (
     hostname: string,
@@ -12,9 +12,7 @@ describe("Official test suite from https://raw.githubusercontent.com/publicsuffi
     publicSuffix: string | null,
     expectedParseResult: Partial<ParseResult>,
   ) => {
-    test(`${hostname} should be parsed to ${JSON.stringify(
-      expectedParseResult,
-    )}`, () => {
+    test(`${hostname} should be parsed to ${JSON.stringify(expectedParseResult)}`, () => {
       const canonicalHostname = canonical(hostname);
       const result = parseDomain(canonicalHostname);
 
@@ -456,16 +454,12 @@ describe("Official test suite from https://raw.githubusercontent.com/publicsuffi
     domain: toASCII("食狮"),
     topLevelDomains: [toASCII("公司"), "cn"],
   });
-  checkPublicSuffix(
-    "www.xn--85x722f.xn--55qx5d.cn",
-    "xn--85x722f.xn--55qx5d.cn",
-    {
-      type: ParseResultType.Listed,
-      subDomains: ["www"],
-      domain: toASCII("食狮"),
-      topLevelDomains: [toASCII("公司"), "cn"],
-    },
-  );
+  checkPublicSuffix("www.xn--85x722f.xn--55qx5d.cn", "xn--85x722f.xn--55qx5d.cn", {
+    type: ParseResultType.Listed,
+    subDomains: ["www"],
+    domain: toASCII("食狮"),
+    topLevelDomains: [toASCII("公司"), "cn"],
+  });
   checkPublicSuffix("shishi.xn--55qx5d.cn", "shishi.xn--55qx5d.cn", {
     type: ParseResultType.Listed,
     subDomains: [],

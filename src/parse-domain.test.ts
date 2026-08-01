@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vitest";
+
 import { fromUrl } from "./from-url.js";
 import { parseDomain, ParseResultType } from "./parse-domain.js";
 import { Validation, ValidationErrorType } from "./sanitize.js";
@@ -167,20 +168,15 @@ describe(parseDomain.name, () => {
   });
 
   test("returns type ParseResultType.Ip for IPv4 addresses", () => {
-    [
-      "0.0.0.0",
-      "8.8.8.8",
-      "127.0.0.1",
-      "100.100.100.100",
-      "192.168.0.1",
-      "18.101.25.153",
-    ].forEach((ipAddress) => {
-      expect(parseDomain(ipAddress)).toMatchObject({
-        type: ParseResultType.Ip,
-        hostname: ipAddress,
-        ipVersion: 4,
-      });
-    });
+    ["0.0.0.0", "8.8.8.8", "127.0.0.1", "100.100.100.100", "192.168.0.1", "18.101.25.153"].forEach(
+      (ipAddress) => {
+        expect(parseDomain(ipAddress)).toMatchObject({
+          type: ParseResultType.Ip,
+          hostname: ipAddress,
+          ipVersion: 4,
+        });
+      },
+    );
   });
 
   test("returns type ParseResultType.Ip for IPv6 addresses", () => {
@@ -252,8 +248,7 @@ describe(parseDomain.name, () => {
         errors: expect.arrayContaining([
           expect.objectContaining({
             type: ValidationErrorType.LabelMinLength,
-            message:
-              'Label "" is too short. Label is 0 octets long but should be at least 1.',
+            message: 'Label "" is too short. Label is 0 octets long but should be at least 1.',
             column: 1,
           }),
         ]),
@@ -294,9 +289,7 @@ describe(parseDomain.name, () => {
           }),
         ]),
       });
-      expect(
-        parseDomain(`www.${labelToLong}.example.com`, { validation }),
-      ).toMatchObject({
+      expect(parseDomain(`www.${labelToLong}.example.com`, { validation })).toMatchObject({
         type: ParseResultType.Invalid,
         errors: expect.arrayContaining([
           expect.objectContaining({
@@ -306,9 +299,7 @@ describe(parseDomain.name, () => {
       });
     });
     // Should work with 63 octets
-    expect(
-      parseDomain(Array.from({ length: 63 }, () => "x").join("")),
-    ).toMatchObject({
+    expect(parseDomain(Array.from({ length: 63 }, () => "x").join(""))).toMatchObject({
       type: ParseResultType.NotListed,
     });
   });
@@ -317,9 +308,7 @@ describe(parseDomain.name, () => {
     const domain = Array.from({ length: 254 }, () => "x").join("");
 
     // A single long label
-    expect(
-      parseDomain(Array.from({ length: 254 }, () => "x").join("")),
-    ).toMatchObject({
+    expect(parseDomain(Array.from({ length: 254 }, () => "x").join(""))).toMatchObject({
       type: ParseResultType.Invalid,
       errors: expect.arrayContaining([
         expect.objectContaining({
@@ -331,9 +320,7 @@ describe(parseDomain.name, () => {
     });
 
     // Multiple labels
-    expect(
-      parseDomain(Array.from({ length: 128 }, () => "x").join(".")),
-    ).toMatchObject({
+    expect(parseDomain(Array.from({ length: 128 }, () => "x").join("."))).toMatchObject({
       type: ParseResultType.Invalid,
       errors: expect.arrayContaining([
         expect.objectContaining({
@@ -343,9 +330,7 @@ describe(parseDomain.name, () => {
     });
 
     // Should work with 253 octets
-    expect(
-      parseDomain(Array.from({ length: 127 }, () => "x").join(".")),
-    ).toMatchObject({
+    expect(parseDomain(Array.from({ length: 127 }, () => "x").join("."))).toMatchObject({
       type: ParseResultType.NotListed,
     });
   });
@@ -384,8 +369,7 @@ describe(parseDomain.name, () => {
       errors: expect.arrayContaining([
         expect.objectContaining({
           type: ValidationErrorType.LabelInvalidCharacter,
-          message:
-            'Label "some-label]" contains invalid character "]" at column 11.',
+          message: 'Label "some-label]" contains invalid character "]" at column 11.',
           column: 11,
         }),
       ]),
@@ -395,8 +379,7 @@ describe(parseDomain.name, () => {
       errors: expect.arrayContaining([
         expect.objectContaining({
           type: ValidationErrorType.LabelInvalidCharacter,
-          message:
-            'Label "some-静" contains invalid character "静" at column 6.',
+          message: 'Label "some-静" contains invalid character "静" at column 6.',
           column: 6,
         }),
       ]),
@@ -406,8 +389,7 @@ describe(parseDomain.name, () => {
       errors: expect.arrayContaining([
         expect.objectContaining({
           type: ValidationErrorType.LabelInvalidCharacter,
-          message:
-            'Label "some-静" contains invalid character "静" at column 6.',
+          message: 'Label "some-静" contains invalid character "静" at column 6.',
           column: 6,
         }),
       ]),
@@ -434,8 +416,7 @@ describe(parseDomain.name, () => {
       errors: expect.arrayContaining([
         expect.objectContaining({
           type: ValidationErrorType.LabelInvalidCharacter,
-          message:
-            'Label "-example" contains invalid character "-" at column 1.',
+          message: 'Label "-example" contains invalid character "-" at column 1.',
           column: 1,
         }),
       ]),
@@ -445,8 +426,7 @@ describe(parseDomain.name, () => {
       errors: expect.arrayContaining([
         expect.objectContaining({
           type: ValidationErrorType.LabelInvalidCharacter,
-          message:
-            'Label "-example" contains invalid character "-" at column 1.',
+          message: 'Label "-example" contains invalid character "-" at column 1.',
           column: 1,
         }),
       ]),
@@ -456,8 +436,7 @@ describe(parseDomain.name, () => {
       errors: expect.arrayContaining([
         expect.objectContaining({
           type: ValidationErrorType.LabelInvalidCharacter,
-          message:
-            'Label "example-" contains invalid character "-" at column 8.',
+          message: 'Label "example-" contains invalid character "-" at column 8.',
           column: 8,
         }),
       ]),
@@ -467,8 +446,7 @@ describe(parseDomain.name, () => {
       errors: expect.arrayContaining([
         expect.objectContaining({
           type: ValidationErrorType.LabelInvalidCharacter,
-          message:
-            'Label "example-" contains invalid character "-" at column 8.',
+          message: 'Label "example-" contains invalid character "-" at column 8.',
           column: 8,
         }),
       ]),
@@ -552,8 +530,7 @@ describe(parseDomain.name, () => {
       errors: expect.arrayContaining([
         expect.objectContaining({
           type: ValidationErrorType.NoHostname,
-          message:
-            "The given input Symbol(NO_HOSTNAME) does not look like a hostname.",
+          message: "The given input Symbol(NO_HOSTNAME) does not look like a hostname.",
           column: 1,
         }),
       ]),

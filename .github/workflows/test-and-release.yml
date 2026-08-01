@@ -34,24 +34,24 @@ jobs:
 
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@4f1f4aec02e41874fa0262ea8ff5172d7978ad1e # main
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: true
 
       - name: 🟢 Setup Node.js
-        uses: actions/setup-node@6a61c0375d66246de94630495909f12cf8dac84d # main
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: "package.json"
 
       - name: 🗄 Cache node_modules
         id: cache-node_modules
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # main
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: "**/node_modules"
           key: node_modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: 🗄 Cache .eslintcache
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # main
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: "**/.eslintcache"
           # Unique key per commit so the cache is refreshed when code changes,
@@ -82,7 +82,7 @@ jobs:
           npm test
 
       - name: ⬆️ Upload coverage report
-        uses: coverallsapp/github-action@0a51d2e0b5417d06e4ecceb534aec87defc53926 # main
+        uses: coverallsapp/github-action@648a8eb78e6d50909eff900e4ec85cab4524a45b # v2.3.6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 

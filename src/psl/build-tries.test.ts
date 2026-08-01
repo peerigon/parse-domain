@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vitest";
+
 import {
   PUBLIC_SUFFIX_MARKER_ICANN_END,
   PUBLIC_SUFFIX_MARKER_ICANN_START,
@@ -45,10 +46,9 @@ describe("buildTries()", () => {
   });
 
   test("throws when the PRIVATE start marker is missing", () => {
-    const listContent = [
-      PUBLIC_SUFFIX_MARKER_ICANN_START,
-      PUBLIC_SUFFIX_MARKER_ICANN_END,
-    ].join("\n");
+    const listContent = [PUBLIC_SUFFIX_MARKER_ICANN_START, PUBLIC_SUFFIX_MARKER_ICANN_END].join(
+      "\n",
+    );
 
     expect(() => buildTries(listContent)).toThrow(
       `Missing start marker ${PUBLIC_SUFFIX_MARKER_PRIVATE_START} in public suffix list`,

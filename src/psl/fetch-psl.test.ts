@@ -1,5 +1,6 @@
 import nock from "nock";
 import { beforeAll, beforeEach, describe, expect, test } from "vitest";
+
 import { PUBLIC_SUFFIX_URL } from "../config.js";
 import { readPslFixture } from "../tests/fixtures/fixtures.js";
 import { fetchPsl } from "./fetch-psl.js";
@@ -17,9 +18,7 @@ describe("fetchPsl()", () => {
   });
 
   test("fetches the public suffix list as text", async () => {
-    nock(publicSuffixUrl.origin)
-      .get(publicSuffixUrl.pathname)
-      .reply(200, pslFixture);
+    nock(publicSuffixUrl.origin).get(publicSuffixUrl.pathname).reply(200, pslFixture);
 
     const list = await fetchPsl();
 

@@ -11,20 +11,14 @@ import { lookUpTldsInTrie } from "./trie/look-up.js";
 import type { TrieRootNode } from "./trie/nodes.js";
 import { parseTrie } from "./trie/parse-trie.js";
 
-export const RESERVED_TOP_LEVEL_DOMAINS = [
-  "localhost",
-  "local",
-  "example",
-  "invalid",
-  "test",
-];
+export const RESERVED_TOP_LEVEL_DOMAINS = ["localhost", "local", "example", "invalid", "test"];
 
 export type Label = string;
 
 export enum ParseResultType {
   /**
-   * This parse result is returned in case the given hostname does not adhere to
-   * [RFC 1034](https://tools.ietf.org/html/rfc1034).
+   * This parse result is returned in case the given hostname does not adhere to [RFC
+   * 1034](https://tools.ietf.org/html/rfc1034).
    */
   Invalid = "INVALID",
   /** This parse result is returned if the given hostname was an IPv4 or IPv6. */
@@ -33,19 +27,17 @@ export enum ParseResultType {
    * This parse result is returned when the given hostname
    *
    * - Is the root domain (the empty string `""`)
-   * - Belongs to the top-level domain `localhost`, `local`, `example`, `invalid`
-   *   or `test`
+   * - Belongs to the top-level domain `localhost`, `local`, `example`, `invalid` or `test`
    */
   Reserved = "RESERVED",
   /**
-   * This parse result is returned when the given hostname is valid and does not
-   * belong to a reserved top-level domain, but is not listed in the public
-   * suffix list.
+   * This parse result is returned when the given hostname is valid and does not belong to a
+   * reserved top-level domain, but is not listed in the public suffix list.
    */
   NotListed = "NOT_LISTED",
   /**
-   * This parse result is returned when the given hostname belongs to a
-   * top-level domain that is listed in the public suffix list.
+   * This parse result is returned when the given hostname belongs to a top-level domain that is
+   * listed in the public suffix list.
    */
   Listed = "LISTED",
 }
@@ -55,15 +47,10 @@ export enum ParseResultType {
 // If we copy the types (hence duplicating the shared properties),
 // JSDoc comments would show up duplicated in the final return type as well.
 type ParseResultCommon<Type extends ParseResultType> = {
-  /**
-   * The type of the parse result. Use switch or if to distinguish between
-   * different results.
-   */
+  /** The type of the parse result. Use switch or if to distinguish between different results. */
   type: Type;
   /** The original hostname that was passed to parseDomain(). */
-  hostname: Type extends ParseResultType.Invalid
-    ? string | typeof NO_HOSTNAME
-    : string;
+  hostname: Type extends ParseResultType.Invalid ? string | typeof NO_HOSTNAME : string;
 };
 
 export type ParseResultInvalid = ParseResultCommon<ParseResultType.Invalid> & {
@@ -72,10 +59,7 @@ export type ParseResultInvalid = ParseResultCommon<ParseResultType.Invalid> & {
 };
 
 type ParseResultCommonValidDomain = {
-  /**
-   * An array of labels that were separated by a dot character in the given
-   * hostname.
-   */
+  /** An array of labels that were separated by a dot character in the given hostname. */
   labels: Array<Label>;
 };
 
@@ -85,19 +69,18 @@ export type ParseResultIp = ParseResultCommon<ParseResultType.Ip> &
 export type ParseResultReserved = ParseResultCommon<ParseResultType.Reserved> &
   ParseResultCommonValidDomain;
 
-export type ParseResultNotListed =
-  ParseResultCommon<ParseResultType.NotListed> & ParseResultCommonValidDomain;
+export type ParseResultNotListed = ParseResultCommon<ParseResultType.NotListed> &
+  ParseResultCommonValidDomain;
 
 type ParseResultListedDomains = {
   /**
-   * An array of labels that belong to the subdomain. Can be empty if there was
-   * no subdomain in the given hostname.
+   * An array of labels that belong to the subdomain. Can be empty if there was no subdomain in the
+   * given hostname.
    */
   subDomains: Array<Label>;
   /**
-   * The first label that belongs to the user-controlled section of the
-   * hostname. Can be undefined if just a top-level domain was passed to
-   * parseDomain().
+   * The first label that belongs to the user-controlled section of the hostname. Can be undefined
+   * if just a top-level domain was passed to parseDomain().
    */
   domain: Label | undefined;
   /** An array of labels that are controlled by the domain registrar. */
@@ -107,10 +90,7 @@ type ParseResultListedDomains = {
 export type ParseResultListed = ParseResultCommon<ParseResultType.Listed> &
   ParseResultCommonValidDomain &
   ParseResultListedDomains & {
-    /**
-     * The parse result according to ICANN only without private top-level
-     * domains.
-     */
+    /** The parse result according to ICANN only without private top-level domains. */
     icann: ParseResultListedDomains;
   };
 
@@ -121,17 +101,11 @@ export type ParseResult =
   | ParseResultNotListed
   | ParseResultListed;
 
-const getAtIndex = <Item>(
-  array: Array<Item>,
-  index: number,
-): Item | undefined => {
+const getAtIndex = <Item>(array: Array<Item>, index: number): Item | undefined => {
   return index >= 0 && index < array.length ? array[index] : undefined;
 };
 
-const splitLabelsIntoDomains = (
-  labels: Array<Label>,
-  index: number,
-): ParseResultListedDomains => {
+const splitLabelsIntoDomains = (labels: Array<Label>, index: number): ParseResultListedDomains => {
   return {
     subDomains: labels.slice(0, Math.max(0, index)),
     domain: getAtIndex(labels, index),

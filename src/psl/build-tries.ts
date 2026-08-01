@@ -6,23 +6,18 @@ import {
 } from "../config.js";
 import { toASCII } from "../punycode.js";
 import { createTrieFromList } from "../trie/create-trie.js";
+import type { TrieRootNode } from "../trie/nodes.js";
 
 const matchNewline = /\r?\n/u;
 const matchComment = /^\s*\/\//u;
 const matchWhitespace = /^\s*$/u;
 
-const extractByMarkers = (
-  listContent: string,
-  startMarker: string,
-  endMarker: string,
-) => {
+const extractByMarkers = (listContent: string, startMarker: string, endMarker: string) => {
   const start = listContent.indexOf(startMarker);
   const end = listContent.indexOf(endMarker);
 
   if (start === -1) {
-    throw new Error(
-      `Missing start marker ${startMarker} in public suffix list`,
-    );
+    throw new Error(`Missing start marker ${startMarker} in public suffix list`);
   }
   if (end === -1) {
     throw new Error(`Missing end marker ${endMarker} in public suffix list`);
@@ -55,7 +50,7 @@ const parsePsl = (listContent: string) => {
   };
 };
 
-export const buildTries = (psl: string) => {
+export const buildTries = (psl: string): { icannTrie: TrieRootNode; privateTrie: TrieRootNode } => {
   const parsedPsl = parsePsl(psl);
   const icannTrie = createTrieFromList(parsedPsl.icann);
   const privateTrie = createTrieFromList(parsedPsl.private);

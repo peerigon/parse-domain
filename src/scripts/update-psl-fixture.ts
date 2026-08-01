@@ -1,5 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
+
 import { fetchPsl } from "../psl/fetch-psl.js";
 
 const pathToPslFixture = path.resolve(
