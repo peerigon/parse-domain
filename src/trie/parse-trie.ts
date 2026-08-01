@@ -4,9 +4,10 @@ import {
   createRootNode,
   NODE_TYPE_ROOT,
   type TrieNode,
+  type TrieRootNode,
 } from "./nodes.js";
 
-export const parseTrie = (serializedTrie: string) => {
+export const parseTrie = (serializedTrie: string): TrieRootNode => {
   const rootNode = createRootNode();
   let domain = "";
   let parentNode: TrieNode = rootNode;

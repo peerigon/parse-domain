@@ -2,7 +2,7 @@ import type { Label } from "../parse-domain.js";
 import * as characters from "./characters.js";
 import type { TrieNode } from "./nodes.js";
 
-export const lookUpTldsInTrie = (labels: Array<Label>, trie: TrieNode) => {
+export const lookUpTldsInTrie = (labels: Array<Label>, trie: TrieNode): Array<Label> => {
   const labelsToCheck = [...labels];
   const tlds: Array<Label> = [];
   let node = trie;

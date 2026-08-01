@@ -1,4 +1,5 @@
 import { expect } from "vitest";
+
 import {
   NODE_TYPE_CHILD,
   NODE_TYPE_ROOT,
@@ -13,7 +14,7 @@ export const expectRoot = ({
 }: {
   root: TrieRootNode;
   childrenSize: number;
-}) => {
+}): void => {
   expect(root.type).toBe(NODE_TYPE_ROOT);
   expect(root.children.size).toBe(childrenSize);
 };
@@ -28,7 +29,7 @@ export const expectChild = ({
   domain: string;
   childrenSize: number;
   parent: TrieNode;
-}) => {
+}): void => {
   expect(child.type).toBe(NODE_TYPE_CHILD);
   expect(child.label).toBe(domain);
   expect(child.children.size).toBe(childrenSize);

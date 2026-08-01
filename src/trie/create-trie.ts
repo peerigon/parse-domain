@@ -1,6 +1,6 @@
-import { createOrGetChild, createRootNode, type TrieNode } from "./nodes.js";
+import { createOrGetChild, createRootNode, type TrieNode, type TrieRootNode } from "./nodes.js";
 
-export const createTrieFromList = (list: Array<string>) => {
+export const createTrieFromList = (list: Array<string>): TrieRootNode => {
   const root = createRootNode();
 
   for (const rule of list) {

@@ -22,12 +22,7 @@ export default [
       "vitest/expect-expect": [
         "error",
         {
-          assertFunctionNames: [
-            "expect",
-            "expectRoot",
-            "expectChild",
-            "expectNode",
-          ],
+          assertFunctionNames: ["expect", "expectRoot", "expectChild", "expectNode"],
         },
       ],
     },

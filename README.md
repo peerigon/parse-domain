@@ -235,9 +235,7 @@ switch (parseResult.type) {
 What's surprising to a lot of people is that the definition of public suffix means that regular user domains can become effective top-level domains:
 
 ```javascript
-const { subDomains, domain, topLevelDomains } = parseDomain(
-  "parse-domain.github.io",
-);
+const { subDomains, domain, topLevelDomains } = parseDomain("parse-domain.github.io");
 
 console.log(subDomains); // []
 console.log(domain); // "parse-domain"

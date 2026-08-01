@@ -1,7 +1,8 @@
 import { ok } from "node:assert";
+
 import { FETCH_PSL_EXPECTED_MIN_LENGTH, PUBLIC_SUFFIX_URL } from "../config.js";
 
-export const fetchPsl = async () => {
+export const fetchPsl = async (): Promise<string> => {
   const response = await fetch(PUBLIC_SUFFIX_URL);
   const pslContent = await response.text();
 

@@ -1,5 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
+
 import { PUBLIC_SUFFIX_URL } from "../config.js";
 import type { Await } from "../type-util.js";
 import { fetchBuildSerializeTries } from "../update-tries.js";
@@ -13,21 +14,9 @@ const writeTriesToFiles = async ({
 
   await Promise.all(
     targetDirectories.map(async (targetDirectory) => {
-      const pathToIcannTrie = path.resolve(
-        import.meta.dirname,
-        targetDirectory,
-        "icann.js",
-      );
-      const pathToPrivateTrie = path.resolve(
-        import.meta.dirname,
-        targetDirectory,
-        "private.js",
-      );
-      const pathToTrieInfoFile = path.resolve(
-        import.meta.dirname,
-        targetDirectory,
-        "info.json",
-      );
+      const pathToIcannTrie = path.resolve(import.meta.dirname, targetDirectory, "icann.js");
+      const pathToPrivateTrie = path.resolve(import.meta.dirname, targetDirectory, "private.js");
+      const pathToTrieInfoFile = path.resolve(import.meta.dirname, targetDirectory, "info.json");
 
       console.warn(`Writing ${pathToIcannTrie}...`);
       console.warn(`Writing ${pathToPrivateTrie}...`);

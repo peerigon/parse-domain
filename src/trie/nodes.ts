@@ -21,7 +21,7 @@ export const createRootNode = (): TrieRootNode => {
   };
 };
 
-export const createOrGetChild = (parent: TrieNode, label: string) => {
+export const createOrGetChild = (parent: TrieNode, label: string): TrieChildNode => {
   let child = parent.children.get(label);
 
   if (child === undefined) {

@@ -14,7 +14,7 @@ updates:
         patterns:
           - "@peerigon/configs"
           - "eslint"
-          - "prettier"
+          - "oxfmt"
           - "semantic-release"
           - "typescript"
     cooldown:

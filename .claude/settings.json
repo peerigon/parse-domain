@@ -6,7 +6,7 @@
       "Bash(npm run test:*)",
       "Bash(npm test)",
       "Bash(npx tsc:*)",
-      "Bash(npx prettier:*)",
+      "Bash(npx oxfmt:*)",
       "Bash(npx eslint:*)",
       "mcp__eslint__lint-files",
       "mcp__typescript-lsp__getTypeAtPosition",

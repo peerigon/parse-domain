@@ -1,4 +1,5 @@
 import { describe, test } from "vitest";
+
 import { expectChild, expectRoot } from "../tests/assertions/nodes.js";
 import { createTrieFromList } from "./create-trie.js";
 
