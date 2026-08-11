@@ -21,6 +21,9 @@
     "type": "git",
     "url": "https://github.com/peerigon/parse-domain.git"
   },
+  "bin": {
+    "parse-domain-update": "./dist/bin/update.js"
+  },
   "files": [
     "dist",
     "serialized-tries",
@@ -30,6 +33,7 @@
   "type": "module",
   "sideEffects": false,
   "main": "./dist/main.js",
+  "types": "./dist/main.d.ts",
   "exports": {
     ".": "./dist/main.js"
   },
