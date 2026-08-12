@@ -3,7 +3,10 @@
   "version": "0.0.0-semantically-released",
   "description": "Splits a hostname into subdomains, domain and (effective) top-level domains",
   "license": "MIT",
-  "exports": "./src/main.ts",
+  "exports": {
+    ".": "./src/main.ts",
+    "./update": "./src/bin/update.ts"
+  },
   "publish": {
     "include": ["src", "serialized-tries", "README.md", "LICENSE"],
     "exclude": [
