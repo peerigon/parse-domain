@@ -44,9 +44,27 @@ The list of top-level domains is stored in a [trie](https://en.wikipedia.org/wik
 npm install parse-domain
 ```
 
+This package is also published to [JSR](https://jsr.io/@peerigon/parse-domain):
+
+```sh
+deno add jsr:@peerigon/parse-domain
+```
+
 ## Updates
 
 💡 **Please note:** [publicsuffix.org](https://publicsuffix.org/) is updated several times per month. This package comes with a prebuilt list that has been downloaded at the time of `npm publish`. In order to get an up-to-date list, you should run `npx parse-domain-update` everytime you start or build your application. This will download the latest list from `https://publicsuffix.org/list/public_suffix_list.dat`.
+
+JSR packages don't support npm-style `bin` entries, so the script is published under the `./update` export instead. The script writes to a path relative to its own location, so it only works once the package has been resolved into a local `node_modules` directory (e.g. by enabling [`nodeModulesDir`](https://docs.deno.com/runtime/fundamentals/configuration/#node-modules-dir) in `deno.json`) — running it directly off a `jsr:` specifier fails because Deno doesn't expose a local path for remote-cached modules:
+
+```jsonc
+// deno.json
+{ "nodeModulesDir": "auto" }
+```
+
+```sh
+deno add jsr:@peerigon/parse-domain
+deno run --allow-net --allow-write ./node_modules/@peerigon/parse-domain/src/bin/update.ts
+```
 
 <br />
 
