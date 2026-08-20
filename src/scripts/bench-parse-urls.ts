@@ -16,8 +16,8 @@ const TLDS = [
 ];
 const SUBDOMAINS = ["", "www.", "api.", "shop.blog.", "cdn.assets.", "mail."];
 
-const generateUrls = (count: number): string[] => {
-  const urls: string[] = [];
+const generateUrls = (count: number): Array<string> => {
+  const urls: Array<string> = [];
 
   for (let i = 0; i < count; i++) {
     const tld = TLDS[i % TLDS.length];
@@ -29,7 +29,7 @@ const generateUrls = (count: number): string[] => {
   return urls;
 };
 
-const URL_COUNT = 23104;
+const URL_COUNT = 23_104;
 const urls = generateUrls(URL_COUNT);
 
 // Warm up: the trie is parsed lazily on the first parseDomain() call and then
