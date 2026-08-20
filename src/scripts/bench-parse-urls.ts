@@ -29,7 +29,7 @@ const generateUrls = (count: number): string[] => {
   return urls;
 };
 
-const URL_COUNT = 5776;
+const URL_COUNT = 23104;
 const urls = generateUrls(URL_COUNT);
 
 // Warm up: the trie is parsed lazily on the first parseDomain() call and then
