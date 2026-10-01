@@ -71,7 +71,7 @@
     "@peerigon/configs": "^21.2.0",
     "@secretlint/secretlint-rule-preset-recommend": "^13.0.2",
     "@types/node": "^26.1.1",
-    "@vitest/coverage-v8": "^4.1.9",
+    "@vitest/coverage-v8": "^5.0.1",
     "eslint": "^9.39.2",
     "husky": "^9.1.7",
     "jsr": "^0.14.3",
