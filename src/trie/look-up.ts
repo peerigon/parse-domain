@@ -11,17 +11,20 @@ export const lookUpTldsInTrie = (labels: Array<Label>, trie: TrieNode): Array<La
     const label = labelsToCheck.pop()!;
     const labelLowerCase = label.toLowerCase();
 
-    if (node.children.has(characters.WILDCARD)) {
-      if (node.children.has(characters.EXCEPTION + labelLowerCase)) {
-        break;
-      }
-      node = node.children.get(characters.WILDCARD) as TrieNode;
-    } else {
-      if (node.children.has(labelLowerCase) === false) {
-        break;
-      }
-      node = node.children.get(labelLowerCase) as TrieNode;
+    const hasWildcard = node.children.has(characters.WILDCARD);
+
+    if (hasWildcard && node.children.has(characters.EXCEPTION + labelLowerCase)) {
+      break;
     }
+
+    // Explicit children are more specific than a wildcard (e.g. *.mtls.run.app vs. *.run.app),
+    // so they must win. The wildcard node has no children, so falling back to it never loses labels.
+    const next = node.children.get(labelLowerCase) ?? node.children.get(characters.WILDCARD);
+
+    if (next === undefined) {
+      break;
+    }
+    node = next;
 
     tlds.unshift(label);
   }
