@@ -1,11 +1,13 @@
 import type { Label } from "../parse-domain.js";
 import * as characters from "./characters.js";
-import type { TrieNode } from "./nodes.js";
+import { NODE_TYPE_ROOT, type TrieNode } from "./nodes.js";
 
 export const lookUpTldsInTrie = (labels: Array<Label>, trie: TrieNode): Array<Label> => {
   const labelsToCheck = [...labels];
   const tlds: Array<Label> = [];
   let node = trie;
+  // Only labels up to the last node that actually ends a rule are part of the public suffix.
+  let ruleLength = 0;
 
   while (labelsToCheck.length > 0) {
     const label = labelsToCheck.pop()!;
@@ -14,6 +16,8 @@ export const lookUpTldsInTrie = (labels: Array<Label>, trie: TrieNode): Array<La
     const hasWildcard = node.children.has(characters.WILDCARD);
 
     if (hasWildcard && node.children.has(characters.EXCEPTION + labelLowerCase)) {
+      // The exception rule makes the parent the public suffix, even if it is not a rule itself
+      ruleLength = tlds.length;
       break;
     }
 
@@ -24,10 +28,21 @@ export const lookUpTldsInTrie = (labels: Array<Label>, trie: TrieNode): Array<La
     if (next === undefined) {
       break;
     }
+    const parent = node;
     node = next;
 
     tlds.unshift(label);
+    // A node is also a public suffix if a wildcard rule matches it (*.run.app matches mtls.run.app)
+    // or if it is a top-level label from the list: the PSL's implicit "*" rule makes it a suffix
+    // even without an explicit rule (e.g. za, or ck via *.ck).
+    if (
+      next.isRule ||
+      parent.children.get(characters.WILDCARD)?.isRule === true ||
+      parent.type === NODE_TYPE_ROOT
+    ) {
+      ruleLength = tlds.length;
+    }
   }
 
-  return tlds;
+  return tlds.slice(tlds.length - ruleLength);
 };

@@ -121,4 +121,12 @@ describe("parseTrie()", () => {
       `[Error: Error in serialized trie at position 0: Cannot go up, current parent node is already root]`,
     );
   });
+
+  test("when called with '~a>b' it marks 'a' as not being a rule", () => {
+    const root = parseTrie("~a>b");
+    const a = root.children.get("a")!;
+
+    expect(a.isRule).toBe(false);
+    expect(a.children.get("b")!.isRule).toBe(true);
+  });
 });

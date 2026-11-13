@@ -4,4 +4,5 @@ export const SAME = ","; // same level
 export const DOWN = ">"; // one level down
 export const RESET = "|"; // reset level index and start new
 export const WILDCARD = "*"; // as defined by publicsuffix.org
+export const NOT_A_RULE = "~"; // prefix for nodes that only exist as a path to deeper rules
 export const EXCEPTION = "!"; // as defined by publicsuffix.org

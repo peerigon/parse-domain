@@ -1,4 +1,4 @@
-import { DOWN, SAME, UP } from "./characters.js";
+import { DOWN, NOT_A_RULE, SAME, UP } from "./characters.js";
 import type { TrieChildNode, TrieRootNode } from "./nodes.js";
 
 export const serializeTrie = (root: TrieRootNode): string => {
@@ -28,7 +28,7 @@ export const serializeTrie = (root: TrieRootNode): string => {
       serialized += UP;
       continue;
     }
-    serialized += current.label;
+    serialized += (current.isRule ? "" : NOT_A_RULE) + current.label;
     if (current.children.size === 0) {
       if (queue.length > 0 && queue[0] !== UP) {
         serialized += SAME;

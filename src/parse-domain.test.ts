@@ -596,3 +596,33 @@ describe(parseDomain.name, () => {
 const getCharCodesUntil = (length: number) => {
   return Array.from({ length }, (_, i) => i);
 };
+
+describe("parseDomain() with path-only trie nodes (#159)", () => {
+  test("does not treat intermediate labels of deep rules as part of the TLD", () => {
+    expect(parseDomain("salesforce.com")).toMatchObject({
+      type: ParseResultType.Listed,
+      domain: "salesforce",
+      topLevelDomains: ["com"],
+    });
+    expect(parseDomain("foo.platform.salesforce.com")).toMatchObject({
+      domain: "salesforce",
+      topLevelDomains: ["com"],
+    });
+  });
+
+  test("only uses the private trie when a private rule actually matches", () => {
+    expect(parseDomain("example.io")).toMatchObject({ domain: "example", topLevelDomains: ["io"] });
+    expect(parseDomain("foo.github.io")).toMatchObject({
+      domain: "foo",
+      topLevelDomains: ["github", "io"],
+    });
+  });
+
+  test("keeps top-level labels without a bare rule listed", () => {
+    expect(parseDomain("example.za")).toMatchObject({
+      type: ParseResultType.Listed,
+      domain: "example",
+      topLevelDomains: ["za"],
+    });
+  });
+});
