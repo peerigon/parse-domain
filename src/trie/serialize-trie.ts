@@ -20,6 +20,7 @@ export const serializeTrie = (root: TrieRootNode): string => {
 	*/
   type QueueItem = TrieChildNode | typeof UP;
   let serialized = "";
+  // eslint-disable-next-line unicorn/prefer-iterator-to-array -- Iterator#toArray() needs Node 22
   const queue: Array<QueueItem> = [...root.children.values()];
   let current: QueueItem | undefined;
 
@@ -37,6 +38,7 @@ export const serializeTrie = (root: TrieRootNode): string => {
     }
     serialized += DOWN;
 
+    // eslint-disable-next-line unicorn/prefer-iterator-to-array -- Iterator#toArray() needs Node 22
     const newItems: Array<QueueItem> = [...current.children.values()];
 
     if (queue.length > 0) {

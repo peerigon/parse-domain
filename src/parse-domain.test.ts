@@ -168,35 +168,40 @@ describe(parseDomain.name, () => {
   });
 
   test("returns type ParseResultType.Ip for IPv4 addresses", () => {
-    ["0.0.0.0", "8.8.8.8", "127.0.0.1", "100.100.100.100", "192.168.0.1", "18.101.25.153"].forEach(
-      (ipAddress) => {
-        expect(parseDomain(ipAddress)).toMatchObject({
-          type: ParseResultType.Ip,
-          hostname: ipAddress,
-          ipVersion: 4,
-        });
-      },
-    );
+    for (const ipAddress of [
+      "0.0.0.0",
+      "8.8.8.8",
+      "127.0.0.1",
+      "100.100.100.100",
+      "192.168.0.1",
+      "18.101.25.153",
+    ]) {
+      expect(parseDomain(ipAddress)).toMatchObject({
+        type: ParseResultType.Ip,
+        hostname: ipAddress,
+        ipVersion: 4,
+      });
+    }
   });
 
   test("returns type ParseResultType.Ip for IPv6 addresses", () => {
-    ipV6Samples.forEach((ipAddress) => {
+    for (const ipAddress of ipV6Samples) {
       expect(parseDomain(ipAddress)).toMatchObject({
         type: ParseResultType.Ip,
         hostname: ipAddress,
         ipVersion: 6,
       });
-    });
+    }
   });
 
   test("returns type ParseResultType.Ip for IPv6 addresses with square brackets according to RFC 3986", () => {
-    ipV6Samples.forEach((ipAddress) => {
+    for (const ipAddress of ipV6Samples) {
       expect(parseDomain("[" + ipAddress + "]")).toMatchObject({
         type: ParseResultType.Ip,
         hostname: ipAddress,
         ipVersion: 6,
       });
-    });
+    }
   });
 
   test("returns type ParseResultType.Reserved for all reserved TLDs according to RFC 6761, 6762", () => {
@@ -242,7 +247,7 @@ describe(parseDomain.name, () => {
   });
 
   test("returns type ParseResultType.Invalid and error information for a hostname with an empty label (both validation modes)", () => {
-    [Validation.Lax, Validation.Strict].forEach((validation) => {
+    for (const validation of [Validation.Lax, Validation.Strict]) {
       expect(parseDomain(".example.com", { validation })).toMatchObject({
         type: ParseResultType.Invalid,
         errors: expect.arrayContaining([
@@ -261,7 +266,7 @@ describe(parseDomain.name, () => {
           }),
         ]),
       });
-    });
+    }
   });
 
   test("returns type ParseResultType.Invalid for the domain '.'", () => {
@@ -278,7 +283,7 @@ describe(parseDomain.name, () => {
   test("returns type ParseResultType.Invalid and error information for a hostname with a label that is too long (both validation modes)", () => {
     const labelToLong = Array.from({ length: 64 }, () => "x").join("");
 
-    [Validation.Lax, Validation.Strict].forEach((validation) => {
+    for (const validation of [Validation.Lax, Validation.Strict]) {
       expect(parseDomain(labelToLong, { validation })).toMatchObject({
         type: ParseResultType.Invalid,
         errors: expect.arrayContaining([
@@ -297,7 +302,7 @@ describe(parseDomain.name, () => {
           }),
         ]),
       });
-    });
+    }
     // Should work with 63 octets
     expect(parseDomain(Array.from({ length: 63 }, () => "x").join(""))).toMatchObject({
       type: ParseResultType.NotListed,
@@ -398,16 +403,17 @@ describe(parseDomain.name, () => {
 
   test("accepts any character as labels with Validation.Lax", () => {
     // Trying out 2^10 characters
-    getCharCodesUntil(2 ** 10)
-      .map((octet) => String.fromCodePoint(octet))
-      .filter((hostname) => hostname !== ".")
-      .forEach((hostname) => {
-        const result = parseDomain(hostname, { validation: Validation.Lax });
+    for (const octet of getCharCodesUntil(2 ** 10)) {
+      const hostname = String.fromCodePoint(octet);
 
-        expect(result).toMatchObject({
-          type: ParseResultType.NotListed,
-        });
+      if (hostname === ".") continue;
+
+      const result = parseDomain(hostname, { validation: Validation.Lax });
+
+      expect(result).toMatchObject({
+        type: ParseResultType.NotListed,
       });
+    }
   });
 
   test("returns type ParseResultType.Invalid and error information for a hostname where some labels start or end with a -", () => {
