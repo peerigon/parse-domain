@@ -254,7 +254,7 @@ const validateLabels = {
       lastLabel = label;
     }
 
-    if (lastLabel !== undefined && /[a-z-]/iu.test(lastLabel) === false) {
+    if (lastLabel !== undefined && !/[a-z-]/iu.test(lastLabel)) {
       labelValidationErrors.push(
         createLastLabelInvalidError(lastLabel, column - lastLabel.length - LABEL_SEPARATOR.length),
       );

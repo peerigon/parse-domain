@@ -161,8 +161,10 @@ export const parseDomain = (
   }
 
   // Parse the serialized trie lazily
-  parsedIcannTrie = parsedIcannTrie ?? parseTrie(icannTrie);
-  parsedPrivateTrie = parsedPrivateTrie ?? parseTrie(privateTrie);
+  // eslint-disable-next-line unicorn/no-top-level-assignment-in-function -- lazy cache
+  parsedIcannTrie ??= parseTrie(icannTrie);
+  // eslint-disable-next-line unicorn/no-top-level-assignment-in-function -- lazy cache
+  parsedPrivateTrie ??= parseTrie(privateTrie);
 
   const icannTlds = lookUpTldsInTrie(labels, parsedIcannTrie);
   const privateTlds = lookUpTldsInTrie(labels, parsedPrivateTrie);

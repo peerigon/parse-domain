@@ -14,11 +14,13 @@ const matchWhitespace = /^\s*$/u;
 
 const extractByMarkers = (listContent: string, startMarker: string, endMarker: string) => {
   const start = listContent.indexOf(startMarker);
-  const end = listContent.indexOf(endMarker);
 
   if (start === -1) {
     throw new Error(`Missing start marker ${startMarker} in public suffix list`);
   }
+
+  const end = listContent.indexOf(endMarker);
+
   if (end === -1) {
     throw new Error(`Missing end marker ${endMarker} in public suffix list`);
   }
@@ -26,8 +28,7 @@ const extractByMarkers = (listContent: string, startMarker: string, endMarker: s
   return listContent.slice(start, end);
 };
 
-const containsRule = (line: string) =>
-  matchComment.test(line) === false && matchWhitespace.test(line) === false;
+const containsRule = (line: string) => !matchComment.test(line) && !matchWhitespace.test(line);
 
 const parsePsl = (listContent: string) => {
   return {
