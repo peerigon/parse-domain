@@ -16,7 +16,13 @@ export const parseTrie = (serializedTrie: string): TrieRootNode => {
   let node = rootNode as TrieNode;
 
   const addDomain = () => {
-    node = createOrGetChild(parentNode, domain);
+    const isRule = !domain.startsWith(characters.NOT_A_RULE);
+
+    node = createOrGetChild(
+      parentNode,
+      isRule ? domain : domain.slice(characters.NOT_A_RULE.length),
+      isRule,
+    );
     domain = "";
   };
 

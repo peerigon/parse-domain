@@ -1,4 +1,4 @@
-import { describe, test } from "vitest";
+import { describe, expect, test } from "vitest";
 
 import { expectChild, expectRoot } from "../tests/assertions/nodes.js";
 import { createTrieFromList } from "./create-trie.js";
@@ -56,5 +56,23 @@ describe("createTrieFromList()", () => {
     expectChild({ child: b, parent: root, domain: "b", childrenSize: 2 });
     expectChild({ child: a, parent: b, domain: "a", childrenSize: 0 });
     expectChild({ child: c, parent: b, domain: "c", childrenSize: 0 });
+  });
+
+  test("marks only the last label of each rule as a rule, regardless of order", () => {
+    for (const list of [
+      ["a.b", "b"],
+      ["b", "a.b"],
+    ]) {
+      const root = createTrieFromList(list);
+      const b = root.children.get("b")!;
+
+      expect(b.isRule).toBe(true);
+      expect(b.children.get("a")!.isRule).toBe(true);
+    }
+
+    const root = createTrieFromList(["a.b"]);
+
+    expect(root.children.get("b")!.isRule).toBe(false);
+    expect(root.children.get("b")!.children.get("a")!.isRule).toBe(true);
   });
 });

@@ -3,6 +3,7 @@ import { describe, expect, test } from "vitest";
 import { buildTries } from "../psl/build-tries.js";
 import { readPslFixture } from "../tests/fixtures/fixtures.js";
 import * as characters from "./characters.js";
+import { createTrieFromList } from "./create-trie.js";
 import { createOrGetChild, createRootNode } from "./nodes.js";
 import { serializeTrie } from "./serialize-trie.js";
 
@@ -68,5 +69,11 @@ describe("serializeTrie()", () => {
 
     expect(toReadableTrie(serializeTrie(icannTrie))).toMatchSnapshot();
     expect(toReadableTrie(serializeTrie(privateTrie))).toMatchSnapshot();
+  });
+});
+
+describe("serializeTrie() path-only nodes", () => {
+  test("marks nodes that are not rules", () => {
+    expect(serializeTrie(createTrieFromList(["a.b", "c"]))).toBe("~b>a<c");
   });
 });

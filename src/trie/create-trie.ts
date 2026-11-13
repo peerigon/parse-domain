@@ -8,8 +8,15 @@ export const createTrieFromList = (list: Array<string>): TrieRootNode => {
 
     // We do not want to break compatibility with older engines unnecessarily.
     // eslint-disable-next-line unicorn/no-array-reverse
-    for (const label of rule.split(".").reverse()) {
-      node = createOrGetChild(node, label);
+    const labels = rule.split(".").reverse();
+
+    for (const [index, label] of labels.entries()) {
+      const isLast = index === labels.length - 1;
+
+      node = createOrGetChild(node, label, isLast);
+      if (isLast) {
+        node.isRule = true;
+      }
     }
   }
 
