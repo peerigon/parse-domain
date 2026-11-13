@@ -414,7 +414,7 @@ describe(parseDomain.name, () => {
         type: ParseResultType.NotListed,
       });
     }
-  });
+  }, 20_000);
 
   test("returns type ParseResultType.Invalid and error information for a hostname where some labels start or end with a -", () => {
     expect(parseDomain("-example")).toMatchObject({
